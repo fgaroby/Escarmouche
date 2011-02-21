@@ -1,0 +1,72 @@
+.top-left, .top-center, .top-right, .center-left, .center-center, .center-right, .bottom-left, .bottom-center, .bottom-right
+{
+	padding : 2px;
+	min-height : 50px;
+	min-width : 200px;
+}
+
+.top-left
+{
+	border-right	: solid 1px black;
+	border-bottom	: solid 1px black;
+}
+
+.top-center
+{
+	border-right	: solid 1px black;
+	border-bottom	: solid 1px black;
+	border-left		: solid 1px black;
+}
+
+.top-right
+{
+	border-bottom	: solid 1px black;
+	border-left		: solid 1px black;
+}
+
+.center-left
+{
+	border-top		: solid 1px black;
+	border-right	: solid 1px black;
+	border-bottom	: solid 1px black;
+}
+
+.center-center
+{
+	border-top		: solid 1px black;
+	border-right	: solid 1px black;
+	border-bottom	: solid 1px black;
+	border-left		: solid 1px black;
+}
+
+.center-right
+{
+	border-top		: solid 1px black;
+	border-bottom	: solid 1px black;
+	border-left		: solid 1px black;
+}
+
+.bottom-left
+{
+	border-top		: solid 1px black;
+	border-right	: solid 1px black;
+}
+
+.bottom-center
+{
+	border-top	: solid 1px black;
+	border-right	: solid 1px black;
+	border-left		: solid 1px black;
+}
+
+.bottom-right
+{
+	border-top		: solid 1px black;
+	border-left		: solid 1px black;
+}
+
+.spacer
+{
+	clear : both;
+	height : 0px;
+}

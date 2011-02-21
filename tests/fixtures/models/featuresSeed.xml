@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+  <feature id="1" name="feature1" description="feature desc. 1" status_id="16" color="red" release_id="1" />
+  <feature id="2" name="feature2" description="feature desc. 2" status_id="32" color="red" release_id="1" />
+</dataset>

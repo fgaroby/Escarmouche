@@ -1,0 +1,104 @@
+form
+{
+	width : 60%;
+}
+
+form p
+{
+	margin: 2px 0;
+	border-top: 1px dashed gray;
+	clear: left;
+	padding: 5px 0 8px 0;
+	padding-left: 155px; /*width of left column containing the label elements*/
+	height: 1%;
+}
+
+
+/* Label */
+form label
+{
+	display: block;
+	width: 39%;
+	float: left;
+	padding-right: 1%;
+	text-align: right;
+	letter-spacing: 1px;
+}
+
+form .form_label_nostyle
+{
+	background: none;
+}
+
+/* fieldset , legend */
+form fieldset
+{
+	margin-bottom: 10px;
+	border: #CCC 1px solid;
+}
+
+form fieldset:hover
+{
+	background-color: #FFF;
+}
+
+form fieldset legend
+{
+	padding: 0 10px;
+	border-left: #CCC 1px solid;
+	border-right: #CCC 1px solid;
+	font-size: 1.2em;
+	color: #999;
+}
+
+
+/* Input */
+form input, form select, form textarea
+{
+	margin-left: 1%;
+	width: 58%;
+	border: #CCC 1px solid;
+}
+
+form input:focus, form select:focus, form textarea:focus
+{
+	border: #999 1px solid;
+	background-color: #DDEEFF;
+}
+
+form .form_input_day_month
+{
+	width: 3%;
+}
+
+form .form_input_year
+{
+	width: 6%;
+}
+
+
+
+/* button submit */
+form input[type="submit"]
+{
+	border: #DDEEFF 1px solid;
+	width: 27%;
+}
+
+form input[type="submit"]:hover
+{
+	background-color: #66CC33;
+	cursor: pointer;
+}
+
+form input[type="reset"]
+{
+	border: #DDEEFF 1px solid;
+	width: 27%;
+}
+
+form input[type="reset"]:hover
+{
+	background-color: #E6484D;
+	cursor: pointer;
+}

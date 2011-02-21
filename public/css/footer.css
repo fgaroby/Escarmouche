@@ -1,0 +1,12 @@
+#footer
+{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right : 0px;
+	padding: 10px;
+	background-color: #0066b2;
+	width: 98%;
+	margin : 0px;
+	color : white;
+}

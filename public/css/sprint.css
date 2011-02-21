@@ -1,0 +1,71 @@
+.storiesList
+{
+	border-collapse : collapse;
+	width : 90%;
+	padding : 2px;
+}
+
+.draggable
+{
+	height : 35px;
+	margin : 2px;
+	padding : 2px;
+}
+
+.story
+{
+	border-style : solid;
+	border-width : 3px;
+	-moz-border-radius-topright : 0.8em; 
+	padding-top : 5px;
+	padding-bottom : 5px;
+	padding-left : 3px;
+	margin : auto;
+}
+
+span.title
+{
+	text-align : center;
+	display : block;
+	margin : auto;
+}
+
+.count
+{
+	float : right;
+	padding-right : 10px;
+	padding-top : 3px;
+}
+
+.item
+{
+	cursor : move;
+	display : block;
+	width : 80%;
+	padding-top : 3px;
+}
+
+.placeholder
+{
+	background: #f0f0f0;
+	border : 1px dashed #ddd;
+}
+
+h2
+{
+	text-align : center;
+	margin-bottom : 5px;
+}
+
+h3
+{
+	text-align : center;
+	border : solid 1px black;
+	background-color : lightyellow;
+	width : 90%;
+	display : block;
+	margin : auto;
+	margin-top :0px;
+	margin-bottom :10px;
+	margin-bottom :10px;
+}

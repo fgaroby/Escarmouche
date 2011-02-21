@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+  <task id="1" name="task1" description="task desc. 1" status_id="16" />
+  <task id="2" name="task2" description="new task desc. 2" status_id="32" />
+</dataset>

@@ -8,7 +8,7 @@ $confPath = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'configs';
 /** Zend_Loader_Autoloader */
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace( 'Overlord_' );
+$autoloader->registerNamespace( 'Escarmouche_' );
 
 $loader = new Zend_Loader_Autoloader_Resource( array( 'basePath' => APPLICATION_PATH, 'namespace' => 'Application' ) );
 $loader->addResourceType( 'model', 'models', 'Model' );

@@ -20,10 +20,11 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 	{
 		$data = array(	'name'			=> $story->getName(),
 						'description'	=> $story->getDescription(),
-						'status_id'		=> $story->getStatus(),
-						'sprint_id'		=> $story->getSprintId(),
-						'feature_id'	=> $story->getFeatureId(),
-						'priority'		=> $story->getPriority() );
+						'status'		=> $story->getStatus(),
+						'sprint'		=> $story->getSprintId(),
+						'feature'		=> $story->getFeatureId(),
+						'priority'		=> $story->getPriority(),
+						'points'		=> $story->getPoints() );
 		
 		if( null === ( $id = $story->getId() ) )
 		{
@@ -51,10 +52,11 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 		$data = array( 	'id'			=> $row->id,
 			 			'name'			=> $row->name,
 			 			'description'	=> $row->description,
-			 			'status'		=> $row->status_id,
-			 			'sprint'		=> $row->sprint_id,
-						'feature'		=> $row->feature_id,
-						'priority'		=> $row->priority );
+			 			'status'		=> $row->status,
+			 			'sprint'		=> $row->sprint,
+						'feature'		=> $row->feature,
+						'priority'		=> $row->priority,
+						'points'		=> $row->points );
 			
 		$this->_loadedMap[$id] = new Application_Model_Story( $data );
 		
@@ -71,9 +73,10 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 			$entry = new Application_Model_Story( array(	'id'			=> $row->id,
 															'name'			=> $row->name,
 															'description'	=> $row->description,
-															'status'		=> $row->status_id,
-															'sprint'		=> $row->sprint_id,
-															'feature'		=> $row->feature_id ) );
+															'status'		=> $row->status,
+															'sprint'		=> $row->sprint,
+															'feature'		=> $row->feature,
+															'points'		=> $row->points ) );
 			$entries[] = $entry;
 		}
 		

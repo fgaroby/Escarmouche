@@ -23,9 +23,9 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 			
 		$data = array(	'name'			=> $feature->getName(),
 						'description'	=> $feature->getDescription(),
-						'status_id'		=> $feature->getStatus(),
+						'status'		=> $feature->getStatus(),
 						'color'			=> $feature->getColor(),
-						'release_id'	=> $feature->getReleaseId() );
+						'release'		=> $feature->getReleaseId() );
 		
 		if( null === ( $id = $feature->getId() ) )
 		{
@@ -58,9 +58,9 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 		$data = array(	'id'			=> $row->id,
 			 			'name'			=> $row->name,
 						'description'	=> $row->description,
-						'status'		=> $row->status_id,
+						'status'		=> $row->status,
 						'color'			=> $row->color,
-						'release'		=> $row->release_id );
+						'release'		=> $row->release );
 			
 		$this->_loadedMap[$id] = new Application_Model_Feature( $data );
 		

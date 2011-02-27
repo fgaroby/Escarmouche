@@ -1,5 +1,5 @@
 <?php
-class Application_Model_Db_Table_Sprint extends Zend_Db_Table_Abstract
+class Application_Model_Db_Table_Sprint extends Escarmouche_Db_Table_Abstract
 {
 	/**
 	 *
@@ -9,13 +9,10 @@ class Application_Model_Db_Table_Sprint extends Zend_Db_Table_Abstract
 	protected $_name = 'sprint';
 	
 	
-	protected $_primary = 'id';
-	
-	
-	protected $_referenceMap = array(	'Release'	=> array(	'columns'		=> 'release_id',
-																'refTableClass'	=> 'Release',
+	protected $_referenceMap = array(	'Release'	=> array(	'columns'		=> 'release',
+																'refTableClass'	=> 'Application_Model_Db_Table_Release',
 																'refColumns'	=> array( 'id' ) ),
-	 									'Story'		=> array(	'columns'		=> 'story_id',
-																'refTableClass'	=> 'Story',
+	 									'Story'		=> array(	'columns'		=> 'story',
+																'refTableClass'	=> 'Application_Model_Db_Table_Story',
 																'refColumns'	=> array( 'id' ) ) );
 }

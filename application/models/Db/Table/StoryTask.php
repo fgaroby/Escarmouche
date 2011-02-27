@@ -1,5 +1,5 @@
 <?php
-class Application_Model_Db_Table_StoryTask extends Zend_Db_Table_Abstract
+class Application_Model_Db_Table_StoryTask extends Escarmouche_Db_Table_Abstract
 {
 	/**
 	 *

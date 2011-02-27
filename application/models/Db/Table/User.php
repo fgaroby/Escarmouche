@@ -1,7 +1,5 @@
 <?php
-require_once( 'Zend/Db/Table/Abstract.php' );
-
-class Application_Model_Db_Table_User extends Zend_Db_Table_Abstract
+class Application_Model_Db_Table_User extends Escarmouche_Db_Table_Abstract
 {
 	/**
 	 *
@@ -9,7 +7,4 @@ class Application_Model_Db_Table_User extends Zend_Db_Table_Abstract
 	 * @var string
 	 */
 	protected $_name = 'user';
-	
-	
-	protected $_primary = 'id';
 }

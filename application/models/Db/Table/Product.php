@@ -1,5 +1,5 @@
 <?php
-class Application_Model_Db_Table_Product extends Zend_Db_Table_Abstract
+class Application_Model_Db_Table_Product extends Escarmouche_Db_Table_Abstract
 {
 	/**
 	 *
@@ -9,13 +9,13 @@ class Application_Model_Db_Table_Product extends Zend_Db_Table_Abstract
 	protected $_name = 'product';
 	
 	
-	protected $_referenceMap = array(	'Creator'		=> array(	'columns'		=> 'creator_id',
+	protected $_referenceMap = array(	'Creator'		=> array(	'columns'		=> 'creator',
 																	'refTableClass'	=> 'User',
 																	'refColumns'	=> array( 'id' ) ),
-										'ProductOwner'	=> array(	'columns'		=> 'productOwner_id',
+										'ProductOwner'	=> array(	'columns'		=> 'productOwner',
 																	'refTableClass'	=> 'User',
 																	'refColumns'	=> array( 'id' ) ),
-										'ScrumMaster'	=> array(	'columns'		=> 'scrumMaster_id',
+										'ScrumMaster'	=> array(	'columns'		=> 'scrumMaster',
 																	'refTableClass'	=> 'User',
 																	'refColumns'	=> array( 'id' ) ) );
 }

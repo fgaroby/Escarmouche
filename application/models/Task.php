@@ -156,9 +156,7 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	
 	public function toArray()
 	{
-		$data = parent::toArray();
-		
-		return array_merge( $data, array( 'status_id' => $this->getStatus() ) );
+		return array_merge( parent::toArray(), array( 'status' => $this->getStatus() ) );
 	}
 }
 ?>

@@ -1,3 +1,9 @@
-<ul>
-	<li><a href="<?php echo $this->baseUrl();?>/product/edit">Products</a></li>
-</ul>
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/product.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php foreach( $this->products as $product ):?>
+	<div class="divProduct">
+		<h4>
+			<a href="<?php echo $this->baseUrl();?>/product/display/id/<?php echo $product->getId(); ?>"><?php echo $product->getName(); ?></a>
+		</h4>
+	</div>
+<?php endforeach; ?>

@@ -22,6 +22,7 @@ class ReleaseController extends Zend_Controller_Action
 		// restauration du rendu via le helper viewRenderer.
 		// (cette action rend une vue)
 		$this->_helper->viewRenderer->setNoRender( false );
+		$this->view->setTitle( 'Releases' );
 	}
 
 
@@ -30,9 +31,9 @@ class ReleaseController extends Zend_Controller_Action
 	 */
 	public function indexAction()
 	{
-		$this->view->setTitrePage( 'Liste des releases de votre projet' );
+		$this->view->setTitle( 'Liste des releases de votre produit' );
 
-		$this->view->entries = $this->_releaseTable->fetchAll();
+		$this->view->releases = $this->_releaseMapper->fetchAll();
 
 		$this->render();
 	}

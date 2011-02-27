@@ -3,7 +3,7 @@ class SprintController extends Zend_Controller_Action
 {
 	public function init()
 	{
-		$this->view->setTitrePage( 'Overlord :: Sprint' );
+		$this->view->setTitle( 'Sprint' );
 	}
 	
 	

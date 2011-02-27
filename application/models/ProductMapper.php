@@ -56,13 +56,33 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
 			return null;
 			
 		$row = $rowset->current();
-		$data = array(	'id'			=> $row->id,
-			 			'name'			=> $row->name,
-						'description'	=> $row->description,
-						'scrumMaster'	=> $row->scrumMaster,
-						'productOwner'	=> $row->productOwner );
-			
-		$this->_loadedMap[$id] = new Application_Model_Product( $data );
+		$product = new Application_Model_Product( array(	'id'			=> $row->id,
+												 			'name'			=> $row->name,
+															'description'	=> $row->description,
+															'scrumMaster'	=> $row->scrumMaster,
+															'productOwner'	=> $row->productOwner ) );
+		$select = $row->select()->order( 'name ASC' );
+		
+		/*
+		 * add the releases
+		 */
+		$rsReleases = $row->findDependentRowset( 'Application_Model_Db_Table_Release', 'Product' );
+		while( $rsReleases->valid() )
+		{
+			$rRelease = $rsReleases->current();
+			$product->addRelease( new Application_Model_Release( array(	'id'			=> $rRelease->id,
+																		'name'			=> $rRelease->name,
+																		'description'	=> $rRelease->description,
+																		'status'		=> $rRelease->status,
+																		'product'		=> $rRelease->product,
+																		'startDate'		=> $rRelease->startDate,
+																		'endDate'		=> $rRelease->endDate,
+																		'duration'		=> $rRelease->duration ) ) );
+			$rsReleases->next();
+		}
+		
+		// We cache the product
+		$this->_loadedMap[$id] = $product;
 		
 		return $this->_loadedMap[$id];
 	}

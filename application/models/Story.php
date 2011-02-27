@@ -268,10 +268,21 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	 */
 	public function getColor()
 	{
-		if( $this->_feature !== null )
-			return $this->_feature->getColor();
-		else
-			return null;
+		if( isset( $this->_feature ) )
+		{
+			if( is_int( $this->_feature ) )
+			{
+				$f = new Application_Model_FeatureMapper();
+				$this->_feature = $f->find( $this->_feature );
+			}
+			
+			if( $this->_feature instanceof Application_Model_Feature )
+				return $this->_feature->getColor();
+			else
+				return Zend_Registry::get( 'config' )->color->border->default;
+		}
+		
+		return null;
 	}
 	
 	

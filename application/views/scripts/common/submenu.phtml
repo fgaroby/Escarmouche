@@ -1,8 +1,5 @@
 <?php if( isset( $this->submenu ) ) : ?>
-<script language="javascript"><!--
-	document.getElementById( 'submenu' ).style.display = 'block';
-// -->
-</script>
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/submenu.css" />
 <div id="submenu">
 	<ul>
 		<?php foreach ( $this->submenu as $link => $label ) : ?>

@@ -54,7 +54,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 		{
 			if( $status instanceof Zend_Db_Table_Row )
 				$this->_status = new Application_Model_Status( $status );
-			if( $status instanceof Application_Model_Status && !is_numeric( intval( $status, 10 ) ) )
+			if( $status instanceof Application_Model_Status && !is_int( $status ) )
 				throw new InvalidArgumentException( "\$status' is 'NaN' !" );
 			if( !Application_Model_Status::isValid( $status ) )
 				throw new InvalidArgumentException( "'\$status' is not a valid status !" );
@@ -67,7 +67,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 
 
 	/**
-	 * @todo renvoyer un statut dépendant du statut des tasks, si le statu de la story est >= Application_Model_Status::WIP
+	 * @todo renvoyer un statut dépendant du statut des tasks, si le statut de la story est >= Application_Model_Status::WIP
 	 * Enter description here ...
 	 */
 	public function getStatus()
@@ -115,7 +115,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 
 	public function setPriority( $priority )
 	{
-		if( strlen( $priority ) > 0 && 0 === ( $priority = intval( $priority, 10 ) ) )
+		if( !is_int( $priority ) )
 			throw new InvalidArgumentException( "'\$priority' is 'NaN' !" );
 			
 		$this->_priority = $priority;

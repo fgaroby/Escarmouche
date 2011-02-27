@@ -122,15 +122,13 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	 */
 	public function setStatus( $status )
 	{
-		if( !is_numeric( $status ) )
-			throw new InvalidArgumentException( "'\$status' is NaN !" );
+		if( !$status instanceof Application_Model_Status && !is_numeric( $status ) )
+			throw new InvalidArgumentException( "'\$status' is NaN and not an instance of Application_Model_Status !" );
 		if( !Application_Model_Status::isValid( $status ) )
 			throw new InvalidArgumentException( "'\$status' is not a valid status !" );
 		
-		if(	$status === Application_Model_Status::ACCEPTED
-			|| $status === Application_Model_Status::ESTIMATED
-			|| $status === Application_Model_Status::PLANIFIED )
-			throw new InvalidArgumentException( "This status is not allowed !" );
+		if( !Application_Model_Status::isValidSprintStatus( $status ) )
+			throw new InvalidArgumentException( "The status '" . Application_Model_Status::getStatus( $status ) . "' is not allowed !" );
 			
 		$this->_status = $status;
 		

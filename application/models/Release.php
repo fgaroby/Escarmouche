@@ -212,5 +212,12 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	{
 		return $this->_duration;
 	}
+	
+	public function toArray()
+	{
+		return array_merge( parent::toArray(), array(	'startDate'	=> $this->getStartDate(),
+														'endDate'	=> $this->getEndDate(),
+														'duration'	=> $this->getDuration() ) );
+	}
 }
 ?>

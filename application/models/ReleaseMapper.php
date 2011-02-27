@@ -25,7 +25,9 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 						'description'	=> $release->getDescription(),
 						'status'		=> $release->getStatus(),
 						'product'		=> $release->getProduct(),
-						'sprint'		=> $release->getSprints() );
+						'startDate'		=> $release->getStartDate(),
+						'endDate'		=> $release->getEndDate(),
+						'duration'		=> $release->getDuration() );
 		
 		if( null === ( $id = $release->getId() ) )
 		{
@@ -55,12 +57,14 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 			return null;
 			
 		$row = $rowset->current();
-		$stories = $row->findSprintViaSprintRelease();
-		$data = array(	'name'			=> $row->name,
+		$data = array(	'id'			=> $row->id,
+						'name'			=> $row->name,
 						'description'	=> $row->description,
 						'status'		=> $row->status,
 						'product'		=> $row->product,
-						'sprint'		=> $row->sprints );
+						'startDate'		=> $row->startDate,
+						'endDate'		=> $row->endDate,
+						'duration'		=> $row->duration );
 			
 		$this->_loadedMap[$id] = new Application_Model_Release( $data );
 		
@@ -81,8 +85,7 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 			$entry = new Application_Model_Release( array(	'id'			=> $row->id,
 															'name'			=> $row->name,
 															'description'	=> $row->description,
-															'status'		=> $row->status,
-															'sprint'		=> $row->sprint ) );
+															'status'		=> $row->status ) );
 			$entries[] = $entry;
 		}
 		

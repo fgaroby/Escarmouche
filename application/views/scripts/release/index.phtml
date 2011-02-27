@@ -1,0 +1,7 @@
+<?php foreach( $this->releases as $release ):?>
+	<div class="divRelease">
+		<h4>
+			<a href="<?php echo $this->baseUrl();?>/release/display/id/<?php echo $release->getId(); ?>"><?php echo $release->getName(); ?></a>
+		</h4>
+	</div>
+<?php endforeach; ?>

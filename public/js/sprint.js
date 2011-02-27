@@ -47,11 +47,18 @@
 
 $( document ).ready( function()
 {
+	var parent = null;
+	
 	//$( '.storiesList' ).sortableList( {} );
 	$( '.draggable' ).draggable(
 	{
 		revert			: 'invalid',
-		revertDuration	: 0
+		revertDuration	: 0,
+		start			: function( event, ui )
+		{
+			// On récupère l'ancien parent
+			parent = $( '#' + $( this ).attr( 'id' ).substring( 0, $( this ).attr( 'id' ).length - 2 ) );
+		}
 	} );
 	
 	$( '.droppable' ).droppable(
@@ -73,12 +80,20 @@ $( document ).ready( function()
 			$( '.placeholder' ).remove();
 		},
 		drop	: function( event, ui )
-		{
+		{	
 			ui.draggable.css( 'left', $( '.placeholder' ).css( 'left' ) );
 			ui.draggable.css( 'top', $( '.placeholder' ).css( 'top' )  );
-			ui.draggable.attr( 'id', $( this ).attr( 'id' ) + '_' + $( this ).size() + 1 );
+			ui.draggable.attr( 'id', $( this ).attr( 'id' ) + '_' + ( $( this ).size() + 1 ) );
 			$( '.placeholder' ).remove();
+			
+			// on raccroche au nouveau parent
 			$( this ).append( ui.draggable );
+			
+			// On recalcule les id des éléments appartenant toujours à l'ancien parent
+			$( parent ).find( '.draggable' ).each( function( i )
+			{
+				$( this ).attr( 'id', $( parent ).attr( 'id' ) + '_' + ( i + 1 ) );
+			});
 		}
 	});
 } );

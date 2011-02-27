@@ -8,7 +8,7 @@
  */
 
 
-class ReleaseController extends Overlord_Controller_Abstract
+class ReleaseController extends Zend_Controller_Action
 {
 	private $_releaseTable;
 

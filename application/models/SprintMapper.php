@@ -47,7 +47,7 @@ class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 			return $this->_loadedMap[$id];
 		
 		$rowset = $this->getDbTable()->find( array( 'id = ?' => $id ) );
-		if( 0 === $result->count() )
+		if( 0 === $rowset->count() )
 			return null;
 			
 		$row = $rowset->current();

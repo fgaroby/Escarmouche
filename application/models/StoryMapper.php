@@ -66,7 +66,7 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 	
 	public function fetchAll()
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
+		$resultSet = $this->getDbTable()->fetchAll( null, array( ' status DESC', 'feature ASC', 'priority DESC' ) );
 		$entries = array();
 		foreach( $resultSet as $row )
 		{

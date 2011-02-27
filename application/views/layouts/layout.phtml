@@ -1,7 +1,7 @@
 <html>
 	<?php echo $this->doctype( "XHTML1_TRANSITIONAL" ), PHP_EOL; ?>
 	<head>
-		<base href="http://<?php echo $_SERVER['SERVER_NAME'] . $this->baseUrl(); ?>/" />
+		<base href="<?php echo $this->baseUrl(); ?>" />
 		<?php echo $this->headMeta()->setHttpEquiv( 'Content-type', 'text/html, charset=utf-8' )
 									->setHttpEquiv( 'Content-Style-type', 'text/css' )
 									->setHttpEquiv( 'lang', 'fr' )
@@ -9,15 +9,23 @@
 									->setName( 'author', 'Francescu GAROBY' )
 									->setName( 'generator', 'ZendFramework 1.10' )
 									->setName( 'language', 'fr' );
-									echo $this->headLink( array( 'rel' => 'favicon',
+									/*echo $this->headLink( array( 'rel' => 'favicon',
 																'type' => 'image/x-icon',
-																'href' => 'images/favicon.ico' ) );
-									echo $this->headTitle( $this->pageTitle );
+																'href' => 'images/favicon.ico' ) );*/
+									echo $this->headTitle( $this->headTitle );
 									/*echo $this->headLink()->setAlternate( $this->link( 'webservice', 'rss' ),
 																		'application/rss+xml',
 																		$this->translate( 'Votre liste de courses' ) );*/
 		?>
+		<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/common.css" />
+		
 		<script type="text/javascript" src="<?php echo $this->baseUrl();?>/js/jquery.js"></script>
+		<script src="<?php echo $this->baseUrl();?>/js/jquery.ui.custom.js"></script>
+		<script src="<?php echo $this->baseUrl();?>/js/jquery.ui.widget.js"></script>
+		<script src="<?php echo $this->baseUrl();?>/js/jquery.ui.mouse.js"></script>
+		<script src="<?php echo $this->baseUrl();?>/js/jquery.ui.draggable.js"></script>
+		<script src="<?php echo $this->baseUrl();?>/js/jquery.ui.droppable.js"></script>
+		<script src="<?php echo $this->baseUrl();?>/js/jquery.ui.sortable.js"></script>
 	</head>
 	<body>
 		<div class="container">

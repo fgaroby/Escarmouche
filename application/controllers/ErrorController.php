@@ -16,21 +16,21 @@ class ErrorController extends Zend_Controller_Action
 			$log = 'notice';
 			// 404 error -- controller or action not found
 			$this->getResponse()->setHttpResponseCode( 404 );
-			$this->view->setTitrePage( 'Page not found' );
+			$this->view->setTitle( 'Page not found' );
 			$this->view->message = $this->view->translate( 'La page que vous demandez n\'a pu être trouvée !' );
 		}
 		else if( $errors->exception instanceof Zend_Db_Exception )
 		{
 			$log = 'emerg';
 			$this->getResponse()->setHttpResponseCode( 503 );
-			$this->view->setTitrePage( 'Database problem' );
+			$this->view->setTitle( 'Database problem' );
 			$this->view->message = $this->view->translate( 'Un problème de base de données nous empêche de servir votre requête.' );
 		}
 		else
 		{
 			$log = 'emerg';
 			$this->getResponse()->setHttpResponseCode( 503 );
-			$this->view->setTitrePage( 'Erreur de l\'application' );
+			$this->view->setTitle( 'Erreur de l\'application' );
 			$this->view->message = $this->view->translate( 'Notre site est momentanément indisponible.' );
 		}
 		
@@ -54,7 +54,7 @@ class ErrorController extends Zend_Controller_Action
 	public function unauthorizedAction()
 	{
 		$this->_response->setHttpResponseCode( 403 );
-		$this->view->setTitrePage( "Accès refusé" );
+		$this->view->setTitle( "Accès refusé" );
 	}
 
 }

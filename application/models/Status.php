@@ -1,5 +1,5 @@
 <?php
-abstract class Application_Model_Status
+class Application_Model_Status extends Application_Model_AbstractModel
 {
 	/**
 	 *
@@ -17,17 +17,17 @@ abstract class Application_Model_Status
 
 	/**
 	 *
-	 * The status used when the story was estimated by team.
-	 * @var int
-	 */
-	const ESTIMATED	= 4;
-
-	/**
-	 *
 	 * The status used when the story has been planified in a sprint, by the extended team.
 	 * @var int
 	 */
-	const PLANIFIED	= 8;
+	const PLANIFIED	= 4;
+
+	/**
+	 *
+	 * The status used when the story was estimated by team.
+	 * @var int
+	 */
+	const ESTIMATED	= 8;
 	
 	
 	/**
@@ -69,6 +69,55 @@ abstract class Application_Model_Status
 	const FINISHED	= 256;
 	
 	
+	public function __construct( array $options = array() )
+	{
+		parent::__construct( $options );
+	}
+	
+	
+	public function __toString()
+	{
+		return $this->_name;
+	}
+	
+	
+	public function getName()
+	{
+		return $this->_name;
+	}
+	
+	
+	public function getId()
+	{
+		return $this->_id;
+	}
+	
+	
+	public static function getStatus( $status )
+	{
+		if( is_int( $status ) )
+		{
+			$sm = new Application_Model_StatusMapper();
+			$status = $sm->find( $status );
+		}
+		
+		return $status->getName();
+	}
+	
+	
+	public static function equals( $status1, $status2 )
+	{
+		if( $status1 instanceof Application_Model_Status && $status2 instanceof Application_Model_Status )
+			return $status1->getId() === $status2->getId();
+		
+		if( $status1 instanceof Application_Model_Status && is_int( $status2 ) )
+			return $status1->getId() === $status2;
+		
+		if( is_int( $status1 ) && $status2 instanceof Application_Model_Status )
+			return $status1 === $status2->getId();
+		
+		return false;
+	}
 	
 	/**
 	 * 
@@ -78,24 +127,30 @@ abstract class Application_Model_Status
 	 */
 	public static function isValid( $status )
 	{
-		if( !is_int( (int ) $status ) )
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+			
+		if( !is_int( ( int ) $status ) )
 			return false;
 		
-		$status = (int ) $status;
-		return $status === self::SUGGESTED
-			|| $status === self::ACCEPTED
-			|| $status === self::ESTIMATED
-			|| $status === self::PLANIFIED
-			|| $status === self::TODO
-			|| $status === self::WIP
-			|| $status === self::FAILED
-			|| $status === self::PASSED
-			|| $status === self::FINISHED;
+		$status = intval( $status, 10 );
+		return ( $status & ( self::SUGGESTED
+							| self::ACCEPTED
+							| self::ESTIMATED
+							| self::PLANIFIED
+							| self::TODO
+							| self::WIP
+							| self::FAILED
+							| self::PASSED
+							| self::FINISHED ) ) > 0;
 	}
 	
 	
 	public static function isSandbox( $status )
 	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
 		return ( $status & self::SUGGESTED ) > 0 ;
 	}
 	
@@ -108,6 +163,9 @@ abstract class Application_Model_Status
 	 */
 	public static function isBacklogProduct( $status )
 	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
 		return ( $status & ( self::ACCEPTED
 							| self::ESTIMATED ) ) > 0 ;
 	}
@@ -122,6 +180,9 @@ abstract class Application_Model_Status
 	 */
 	public static function isSprintPlan( $status )
 	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
 		return ( $status & ( self::TODO
 							| self::WIP
 							| self::PASSED
@@ -131,18 +192,70 @@ abstract class Application_Model_Status
 	
 	/**
 	 * 
-	 * Checks if $status has one of the status autohrized.
+	 * Checks if $status has one of the status authorized.
 	 * @param int $status the status we want to check.
 	 * @return <code>true</code> if $status is Application_Model_Status::PLANIFIED or Application_Model_Status::WIP or Application_Model_Status::FINISHED.
 	 * <code>false</code> otherwise.
 	 */
 	public static function isReleasePlan( $status )
 	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
 		return ( $status & ( self::PLANIFIED
 							| self::TODO
 							| self::WIP
 							| self::PASSED
 							| self::FAILED
 							| self::FINISHED ) ) > 0 ;
+	}
+	
+	
+	public static function isValidSprintStatus( $status )
+	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
+		return ( $status & ( Application_Model_Status::ACCEPTED
+							| Application_Model_Status::PLANIFIED
+							| Application_Model_Status::ESTIMATED
+							| Application_Model_Status::WIP
+							| Application_Model_Status::FINISHED ) ) > 0;
+	}
+	
+	/**
+	 * 
+	 * Checks if $status has one of the status authorized to a feature
+	 * @param int $status the status we want to check.
+	 * @return <code>true</code> if s$tatus is Application_Model_Status::SUGGESTED or Application_Model_Status::PLANIFIED or Application_Model_Status::WIP or Application_Model_Status::FINISHED.
+	 * <code>false</code> otherwise.
+	 */
+	public static function isValidFeatureStatus( $status )
+	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
+		
+		return ( $status & ( self::TODO
+							| self::WIP
+							| self::FINISHED ) ) > 0;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * Checks if $status has one of the status authorized to a release
+	 * @param int $status the status we want to check.
+	 * @return <code>true</code> if s$tatus is Application_Model_Status::SUGGESTED or Application_Model_Status::PLANIFIED or Application_Model_Status::WIP or Application_Model_Status::FINISHED.
+	 * <code>false</code> otherwise.
+	 */
+	public static function isValidReleaseStatus( $status )
+	{
+		$status = intval( $status, 10 );
+		return ( $status & ( self::SUGGESTED
+							| self::PLANIFIED
+							| self::WIP
+							| self::FINISHED ) ) > 0;
 	}
 }

@@ -72,6 +72,12 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	 */
 	public function getStatus()
 	{
+		if( is_int( $this->_status ) )
+		{
+			$sm = new Application_Model_StatusMapper();
+			$this->_status = $sm->find( $this->_status );
+		}
+		
 		return $this->_status;
 	}
 
@@ -100,7 +106,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	{
 		if( $this->_sprint instanceof Application_Model_Sprint )
 			return $this->_sprint->getId();
-		else if( is_int( intval( $this->_sprint, 10 ) ) )
+		else if( is_int( $this->_sprint ) )
 			return $this->_sprint;
 		else
 			return null;
@@ -221,7 +227,13 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	
 	public function setFeature( $feature = null )
 	{
-		$this->_feature = $feature;
+		if( null !== $feature )
+		{
+			if( !$feature instanceof Application_Model_Feature && !is_int( $feature ) )
+					throw new InvalidArgumentException( "'\$feature is NaN or not an instance of Application_Model_Feature !" );
+
+			$this->_feature = $feature;
+		}
 		
 		return $this;
 	}
@@ -243,7 +255,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	{
 		if( $this->_feature instanceof Application_Model_Feature )
 			return $this->_feature->getId();
-		else if( is_int( intval( $this->_feature, 10 ) ) )
+		else if( is_int( $this->_feature ) )
 			return $this->_feature;
 		else
 			return null;

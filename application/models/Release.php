@@ -152,16 +152,13 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	 */
 	public function setStatus( $status )
 	{
-		if( !is_integer( $status ) )
-			throw new InvalidArgumentException( "'\$status' is 'NaN' !" );
+		if( !$status instanceof Application_Model_Status && !is_numeric( $status ) )
+			throw new InvalidArgumentException( "'\$status' is NaN and not an instance of Application_Model_Status !" );
 		if( !Application_Model_Status::isValid( $status ) )
 			throw new InvalidArgumentException( "'\$status' is not a valid status !" );
 		
-		if( $status !== Application_Model_Status::SUGGESTED
-			&& $status !== Application_Model_Status::PLANIFIED
-			&& $status !== Application_Model_Status::WIP
-			&& $status !== Application_Model_Status::FINISHED )
-			throw new InvalidArgumentException( "This status is not allowed !" );
+		if( !Application_Model_Status::isValidReleaseStatus( $status ) )
+			throw new InvalidArgumentException( "This status '" . Application_Model_Status::getStatus( $status ) . "' is not allowed !" );
 			
 		$this->_status = $status;
 		
@@ -175,8 +172,15 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	 */
 	public function getStatus()
 	{
+		if( is_int( $this->_status ) )
+		{
+			$sm = new Application_Model_StatusMapper();
+			$this->_status = $sm->find( $this->_status );
+		}
+		
 		return $this->_status;
 	}
+	
 	
 	public function setStartDate( DateTime $startDate = null )
 	{
@@ -212,6 +216,7 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	{
 		return $this->_duration;
 	}
+	
 	
 	public function toArray()
 	{

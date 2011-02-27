@@ -21,10 +21,10 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
     	if( !$product instanceof Application_Model_Product )
 			throw new InvalidArgumentException( "'\$product' must be instance of 'Application_Model_Product' !" );
 			
-		$data = array(	'name'				=> $product->getName(),
-						'description'		=> $product->getDescription(),
-						'scrumMaster_id'	=> $product->getScrumMaster(),
-						'productOwner_id'	=> $product->getProductOwner() );
+		$data = array(	'name'			=> $product->getName(),
+						'description'	=> $product->getDescription(),
+						'scrumMaster'	=> $product->getScrumMaster(),
+						'productOwner'	=> $product->getProductOwner() );
 		
 		if( null === ( $id = $product->getId() ) )
 		{
@@ -81,8 +81,8 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
 			$entry = new Application_Model_Product( array(	'id'			=> $row->id,
 															'name'			=> $row->name,
 															'description'	=> $row->description,
-															'scrumMaster'	=> $row->scrumMaster_id,
-															'productOwner'	=> $row->productOwner_id ) );
+															'scrumMaster'	=> $row->scrumMaster,
+															'productOwner'	=> $row->productOwner ) );
 			$entries[] = $entry;
 		}
 		

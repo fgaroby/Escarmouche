@@ -91,7 +91,23 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	}
 	
 	
+	public function getDeveloppers()
+	{
+		$um = null;
+		foreach( $this->_developpers as $key => $developper )
+		{
+			if( is_int( $developper ) )
+			{
+				if( $um === null )
+					$um = new Application_Model_UserMapper();
+				$this->_developpers[$key] = $um->find( $developper );
+			}
+		}
+		
 		return $this->_developpers;
+	}
+	
+	
 	public function setProductOwner( $productOwner )
 	{
 		if( $productOwner instanceof Application_Model_User )
@@ -130,6 +146,12 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	}
 	
 	
+	public function getUsers()
+	{
+		return array(	'productOwner'	=> $this->getProductOwner(),
+						'scrumMaster'	=> $this->getScrumMaster(),
+						'developper'	=> $this->getDeveloppers() );
+	}
 	public function toArray()
 	{
 		return array_merge( parent::toArray(), array(	'scrumMaster'	=> $this->_scrumMaster,

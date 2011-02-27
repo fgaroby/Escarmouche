@@ -1,14 +1,23 @@
 <?php
 
 /**
- * ReleaseController
+ * UserController
  *
  * @author Francescu Garoby
  * @version 0.1
  */
-class Application_Controller_User extends Overlord_Controller_Abstract
+class UserController extends Zend_Controller_Action
 {
+	protected $_userMapper;
+	
+	
+	public function init()
+	{
 		$this->view->setTitle( 'Users' );
+		$this->_userMapper = new Application_Model_UserMapper();
+	}
+
+	
 	/**
 	 * The default action - show the login form
 	 */

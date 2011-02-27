@@ -22,8 +22,29 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	protected $_status;
 	
 	
+	/**
+	 * 
+	 * @var DateTime
+	 */
+	protected $_startDate;
 	
-	public function __construct( $options = array() )
+	
+	/**
+	 * 
+	 * @var DateTime
+	 */
+	protected $_endDate;
+	
+	
+	/**
+	 *
+	 * @var int
+	 */
+	protected $_duration;
+	
+	
+	
+	public function __construct( array $options = array() )
 	{
 		$this->_status = Application_Model_Status::SUGGESTED;
 		parent::__construct( $options );
@@ -155,6 +176,41 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	public function getStatus()
 	{
 		return $this->_status;
+	}
+	
+	public function setStartDate( DateTime $startDate = null )
+	{
+		$this->_startDate = $startDate;
+	}
+	
+	
+	public function getStartDate()
+	{
+		return $this->_startDate->format( 'd/m/Y' );
+	}
+	
+	
+	public function setEndDate( DateTime $endDate = null )
+	{
+		$this->_endDate = $endDate;
+	}
+	
+	
+	public function getEndDate()
+	{
+		return $this->_endDate->format( 'd/m/Y' );
+	}
+	
+	
+	public function setDuration( $duration = 0 )
+	{
+		$this->_duration = $duration;
+	}
+	
+	
+	public function getDuration()
+	{
+		return $this->_duration;
 	}
 }
 ?>

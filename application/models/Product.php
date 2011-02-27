@@ -71,6 +71,8 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	public function setScrumMaster( $scrumMaster )
 	{
+		if( $scrumMaster instanceof Application_Model_User )
+			$scrumMaster->setRole( 'scrumMaster' );
 		$this->_scrumMaster = $scrumMaster;
 	}
 	
@@ -89,6 +91,8 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	public function setProductOwner( $productOwner )
 	{
+		if( $productOwner instanceof Application_Model_User )
+			$productOwner->setRole( 'productOwner' );
 		$this->_productOwner = $productOwner;
 	}
 	

@@ -1,13 +1,16 @@
 <?php
 class Application_Model_Product extends Application_Model_AbstractModel
 {
-	protected $_releases = array();
+	protected $_releases		= array();
 	
 	
-	protected $_scrumMaster = null;
+	protected $_scrumMaster		= null;
 	
 	
-	protected $_productOwner = null;
+	protected $_productOwner	= null;
+	
+	
+	protected $_developpers		= array();
 	
 	
 	

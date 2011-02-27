@@ -36,8 +36,10 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	 */
 	public function setStatus( $status )
 	{
-		if( 0 === ( $status = intval( $status, 10 ) ) )
+		if( !is_int( $status ) )
 			throw new InvalidArgumentException( "'\$status' is 'NaN' !" );
+			
+		// Status is an integer
 		if( !Application_Model_Status::isValid( $status ) )
 			throw new InvalidArgumentException( "'\$status' is not a valid status !" );
 		

@@ -6,18 +6,26 @@ class ProductController extends Zend_Controller_Action
 	
 	public function init()
 	{
-		$this->view->setTitrePage( 'Overlord :: Products' );
+		$this->view->setTitle( 'Products' );
 		$this->_productMapper = new Application_Model_ProductMapper();
 	}
 
 	
 	public function indexAction()
 	{
-		// Si un ID de produit a été précisé en URL
-		if( isset( $this->getRequest()->product ) )
+		$this->view->products = $this->_productMapper->fetchAll();
+	}
+	
+	
+	public function displayAction()
+	{
+		$params = $this->getRequest()->getParams();
+		if( isset( $params['id'] ) )
 		{
-			echo 'test';
+			$this->view->product = $this->_productMapper->find( $params['id' ] );
 		}
+		else
+			$this->_redirect( $this->view->url( array( 'controller' => 'product', 'action' => 'index' ) ), array( 'prependBase' => false ) );
 	}
 	
 	
@@ -42,7 +50,7 @@ class ProductController extends Zend_Controller_Action
 			$product = new Application_Model_Product( array( 'name' => 'default product' ) );
 		}
 		
-		$form = new Overlord_Form_Product();
+		$form = new Escarmouche_Form_Product();
 		$form->setAction( $this->view->link( 'product', 'edit', null, '', 'default', !$isUpdate ) )
 			 ->setMethod( 'post' )
 			 ->setDefaults( $product->toArray() );
@@ -75,5 +83,4 @@ class ProductController extends Zend_Controller_Action
 	{
 		$this->view->flashMessenger = $this->_helper->FlashMessenger->getMessages();
 	}
-	
 }

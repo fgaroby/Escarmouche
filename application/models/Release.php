@@ -105,8 +105,13 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	}
 	
 	
-	public function setProduct( Application_Model_Product $product = null )
+	public function setProduct( $product = null )
 	{
+		if( null !== $product
+			&& !$product instanceof Application_Model_Product
+			&& !is_int( $product ) )
+			throw new InvalidArgumentException( "'\$product is NaN or an instance of Application_Model_Product !" );
+		
 		$this->_product = $product;
 		
 		return $this;

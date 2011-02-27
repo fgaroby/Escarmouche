@@ -1,0 +1,7 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/sprint.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php
+	echo $this->partialLoop()
+			  ->setObjectKey( 'sprint' )
+			  ->partialLoop( 'sprint/partials/partial-sprint-with-stories.phtml', $this->sprints );
+?>

@@ -1,0 +1,10 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/story.css" />
+<div class="divStory" style="border-color : <?php echo $this->story->getColor(); ?>">
+	<h4>
+		<a href="<?php echo $this->baseUrl();?>/story/display/id/<?php echo $this->story->getId(); ?>"><?php echo $this->story->getName(); ?></a>
+	</h4>
+	<div class="status <?php echo $this->story->getStatus()->getName(); ?>">
+		<?php echo $this->story->getStatus()->getName(); ?>
+		<div class="points" title="<?php echo $this->story->getPoints(); ?> point<?php echo ( $this->story->getPoints() > 1 ? 's' : '' ); ?>"><?php echo $this->story->getPoints(); ?></div>
+	</div>
+</div>

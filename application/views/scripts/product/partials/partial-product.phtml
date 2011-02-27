@@ -1,0 +1,45 @@
+<div class="divProduct">
+	<div class="header">
+		<a href="<?php echo $this->baseUrl();?>/product/edit/id/<?php echo  $this->escape( $this->product->getId() ); ?>">
+			<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit product" title="edit product" />
+		</a>
+		<h4><?php echo  $this->escape( $this->product->getName() ); ?>
+		</h4>
+		<h5>
+			<?php echo $this->escape( $this->product->getDescription() ); ?>
+		</h5>
+	</div>
+	<div class="content">
+		<div class="users">
+			<h4>Users</h4>
+			<div style="background-color : #FFF2C9;">
+				<h5>Scrum Master</h5>
+				<?php
+					echo $this->partial( 'user/partials/partial-user.phtml', array( 'user' => $this->product->getScrumMaster() ) );
+				?>
+			</div>
+			<div style="background-color : #F5E1C2;">
+				<h5>Product Owner</h5>
+				<?php
+					echo $this->partial( 'user/partials/partial-user.phtml', array( 'user' => $this->product->getProductOwner() ) );
+				?>
+			</div>
+			<div style="background-color : #F5D5A7;">
+				<h5>Équipe</h5>
+				<?php
+					echo $this->partialLoop()
+							->setObjectKey( 'user' )
+							->partialLoop( 'user/partials/partial-user.phtml', $this->product->getDeveloppers() );
+				?>
+			</div>
+		</div>
+		<div class="releases">
+			<h4>Releases</h4>
+			<?php
+				echo $this->partialLoop()
+						->setObjectKey( 'release' )
+						->partialLoop( 'release/partials/partial-release.phtml', $this->product->getReleases() );
+			?>
+		</div>
+	</div>
+</div>

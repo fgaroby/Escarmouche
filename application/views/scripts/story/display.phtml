@@ -1,0 +1,5 @@
+<?php
+	echo $this->partial()
+			  ->setObjectKey( 'story' )
+			  ->partial( 'story/partials/partial-story.phtml', $this->story );
+?>

@@ -1,0 +1,8 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/product.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/user.css" />
+<?php
+	echo $this->partial()
+			  ->setObjectKey( 'product' )
+			  ->partial( 'product/partials/partial-product.phtml', $this->product );
+?>

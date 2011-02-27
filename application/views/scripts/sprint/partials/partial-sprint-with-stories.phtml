@@ -1,0 +1,23 @@
+<div class="divSprint">
+	<div class="header <?php echo $this->sprint->getStatus(); ?>">
+		<h4>Sprint <?php echo $this->partialCounter; ?> : <?php echo $this->sprint->getName(); ?></h4>
+		<h5 class="<?php echo $this->sprint->getStatus(); ?>" title="<?php echo $this->sprint->getPoints(); ?> point<?php echo ( $this->sprint->getPoints() > 1 ? 's' : '' ); ?>">
+			<?php echo $this->sprint->getPoints(); ?> point<?php echo ( $this->sprint->getPoints() > 1 ? 's' : '' ); ?>
+		</h5>
+		<span class="startDate">
+			<img src="<?php echo $this->baseUrl();?>/images/start.png" />
+			<?php echo $this->sprint->getStartDate(); ?>
+		</span>
+		<span class="endDate">
+			<img src="<?php echo $this->baseUrl();?>/images/end.png" />
+			<?php echo $this->sprint->getEndDate(); ?>
+		</span>
+	</div>
+	<div class="content">
+		<?php
+			echo $this->partialLoop()
+					->setObjectKey( 'story' )
+					->partialLoop( 'story/partials/partial-story.phtml', $this->sprint->getStories() );
+		?>
+	</div>
+</div>

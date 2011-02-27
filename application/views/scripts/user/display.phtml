@@ -1,0 +1,5 @@
+<?php
+	echo $this->partial()
+			  ->setObjectKey( 'user' )
+			  ->partial( 'user/partials/partial-user.phtml', $this->user );
+?>

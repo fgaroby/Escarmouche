@@ -45,17 +45,14 @@ class Application_Model_Feature extends Application_Model_AbstractModel
 	{
 		if( !$status instanceof Application_Model_Status )
 		{
-			if( !is_numeric( intval( $status ) ) )
+			if( !is_int( $status ) )
 				throw new InvalidArgumentException( "\$status' is 'NaN' !" );
 				
 			// $status is an integer
-			$status = intval( $status, 10 );	
 			if( !Application_Model_Status::isValid( $status ) )
 				throw new InvalidArgumentException( "'\$status' is not a valid status !" );
 			
-			if( $status !== Application_Model_Status::TODO
-				&& $status !== Application_Model_Status::WIP
-				&& $status !== Application_Model_Status::FINISHED )
+			if( !Application_Model_Status::isValidFeatureStatus( $status ) )
 				throw new InvalidArgumentException( "The status '" . $status . "' is not allowed !" );
 		}
 		$this->_status = $status;
@@ -185,8 +182,8 @@ class Application_Model_Feature extends Application_Model_AbstractModel
 	{
 		$data = parent::toArray();
 		
-		return array_merge( $data, array(	'status_id'		=> $this->getStatus(),
-											'release_id'	=> $this->getReleaseId(),
-											'color'			=> $this->getColor() ) );
+		return array_merge( $data, array(	'status'	=> $this->getStatus(),
+											'release'	=> $this->getReleaseId(),
+											'color'		=> $this->getColor() ) );
 	}
 }

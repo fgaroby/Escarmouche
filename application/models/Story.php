@@ -23,6 +23,9 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	protected $_priority = 0;
 	
 	
+	protected $_points = 0;
+	
+	
 	protected $_feature = null;
 	
 	
@@ -283,6 +286,27 @@ class Application_Model_Story extends Application_Model_AbstractModel
 		}
 		
 		return null;
+	}
+	
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param int $points
+	 */
+	public function setPoints( $points )
+	{
+		if( !is_int( $points ) )
+			throw new InvalidArgumentException( "'\$points' is NaN ! " );
+		$this->_points = ( int ) $points;
+			
+		return $this;
+	}
+	
+	
+	public function getPoints()
+	{
+		return $this->_points;
 	}
 	
 	

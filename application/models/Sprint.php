@@ -150,6 +150,16 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	}
 	
 	
+	public function getPoints()
+	{
+		$points = 0;
+		foreach( $this->_stories as $story )
+			$points += $story->getPoints();
+		
+		return $points;
+	}
+	
+	
 	public function setRelease( $release )
 	{
 		$this->_release = $release;

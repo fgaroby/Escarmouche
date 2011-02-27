@@ -6,7 +6,7 @@ form
 form p
 {
 	margin: 2px 0;
-	border-top: 1px dashed gray;
+	/*border-top: 1px dashed gray;*/
 	clear: left;
 	padding: 5px 0 8px 0;
 	padding-left: 155px; /*width of left column containing the label elements*/
@@ -23,6 +23,11 @@ form label
 	padding-right: 1%;
 	text-align: right;
 	letter-spacing: 1px;
+}
+
+form label.radio
+{
+	display : inline;
 }
 
 form .form_label_nostyle

@@ -1,3 +1,60 @@
+.divSprint
+{
+	float : left;
+	width : 200px;
+}
+
+.divSprint .header h4
+{
+	margin : 2px;
+}
+
+.divSprint .header h5
+{
+	margin-top : 2px;
+	font-weight : normal;
+	border-width : 0px;
+}
+
+.divSprint .header h5.PLANIFIED
+{
+	font-style : italic;
+}
+
+.divSprint .header h5.WIP,
+.divSprint .header h5.FAILED,
+.divSprint .header h5.PASSED,
+.divSprint .header h5.FINISHED 
+{
+
+}
+
+.divSprint .header
+{
+	border-left : solid 2px black;
+	border-right : solid 2px black;
+	padding : 5px;
+}
+
+.divSprint .content
+{
+	padding : 3px;
+	border-left : solid 2px black;
+	border-right : solid 2px black;	
+}
+
+.divSprint .divStory
+{
+	margin-bottom : 5px;
+}
+
+.divSprint .stories
+{
+	border-left : solid 2px black;
+	border-right : solid 2px black;
+	padding : 5px;
+}
+
 .storiesList
 {
 	border-collapse : collapse;
@@ -20,7 +77,6 @@
 	padding-top : 5px;
 	padding-bottom : 5px;
 	padding-left : 3px;
-	margin : auto;
 }
 
 span.title

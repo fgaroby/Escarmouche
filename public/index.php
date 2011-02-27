@@ -28,50 +28,44 @@ $confPath = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'configs';
 
 
 // ******************** CONSTANTES *******************************
-
-
-
 define( 'APP_MODE', 'dev' );
 define( 'CACHE_LIFETIME', 3600 );
 
 // configuration de l'include_path PHP pour l'autoload
-set_include_path( 
-get_include_path() . PATH_SEPARATOR . APPLICATION_PATH . PATH_SEPARATOR . $rootPath . DIRECTORY_SEPARATOR . 'library' . PATH_SEPARATOR . APPLICATION_PATH . DIRECTORY_SEPARATOR .
- 'models' );
+set_include_path( get_include_path()
+	. PATH_SEPARATOR . APPLICATION_PATH
+	. PATH_SEPARATOR . $rootPath . DIRECTORY_SEPARATOR . 'library'
+	. PATH_SEPARATOR . APPLICATION_PATH . DIRECTORY_SEPARATOR . 'models' );
 
 /** Zend_Loader_Autoloader */
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace( 'Overlord_' );
+$autoloader->registerNamespace( 'Escarmouche_' );
 
 $loader = new Zend_Loader_Autoloader_Resource( array( 'basePath' => APPLICATION_PATH, 'namespace' => 'Application' ) );
 $loader->addResourceType( 'model', 'models', 'Model' );
 
+
+
 // ******************** CACHE *******************************
-
-
-
 // création du cache pour les composants ZF l'acceptant
-Overlord_Cache::setup( CACHE_LIFETIME );
+Escarmouche_Cache::setup( CACHE_LIFETIME );
 // cache automatique des fichiers de configuration
-$cacheInstance = Overlord_Cache::getCacheInstance();
-Overlord_Config::setBackendCache( $cacheInstance->getBackend() );
+$cacheInstance = Escarmouche_Cache::getCacheInstance();
+Escarmouche_Config::setBackendCache( $cacheInstance->getBackend() );
+
 
 
 // ********************* CONFIG *****************************
-
-
-
 // Récupération des objets de configuration
 $configMain = new Zend_Config_Ini( $confPath . DIRECTORY_SEPARATOR . 'config.ini', APP_MODE );
-$configRoutes = new Overlord_Config_Ini( $confPath . DIRECTORY_SEPARATOR . 'routes.ini' );
-$configSession = new Overlord_Config_Ini( $confPath . DIRECTORY_SEPARATOR . 'session.ini', APP_MODE );
+$configRoutes = new Escarmouche_Config_Ini( $confPath . DIRECTORY_SEPARATOR . 'routes.ini' );
+$configSession = new Escarmouche_Config_Ini( $confPath . DIRECTORY_SEPARATOR . 'session.ini', APP_MODE );
+
+Zend_Registry::set( 'config', $configMain );
 
 
 // ************************** LOG ******************************
-
-
-
 $log = new Zend_Log( $writer = new Zend_Log_Writer_Stream( APPLICATION_PATH . DIRECTORY_SEPARATOR . $configMain->logdir . DIRECTORY_SEPARATOR . $configMain->logfile ) );
 
 // Ajout de paramètres à enregistrer, adresse ip et navigateur

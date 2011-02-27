@@ -27,4 +27,18 @@ class UserController extends Zend_Controller_Action
 
 		$this->render();
 	}
+	
+	
+	public function displayAction()
+	{
+		$params = $this->getRequest()->getParams();
+		if( isset( $params['id'] ) )
+		{
+			$user = $this->_userMapper->find( $params['id' ] );
+			$this->view->user = $user;
+			$this->view->setTitle( $user->getName() );	
+		}
+		else
+			$this->_redirect( $this->view->url( array( 'controller' => 'user', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+	}
 }

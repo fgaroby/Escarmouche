@@ -1,0 +1,65 @@
+.status
+{
+	border : solid 2px black;
+	padding : 3px;
+}
+
+.status > .points
+{
+	float : right;
+}
+
+
+.SUGGESTED
+{
+	background-color : #E1E6FA;
+	border : solid 2px #C4D7ED;
+}
+
+.ACCEPTED
+{
+	background-color : #E6E2AF;
+	border : solid 2px #A7A37E;
+}
+
+.ESTIMATED
+{
+	background-color : #FEDCBA;
+	border : solid 2px #A67E2E;
+}
+
+.PLANIFIED
+{
+	background-color : lightgrey;
+	border : solid 2px grey;
+}
+
+.TODO
+{
+	background-color : #6B979C;
+	border : solid 2px #4C767A;
+}
+
+.WIP
+{
+	background-color : #ABCDEF; /*8FCF3C*/
+	border : solid 2px #556627;
+}
+
+.FAILED
+{
+	background-color : #E70739;
+	border : solid 2px #B9121B;
+}
+
+.PASSED
+{
+	background-color : #B0CC99;
+	border : solid 2px #677E52;
+}
+
+.FINISHED
+{
+	background-color : #AFBECD;
+	border : solid 2px green;
+}

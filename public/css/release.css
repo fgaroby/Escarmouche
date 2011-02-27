@@ -1,0 +1,14 @@
+.divRelease
+{
+	border : solid 1px black;
+	width : 20%;
+	float : left;
+	margin-left : 10px;
+	margin-right : 10px;
+}
+
+.divRelease h4
+{
+	margin  : auto;
+	text-align :center;
+}

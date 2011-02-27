@@ -1,0 +1,34 @@
+a, a img
+{
+	text-decoration : none;
+	border-width : 0px;
+}
+
+
+.spacer
+{
+	clear : both;
+	height : 0px;
+}
+
+.startDate, .endDate
+{
+	height : 16px;
+}
+
+/*.startDate:before
+{
+	content : url( '/images/start.png' );
+	height : 16px;
+}
+
+.endDate:before
+{
+	content : url( '/images/end.png' );
+	height : 16px;
+}*/
+
+img.edit
+{
+	float : right;
+}

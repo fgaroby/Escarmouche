@@ -30,7 +30,7 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 			
 		$data = array(	'name'			=> $task->getName(),
 						'description'	=> $task->getDescription(),
-						'status_id'		=> $task->getStatus() );
+						'status'		=> $task->getStatus() );
 		
 		if( null === ( $id = $task->getId() ) )
 		{
@@ -70,7 +70,7 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 		$data = array( 	'id'			=> $row->id,
 			 			'name'			=> $row->name,
 			 			'description'	=> $row->description,
-			 			'status'		=> $row->status_id );
+			 			'status'		=> $row->status );
 		$this->_loadedMap[$id] = new Application_Model_Task( $data );
 		
 		return $this->_loadedMap[$id];
@@ -90,7 +90,7 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 			$entry = new Application_Model_Task( array(	'id'			=> $row->id,
 														'name'			=> $row->name,
 														'description'	=> $row->description,
-														'status'		=> $row->status_id ) );
+														'status'		=> $row->status ) );
 			$entries[] = $entry;
 		}
 		

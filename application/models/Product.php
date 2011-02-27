@@ -85,6 +85,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 		{
 			$um = new Application_Model_UserMapper();
 			$this->_scrumMaster = $um->find( $this->_scrumMaster );
+			$this->_scrumMaster->setRole( 'scrumMaster' );
 		}
 		
 		return $this->_scrumMaster;
@@ -113,6 +114,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 		if( $productOwner instanceof Application_Model_User )
 			$productOwner->setRole( 'productOwner' );
 		$this->_productOwner = $productOwner;
+		
 		return $this;
 	}
 	
@@ -123,6 +125,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 		{
 			$po = new Application_Model_UserMapper();
 			$this->_productOwner = $po->find( $this->_productOwner );
+			$this->_productOwner->setRole( 'productOwner' );
 		}
 		
 		return $this->_productOwner;
@@ -152,6 +155,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 						'scrumMaster'	=> $this->getScrumMaster(),
 						'developper'	=> $this->getDeveloppers() );
 	}
+	
 	public function toArray()
 	{
 		return array_merge( parent::toArray(), array(	'scrumMaster'	=> $this->_scrumMaster,

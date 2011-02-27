@@ -14,13 +14,13 @@ Setting Up Your VHOST
 The following is a sample VHOST you might want to consider for your project.
 
 <VirtualHost *:80>
-   DocumentRoot "dir/to/Overlord/public"
-   ServerName Overlord.local
+   DocumentRoot "dir/to/Escarmouche/public"
+   ServerName Escarmouche.local
 
    # This should be omitted in the production environment
    SetEnv APPLICATION_ENV development
     
-   <Directory "dir/to/Overlord/public">
+   <Directory "dir/to/Escarmouche/public">
        Options Indexes MultiViews FollowSymLinks
        AllowOverride All
        Order allow,deny

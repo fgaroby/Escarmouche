@@ -314,9 +314,9 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	{
 		$data = parent::toArray();
 		
-		return array_merge( $data, array(	'status_id'	=> $this->getStatus(),
-											'sprint_id'	=> $this->getSprintId(),
-											'feature_id'=> $this->getFeatureId(),
+		return array_merge( $data, array(	'status'	=> $this->getStatus(),
+											'sprint'	=> $this->getSprintId(),
+											'feature'	=> $this->getFeatureId(),
 											'priority'	=> $this->getPriority() ) );
 	}
 }

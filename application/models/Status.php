@@ -252,10 +252,37 @@ class Application_Model_Status extends Application_Model_AbstractModel
 	 */
 	public static function isValidReleaseStatus( $status )
 	{
-		$status = intval( $status, 10 );
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
+		
 		return ( $status & ( self::SUGGESTED
 							| self::PLANIFIED
 							| self::WIP
+							| self::FINISHED ) ) > 0;
+	}
+	
+	
+	public static function isStarted( $status )
+	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
+		
+		return ( $status & ( self::WIP
+							| self::FAILED
+							| self::PASSED
+							| self::FINISHED ) ) > 0;
+	}
+	
+	
+	public static function isFinished( $status )
+	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
+		
+		return ( $status & ( self::PASSED
 							| self::FINISHED ) ) > 0;
 	}
 }

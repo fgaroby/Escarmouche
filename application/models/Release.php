@@ -181,27 +181,53 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	}
 	
 	
-	public function setStartDate( DateTime $startDate = null )
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param string | Zend_Date | null $startDate
+	 */
+	public function setStartDate( $startDate = null )
 	{
+		if( is_string( $startDate ) ) 
+			$startDate = new Zend_Date( $startDate );
 		$this->_startDate = $startDate;
 	}
 	
 	
-	public function getStartDate()
+	public function getStartDate( $format = null )
 	{
-		return $this->_startDate->format( 'd/m/Y' );
+		if( null === $this->_startDate )
+			return null;
+		
+		if( null === $format )
+			$format = Zend_Date::DATE_SHORT;
+		 
+		return $this->_startDate->get( $format );
 	}
 	
 	
-	public function setEndDate( DateTime $endDate = null )
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param string | Zend_Date | null $endDate
+	 */
+	public function setEndDate( $endDate = null )
 	{
+		if( is_string( $endDate ) ) 
+			$endDate = new Zend_Date( $endDate );
 		$this->_endDate = $endDate;
 	}
 	
 	
-	public function getEndDate()
+	public function getEndDate( $format = null )
 	{
-		return $this->_endDate->format( 'd/m/Y' );
+		if( null === $this->_endDate )
+			return null;
+		
+		if( null === $format )
+			$format = Zend_Date::DATE_SHORT;
+		 
+		return $this->_endDate->get( $format );
 	}
 	
 	

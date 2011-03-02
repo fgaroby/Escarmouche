@@ -172,42 +172,78 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	}
 	
 	
-	public function getStartDate()
+	public function getReleaseId()
 	{
-		return $this->_startDate;
+		if( $this->_release instanceof Application_Model_Feature )
+			return $this->_release->getId();
+		else
+			return $this->_release;
 	}
 	
 	
-	public function getEndDate()
+	public function setStartDate( $startDate = null )
 	{
-		return $this->_endDate;
+		if( null === $startDate )
+			$this->_startDate = null;
+		else if( $startDate instanceof Zend_Date )
+			$this->_startDate = $startDate;
+		else
+			$this->_startDate = new Zend_Date( $startDate );
+		
+		return $this;
 	}
 	
 	
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param string|DateTime $date
+	 * @param string|Zend_Date $date
 	 */
 	public function start( $date = null )
 	{
-		if( $this->_startDate !== null )
-			throw new BadMethodCallException( "This sprint has already started !" );
+		/*debug_print_backtrace();die();
+		if( $this->_startDate !== null && Application_Model_Status::isStarted( $this->getStatus() ) )
+			throw new BadMethodCallException( "This sprint has already started !" );*/
 			
 		if( $date === null )
-			$date = new DateTime( 'now' );
+			$date = new Zend_Date( 'now' );
 		else if( is_string( $date ) )
-			$date = new DateTime( $date );
+			$date = new Zend_Date( $date );
 		
 		$this->_startDate = $date;
 		$this->_status = Application_Model_Status::WIP;
 	}
 	
 	
+	public function getStartDate( $format = null )
+	{
+		if( null === $this->_startDate )
+			return null;
+		
+		if( null === $format )
+			$format = Zend_Date::DATE_MEDIUM;
+		 
+		return $this->_startDate->get( $format );
+	}
+	
+	
+	public function setEndDate( $endDate = null )
+	{
+		if( null === $endDate )
+			$this->_endDate = null;
+		else if( $endDate instanceof Zend_Date )
+			$this->_endDate = $endDate;
+		else
+			$this->_endDate = new Zend_Date( $endDate );
+		
+		return $this;
+	}
+	
+	
 	/**
 	 * @TODO : tester le status pour vérifier qu'une story ne peut être PASSED si un de ses tests est FAILED.
 	 * Defines the end date of the sprint, and its status
-	 * @param string | DateTime $date the new status of the sprint. <code>Application_Model_Status::FINISHED</code> by default.
+	 * @param string | Zend_Date $date the new status of the sprint. <code>Application_Model_Status::FINISHED</code> by default.
 	 * @param int $status the new status of the sprint.
 	 * @throws BadMethodCallException if the sprint is finished already
 	 * @throws InvalidArgumentException if the end date is before the start date
@@ -218,15 +254,35 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 			throw new BadMethodCallException( "This sprint has already finished !" );
 			
 		if( $date === null )
-			$date = new DateTime( 'now' );
+			$date = new Zend_Date( 'now' );
 		else if( is_string( $date ) )
-			$date = new DateTime( $date );
-			
-		if( $date < $this->_startDate )
+			$date = new Zend_Date( $date );
+		if( $date->isEarlier( $this->_startDate ) )
 			throw new InvalidArgumentException( "this sprint cannot finish before it starts !" );
 		
 		$this->_endDate = $date;
 		$this->setStatus( $status );
+	}
+	
+	
+	public function getEndDate( $format = null )
+	{
+		if( null === $this->_endDate )
+			return null;
+		
+		if( null === $format )
+			$format = Zend_Date::DATE_MEDIUM;
+		
+		return $this->_endDate->get( $format );
+	}
+	
+	
+	public function toArray()
+	{
+		return array_merge( parent::toArray(), array(	'startDate'	=> $this->getStartDate(),
+														'endDate'	=> $this->getEndDate(),
+														'release'	=> $this->getReleaseId(),
+														'status'	=> $this->getStatus() ) );
 	}
 }
 ?>

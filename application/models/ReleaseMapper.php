@@ -23,7 +23,7 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 			
 		$data = array(	'name'			=> $release->getName(),
 						'description'	=> $release->getDescription(),
-						'status'		=> $release->getStatus(),
+						'status'		=> $release->getStatusId(),
 						'product'		=> $release->getProduct(),
 						'startDate'		=> $release->getStartDate(),
 						'endDate'		=> $release->getEndDate(),

@@ -19,11 +19,13 @@ class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 	{
 		if( !$sprint instanceof Application_Model_Sprint )
 			throw new InvalidArgumentException( "'\$sprint' is not an instance of Application_Model_Sprint !" );
+
 		$data = array(	'name'			=> $sprint->getName(),
 						'description'	=> $sprint->getDescription(),
-						'release'		=> $sprint->getRelease(),
-						'status'		=> $sprint->getStatus(),
-						'stories'		=> $sprint->getStories() );
+						'status'		=> $sprint->getStatusId(),
+						'startDate'		=> $sprint->getStartDate( Zend_Date::ISO_8601),
+						'endDate'		=> $sprint->getEndDate( Zend_Date::ISO_8601 ),
+						'release'		=> $sprint->getReleaseId() );
 
 		if( null === ( $id = $sprint->getId() ) )
 		{

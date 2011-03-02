@@ -20,14 +20,15 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 	{
 		if( !$story instanceof Application_Model_Story )
 			throw new InvalidArgumentException( "'\$status\' is not an instance of Application_Model_Story !" );
+		
 		$data = array(	'name'			=> $story->getName(),
 						'description'	=> $story->getDescription(),
-						'status'		=> $story->getStatus(),
+						'status'		=> $story->getStatus()->getId(),
 						'sprint'		=> $story->getSprintId(),
 						'feature'		=> $story->getFeatureId(),
 						'priority'		=> $story->getPriority(),
-						'points'		=> $story->getPoints() );
-		
+						'points'		=> $story->getPoints(),
+						'type'			=> $story->getTypeId() );
 		if( null === ( $id = $story->getId() ) )
 		{
 			unset( $data['id'] );

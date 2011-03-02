@@ -64,6 +64,11 @@ class StoryController extends Zend_Controller_Action
 		$form->setAction( $this->view->link( 'story', 'edit', null, '', 'default', !$isUpdate ) )
 			 ->setMethod( 'post' )
 			 ->populate( $story->toArray() );
+		// We define the referrer URL
+		if( isset( $_SERVER['HTTP_REFERER'] ) && !empty( $_SERVER['HTTP_REFERER'] ) )
+			$form->referrer->setValue( $_SERVER['HTTP_REFERER'] );
+		else
+			$form->referrer->setValue( $this->view->url( array( 'controller' => 'story', 'action' => 'index' ) ) );
 			 
 		// Création des informations et ajout/suppression
 		if( $this->getRequest()->isPost() && $form->isValid( $_POST ) )
@@ -76,7 +81,9 @@ class StoryController extends Zend_Controller_Action
 			$this->_storyMapper->save( $story );
 			
 			$this->_helper->FlashMessenger( "Insertion du produit '{$story->getName()}' effectuée ! " );
-			$this->_redirect( $this->view->url( array( 'controller' => 'story', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			
+			// redirect to the referrer page or to the default, if referrer is empty
+			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
 		}
 		
 		$this->view->form = $form;

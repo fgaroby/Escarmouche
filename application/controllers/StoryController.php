@@ -64,6 +64,7 @@ class StoryController extends Zend_Controller_Action
 		$form->setAction( $this->view->link( 'story', 'edit', null, '', 'default', !$isUpdate ) )
 			 ->setMethod( 'post' )
 			 ->populate( $story->toArray() );
+			
 		// We define the referrer URL
 		if( isset( $_SERVER['HTTP_REFERER'] ) && !empty( $_SERVER['HTTP_REFERER'] ) )
 			$form->referrer->setValue( $_SERVER['HTTP_REFERER'] );
@@ -75,10 +76,17 @@ class StoryController extends Zend_Controller_Action
 		{
 			$values = $form->getValues();
 			// $values['creator'] = Zend_Auth::getInstance()->getIdentity()->id;
-			$story->setFromArray( array_intersect_key($values, $story->toArray() ) );
+			$story->setFromArray( array_intersect_key( $values, $story->toArray() ) );
 
 			// Sauvegarde des informations
-			$this->_storyMapper->save( $story );
+			try
+			{
+				$this->_storyMapper->save( $story );
+			}
+			catch (Exception $e )
+			{
+				Zend_Debug::dump( $e );die();
+			}
 			
 			$this->_helper->FlashMessenger( "Insertion du produit '{$story->getName()}' effectuée ! " );
 			

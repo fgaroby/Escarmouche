@@ -34,7 +34,7 @@ class StoryController extends Zend_Controller_Action
 		if( null !== $story )
 		{
 			$this->view->story = $story;
-			$this->view->setTitrePage( $story->getName() );	
+			$this->view->setTitle( $story->getName() );	
 		}
 		else
 			$this->_redirect( $this->view->url( array( 'controller' => 'story', 'action' => 'index' ) ), array( 'prependBase' => false ) );

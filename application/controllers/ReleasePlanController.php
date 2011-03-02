@@ -16,7 +16,7 @@ class ReleasePlanController extends Zend_Controller_Action
 	
 	public function init()
 	{
-		$this->view->setTitrePage( 'Release Plan' );
+		$this->view->setTitle( 'Release Plan' );
 		$this->_sprintMapper = new Application_Model_SprintMapper();
 	}
 

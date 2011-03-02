@@ -107,7 +107,8 @@ class ReleaseController extends Zend_Controller_Action
 			$this->_releaseMapper->save( $release );
 			
 			$this->_helper->FlashMessenger( "Insertion du produit '{$release->getName()}' effectuée ! " );
-			$this->_redirect( $this->view->url( array( 'controller' => 'release', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			// redirect to the referrer page or to the default, if referrer is empty
+			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
 		}
 		
 		$this->view->form = $form;

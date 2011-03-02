@@ -54,15 +54,7 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 		if( 0 === $rowset->count() )
 			return new Zend_Db_Table_Row();
 			
-		$row = $rowset->current();
-		$data = array(	'id'			=> $row->id,
-			 			'name'			=> $row->name,
-						'description'	=> $row->description,
-						'status'		=> $row->status,
-						'color'			=> $row->color,
-						'release'		=> $row->release );
-			
-		$this->_loadedMap[$id] = new Application_Model_Feature( $data );
+		$this->_loadedMap[$id] = new Application_Model_Feature( $rowset->current() );
 		
 		return $this->_loadedMap[$id];
 	}
@@ -78,11 +70,7 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 		$entries = array();
 		foreach( $resultSet as $row )
 		{
-			$entry = new Application_Model_Feature( array(	'id'			=> $row->id,
-															'name'			=> $row->name,
-															'description'	=> $row->description,
-															'status'		=> $row->status,
-															'sprint'		=> $row->sprint ) );
+			$entry = new Application_Model_Feature( $row );
 			$entries[] = $entry;
 		}
 		

@@ -53,20 +53,12 @@ class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 			return null;
 			
 		$row = $rowset->current();
-		$rsStories = $row->findDependentRowset();
-		$data = array( 	'id'			=> $row->id,
-			 			'name'			=> $row->name,
-			 			'description'	=> $row->description,
-			 			'release'		=> $row->release,
-			 			'status'		=> $row->status );
-			
-		$sprint = new Application_Model_Sprint( $data );
+		$sprint = new Application_Model_Sprint( $row );
 		
+		$rsStories = $row->findDependentRowset( 'Application_Model_Db_Table_Story' );
 		while( $rsStories->next() )
-		{
-			$rwStory = $rsStories->current();
-			$sprint->addStory( new Application_Model_Story() );
-		}
+			$sprint->addStory( new Application_Model_Story( $rsStories->current() ) );
+		
 		$this->_loadedMap[$id] = $sprint;
 		
 		return $this->_loadedMap[$id];
@@ -79,27 +71,11 @@ class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 		$entries = array();
 		foreach( $resultSet as $row )
 		{
-			$entry = new Application_Model_Sprint( array(	'id'			=> $row->id,
-															'name'			=> $row->name,
-															'description'	=> $row->description,
-															'status'		=> $row->status ) );
+			$entry = new Application_Model_Sprint( $row );
 			
-			/*
-			 * @todo factoriser le code de création du Story
-			 */
 			$rsStories = $row->findDependentRowset( 'Application_Model_Db_Table_Story' );
 			foreach( $rsStories as $rwStory )
-			{
-				$entry->addStory( new Application_Model_Story( array(	'id'			=> $rwStory->id,
-																		'name'			=> $rwStory->name,
-																		'description'	=> $rwStory->description,
-																		'priority'		=> $rwStory->priority,
-																		'points'		=> $rwStory->points,
-																		'feature'		=> $rwStory->feature,
-																		'points'		=> $rwStory->points ) ) );
-				
-			}
-			
+				$entry->addStory( new Application_Model_Story( $rwStory ) );
 			
 			$entries[] = $entry;
 		}

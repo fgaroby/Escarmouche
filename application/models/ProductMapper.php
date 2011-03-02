@@ -56,11 +56,7 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
 			return null;
 			
 		$row = $rowset->current();
-		$product = new Application_Model_Product( array(	'id'			=> $row->id,
-												 			'name'			=> $row->name,
-															'description'	=> $row->description,
-															'scrumMaster'	=> $row->scrumMaster,
-															'productOwner'	=> $row->productOwner ) );
+		$product = new Application_Model_Product( $row );
 		$select = $row->select()->order( 'name ASC' );
 		
 		/*
@@ -70,14 +66,7 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
 		while( $rsReleases->valid() )
 		{
 			$rRelease = $rsReleases->current();
-			$product->addRelease( new Application_Model_Release( array(	'id'			=> $rRelease->id,
-																		'name'			=> $rRelease->name,
-																		'description'	=> $rRelease->description,
-																		'status'		=> $rRelease->status,
-																		'product'		=> $rRelease->product,
-																		'startDate'		=> $rRelease->startDate,
-																		'endDate'		=> $rRelease->endDate,
-																		'duration'		=> $rRelease->duration ) ) );
+			$product->addRelease( new Application_Model_Release( $rRelease ) );
 			$rsReleases->next();
 		}
 		
@@ -98,11 +87,7 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
 		$entries = array();
 		foreach( $resultSet as $row )
 		{
-			$entry = new Application_Model_Product( array(	'id'			=> $row->id,
-															'name'			=> $row->name,
-															'description'	=> $row->description,
-															'scrumMaster'	=> $row->scrumMaster,
-															'productOwner'	=> $row->productOwner ) );
+			$entry = new Application_Model_Product( $row );
 			$entries[] = $entry;
 		}
 		

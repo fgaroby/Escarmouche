@@ -57,16 +57,7 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 			return null;
 			
 		$row = $rowset->current();
-		$data = array(	'id'			=> $row->id,
-						'name'			=> $row->name,
-						'description'	=> $row->description,
-						'status'		=> $row->status,
-						'product'		=> $row->product,
-						'startDate'		=> $row->startDate,
-						'endDate'		=> $row->endDate,
-						'duration'		=> $row->duration );
-			
-		$this->_loadedMap[$id] = new Application_Model_Release( $data );
+		$release = new Application_Model_Release( $row );
 		
 		return $this->_loadedMap[$id];
 	}
@@ -82,10 +73,7 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 		$entries = array();
 		foreach( $resultSet as $row )
 		{
-			$entry = new Application_Model_Release( array(	'id'			=> $row->id,
-															'name'			=> $row->name,
-															'description'	=> $row->description,
-															'status'		=> $row->status ) );
+			$entry = new Application_Model_Release( $row );
 			$entries[] = $entry;
 		}
 		

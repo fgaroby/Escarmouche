@@ -47,12 +47,7 @@ class Application_Model_StatusMapper extends Application_Model_AbstractMapper
 		if( 0 === $rowset->count() )
 			return null;
 			
-		$row = $rowset->current();
-		$data = array( 	'id'			=> $row->id,
-			 			'name'			=> $row->name,
-			 			'description'	=> $row->description );
-			
-		$this->_loadedMap[$id] = new Application_Model_Status( $data );
+		$this->_loadedMap[$id] = new Application_Model_Status( $rowset->current() );
 		
 		return $this->_loadedMap[$id];
 	}
@@ -64,9 +59,7 @@ class Application_Model_StatusMapper extends Application_Model_AbstractMapper
 		$entries = array();
 		foreach( $resultSet as $row )
 		{
-			$entry = new Application_Model_Status( array(	'id'			=> $row->id,
-															'name'			=> $row->name,
-															'description'	=> $row->description ) );
+			$entry = new Application_Model_Status( $row );
 			$entries[] = $entry;
 		}
 

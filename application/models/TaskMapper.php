@@ -65,13 +65,7 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 		$rowset = $this->getDbTable()->find( array( 'id = ?' => $id ) );
 		if( 0 === $rowset->count() )
 			return null;
-			
-		$row = $rowset->current();
-		$data = array( 	'id'			=> $row->id,
-			 			'name'			=> $row->name,
-			 			'description'	=> $row->description,
-			 			'status'		=> $row->status );
-		$this->_loadedMap[$id] = new Application_Model_Task( $data );
+		$this->_loadedMap[$id] = new Application_Model_Task( $rowset->current() );
 		
 		return $this->_loadedMap[$id];
 	}
@@ -87,10 +81,7 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 		$entries = array();
 		foreach( $resultSet as $row )
 		{
-			$entry = new Application_Model_Task( array(	'id'			=> $row->id,
-														'name'			=> $row->name,
-														'description'	=> $row->description,
-														'status'		=> $row->status ) );
+			$entry = new Application_Model_Task( $row );
 			$entries[] = $entry;
 		}
 		

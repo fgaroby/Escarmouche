@@ -32,3 +32,20 @@ img.edit
 {
 	float : right;
 }
+
+.errors
+{
+	color : red;
+}
+
+.minimized
+{
+	float : left;
+	text-align : center;
+}
+
+.divMinimized
+{
+	padding : 0px;
+	margin : 0px;
+}

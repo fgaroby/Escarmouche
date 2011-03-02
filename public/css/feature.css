@@ -1,0 +1,52 @@
+.divFeature
+{
+	border : solid 1px black;
+	width : 75%;
+	float : left;
+	margin : 10px;
+	padding : 3px;
+}
+
+.divFeature .header
+{
+	padding : 3px;	
+}
+
+.divFeature .header h4
+{
+	margin : 2px;
+	text-align :center;	
+}
+
+.divFeature .header .description
+{
+	margin-top : 5px;
+	font-weight : normal;
+	border-width : 0px;
+}
+
+.divFeature .content
+{
+	border-top : dotted 1px grey;
+}
+
+.divFeature .stories
+{
+	width : auto;
+	padding : 3px;
+}
+
+
+.divFeature .stories > h4
+{
+	margin : 2px;
+	text-align :center;
+	padding : 3px;
+}
+
+
+.divFeature .divRelease h4
+{
+	margin : 2px;
+	padding : 3px;
+}

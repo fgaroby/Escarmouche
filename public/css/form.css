@@ -107,3 +107,10 @@ form input[type="reset"]:hover
 	background-color: #E6484D;
 	cursor: pointer;
 }
+
+form .readonly
+{
+	background-color : #E6E2AF;
+	color : #A7A37E;
+}
+}

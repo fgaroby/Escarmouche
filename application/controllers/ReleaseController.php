@@ -74,6 +74,27 @@ class ReleaseController extends Zend_Controller_Action
 			$form->removeElement( 'sprintRadio' );
 			$form->removeDisplayGroup( 'sprints' );
 		}
+		/*
+		 *  if release has ever started, we can't change the start date anymore.
+		 */
+		if( Application_Model_Status::isStarted( $release->getStatus() ) )
+		{
+			$form->startDate->setAttrib( 'class', 'readonly' );
+			$form->startDate->setAttrib( 'readonly', 'readonly' );
+		}
+		
+		// if release has ever finished, we can't change the end date anymore.
+		if( Application_Model_Status::isFinished( $release->getStatus() ) )
+		{
+			$form->endDate->setAttrib( 'class', 'readonly' );
+			$form->endDate->setAttrib( 'readonly', 'readonly' );
+		}
+		
+		// We define the referrer URL
+		if( isset( $_SERVER['HTTP_REFERER'] ) && !empty( $_SERVER['HTTP_REFERER'] ) )
+			$form->referrer->setValue( $_SERVER['HTTP_REFERER'] );
+		else
+			$form->referrer->setValue( $this->view->url( array( 'controller' => 'story', 'action' => 'index' ) ) );
 			 
 		// Création des informations et ajout/suppression
 		if( $this->getRequest()->isPost() && $form->isValid( $_POST ) )

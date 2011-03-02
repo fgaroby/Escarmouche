@@ -13,6 +13,7 @@ class ReleaseController extends Zend_Controller_Action
 	protected $_releaseMapper;
 	
 	
+	
 	public function init()
 	{
 		$this->view->setTitle( 'Releases' );
@@ -34,6 +35,7 @@ class ReleaseController extends Zend_Controller_Action
 		if( isset( $params['id'] ) )
 		{
 			$release = $this->_releaseMapper->find( $params['id' ] );
+			
 			// Add the release to the view
 			$this->view->release = $release;
 			$this->view->setTitle( $release->getName() );	
@@ -74,6 +76,7 @@ class ReleaseController extends Zend_Controller_Action
 			$form->removeElement( 'sprintRadio' );
 			$form->removeDisplayGroup( 'sprints' );
 		}
+		
 		/*
 		 *  if release has ever started, we can't change the start date anymore.
 		 */

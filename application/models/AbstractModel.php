@@ -30,12 +30,12 @@ abstract class Application_Model_AbstractModel
 		if( ( !isset( $options['id'] ) || empty( $options['id'] ) ) && ( !isset( $options['name'] ) || empty( $options['name'] ) ) )
 			throw new InvalidArgumentException( "'\$id' and '\$name' cannot be both 'null' or empty !" );
 		
-		if( is_array( $options ) )
+		if( is_array( $options ) || $options instanceof ArrayAccess )
 			$this->setOptions( $options );
 	}
 
 
-	public function setOptions( array $options )
+	public function setOptions( $options )
 	{
 		$methods = get_class_methods( $this );
 		foreach( $options as $key => $value )
@@ -44,6 +44,7 @@ abstract class Application_Model_AbstractModel
 				$method = 'add' . ucfirst( $key );
 			else
 				$method = 'set' . ucfirst( $key );
+			
 			if( in_array( $method, $methods ) )
 				$this->$method( $value );
 		}
@@ -80,12 +81,10 @@ abstract class Application_Model_AbstractModel
 
 	public function setId( $id )
 	{
-		/*if( $id === null || empty( $id ) )
-			throw new InvalidArgumentException( "'id' cannot be 'null' or empty !" );*/
 		if( empty( $id ) )
 			$this->_id = null;
 		else
-			$this->_id = $id;
+			$this->_id = ( int ) $id;
 
 		return $this;
 	}

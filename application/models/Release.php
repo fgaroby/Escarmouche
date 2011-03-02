@@ -125,13 +125,34 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	}
 	
 	
+	/**
+	 * @todo changer le calcul du "pourcentage" et résoudre le bug CSS qui empêche le positionnement côte à côte
+	 * Enter description here ...
+	 */
+	public function getMinimized()
+	{
+		$minimized = array();
+		foreach( $this->_sprints as $sprint )
+		{
+			$minimized[$sprint->getStatus()->getId()]['color'] = $sprint->getStatus()->getName();
+			$minimized[$sprint->getStatus()->getId()]['value'] = isset( $minimized[$sprint->getStatus()->getId()]['value'] ) ? $minimized[$sprint->getStatus()->getId()]['value']++ : 1;
+		}
+		foreach( $this->_sprints as $sprint )
+		{
+			$minimized[$sprint->getStatus()->getId()]['percent'] = $minimized[$sprint->getStatus()->getId()]['value'] / sizeof( $this->_sprints ) * 99;
+		}
+		
+		return $minimized;
+	}
+	
+	
 	public function setProduct( $product = null )
 	{
 		if( null !== $product
 			&& !$product instanceof Application_Model_Product
 			&& !intval( $product, 10 ) )
 			throw new InvalidArgumentException( "'\$product is NaN or an instance of Application_Model_Product !" );
-		
+
 		$this->_product = $product;
 		
 		return $this;

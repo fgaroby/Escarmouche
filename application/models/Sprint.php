@@ -148,6 +148,15 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	}
 	
 	
+	public function getStatusId()
+	{
+		if( $this->_status instanceof Application_Model_Status )
+			return $this->_status->getId();
+		
+		return $this->_status;
+	}
+	
+	
 	public function getPoints()
 	{
 		$points = 0;

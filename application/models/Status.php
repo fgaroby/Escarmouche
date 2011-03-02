@@ -216,7 +216,8 @@ class Application_Model_Status extends Application_Model_AbstractModel
 		if( $status instanceof Application_Model_Status )
 			$status = $status->getId();
 		
-		return ( $status & ( Application_Model_Status::ACCEPTED
+		return ( $status & ( Application_Model_Status::SUGGESTED
+							| Application_Model_Status::ACCEPTED
 							| Application_Model_Status::PLANIFIED
 							| Application_Model_Status::ESTIMATED
 							| Application_Model_Status::WIP

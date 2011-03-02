@@ -40,4 +40,10 @@ class Application_Model_User extends Application_Model_AbstractModel
 	{
 		return $this->_role;
 	}
+	
+	
+	public function __toString()
+	{
+		return ( string ) $this->_id;
+	}
 }

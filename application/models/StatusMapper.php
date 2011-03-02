@@ -15,7 +15,7 @@ class Application_Model_StatusMapper extends Application_Model_AbstractMapper
 	 * @see Application_Model_AbstractMapper::save()
 	 * @param Application_Model_Status $status
 	 */
-	public function save( $status )
+	public function save( Application_Model_AbstractModel $status )
 	{
 		$data = array(	'name'			=> $status->getName(),
 						'description'	=> $status->getDescription() );
@@ -58,9 +58,9 @@ class Application_Model_StatusMapper extends Application_Model_AbstractMapper
 	}
 
 
-	public function fetchAll()
+	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
+		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
 		$entries = array();
 		foreach( $resultSet as $row )
 		{

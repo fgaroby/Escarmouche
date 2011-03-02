@@ -12,7 +12,7 @@ class Application_Model_UserMapper extends Application_Model_AbstractMapper
 	}
 	
 
-	public function save( $model )
+	public function save( Application_Model_AbstractModel $model )
 	{
 		
 	}
@@ -39,7 +39,7 @@ class Application_Model_UserMapper extends Application_Model_AbstractMapper
 	}
 
 	
-	public function fetchAll()
+	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
 		
 	}

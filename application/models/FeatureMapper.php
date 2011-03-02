@@ -16,7 +16,7 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
      * @param Application_Model_Feature $feature
      * @return void
      */
-    public function save( $feature )
+    public function save( Application_Model_AbstractModel $feature )
     {
     	if( !$feature instanceof Application_Model_Feature )
 			throw new InvalidArgumentException( "'\$feature' must be instance of 'Application_Model_Feature' !" );
@@ -72,9 +72,9 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 	 * 
 	 * @see Application_Model_AbstractMapper::fetchAll()
 	 */
-	public function fetchAll()
+	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
+		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
 		$entries = array();
 		foreach( $resultSet as $row )
 		{

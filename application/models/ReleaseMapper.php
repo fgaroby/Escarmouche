@@ -16,7 +16,7 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
      * @param Application_Model_Release $release
      * @return void
      */
-	public function save( $release )
+	public function save( Application_Model_AbstractModel $release )
 	{
 		if( !$release instanceof Application_Model_Release )
 			throw new InvalidArgumentException( "'\$release' must be instance of 'Application_Model_Release' !" );
@@ -76,9 +76,9 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 	 * 
 	 * @see Application_Model_AbstractMapper::fetchAll()
 	 */
-	public function fetchAll()
+	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
+		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
 		$entries = array();
 		foreach( $resultSet as $row )
 		{

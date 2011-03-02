@@ -16,7 +16,7 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
      * @param Application_Model_Product $product
      * @return void
      */
-    public function save( $product )
+    public function save( Application_Model_AbstractModel $product )
     {
     	if( !$product instanceof Application_Model_Product )
 			throw new InvalidArgumentException( "'\$product' must be instance of 'Application_Model_Product' !" );
@@ -92,9 +92,9 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
 	 * 
 	 * @see Application_Model_AbstractMapper::fetchAll()
 	 */
-	public function fetchAll()
+	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
+		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
 		$entries = array();
 		foreach( $resultSet as $row )
 		{

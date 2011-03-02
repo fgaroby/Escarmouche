@@ -15,8 +15,10 @@ class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 	 * @see Application_Model_AbstractMapper::save()
 	 * @param Application_Model_Sprint $sprint
 	 */
-	public function save( $sprint )
+	public function save( Application_Model_AbstractModel $sprint )
 	{
+		if( !$sprint instanceof Application_Model_Sprint )
+			throw new InvalidArgumentException( "'\$sprint' is not an instance of Application_Model_Sprint !" );
 		$data = array(	'name'			=> $sprint->getName(),
 						'description'	=> $sprint->getDescription(),
 						'release'		=> $sprint->getRelease(),
@@ -71,9 +73,9 @@ class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 	}
 
 
-	public function fetchAll()
+	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
+		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
 		$entries = array();
 		foreach( $resultSet as $row )
 		{

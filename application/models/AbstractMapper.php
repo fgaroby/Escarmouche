@@ -17,13 +17,13 @@ abstract class Application_Model_AbstractMapper
 	public abstract function getDbTable();
 	
 
-	public abstract function save( $model );
+	public abstract function save( Application_Model_AbstractModel $model );
 
 	
 	public abstract function find( $id );
 
 	
-	public abstract function fetchAll();
+	public abstract function fetchAll( $where = null, $order = null, $count = null, $offset = null );
 
 	
 	public abstract function delete( $model );

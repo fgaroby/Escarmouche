@@ -23,7 +23,7 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
      * 
      * @see Application_Model_AbstractMapper::save()
      */
-	public function save( $task )
+	public function save( Application_Model_AbstractModel $task )
 	{
 		if( !$task instanceof Application_Model_Task )
 			throw new InvalidArgumentException( "'\$task' must be instance of 'Application_Model_Task' !" );
@@ -81,9 +81,9 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 	 * 
 	 * @see Application_Model_AbstractMapper::fetchAll()
 	 */
-	public function fetchAll()
+	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
-		$resultSet = $this->getDbTable()->fetchAll();
+		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
 		$entries = array();
 		foreach( $resultSet as $row )
 		{

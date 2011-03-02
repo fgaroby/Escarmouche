@@ -16,8 +16,10 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
      * 
      * @see Application_Model_AbstractMapper::save()
      */
-	public function save( $story )
+	public function save( Application_Model_AbstractModel $story )
 	{
+		if( !$story instanceof Application_Model_Story )
+			throw new InvalidArgumentException( "'\$status\' is not an instance of Application_Model_Story !" );
 		$data = array(	'name'			=> $story->getName(),
 						'description'	=> $story->getDescription(),
 						'status'		=> $story->getStatus(),
@@ -64,9 +66,9 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 	}
 	
 	
-	public function fetchAll()
+	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
-		$resultSet = $this->getDbTable()->fetchAll( null, array( ' status DESC', 'feature ASC', 'priority DESC' ) );
+		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
 		$entries = array();
 		foreach( $resultSet as $row )
 		{

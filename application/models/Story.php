@@ -305,6 +305,39 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	}
 	
 	
+	public function setType( $type )
+	{
+		$this->_type = ( int ) $type;
+	}
+	
+	
+	protected function _getType()
+	{
+		$tm = new Application_Model_TypeMapper();
+		$this->_type = $tm->find( $this->_type );
+	}
+	
+	public function getType()
+	{
+		if( is_int( $this->_type ) )
+			$this->_getType();
+		
+		return $this->_type;
+	}
+	
+	
+	public function getTypeId()
+	{
+		if( !isset( $this->_type ) )
+			return null;
+
+		if( is_int( $this->_type ) )
+			$this->_getType();
+			
+		return $this->_type->getId();
+	}
+	
+	
 	public function toArray()
 	{
 		$data = parent::toArray();
@@ -312,6 +345,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 		return array_merge( $data, array(	'status'	=> $this->getStatus(),
 											'sprint'	=> $this->getSprintId(),
 											'feature'	=> $this->getFeatureId(),
-											'priority'	=> $this->getPriority() ) );
+											'priority'	=> $this->getPriority(),
+											'type'		=> $this->getTypeId() ) );
 	}
 }

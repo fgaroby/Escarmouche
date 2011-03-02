@@ -34,6 +34,7 @@ class ReleaseController extends Zend_Controller_Action
 		if( isset( $params['id'] ) )
 		{
 			$release = $this->_releaseMapper->find( $params['id' ] );
+			// Add the release to the view
 			$this->view->release = $release;
 			$this->view->setTitle( $release->getName() );	
 		}
@@ -61,7 +62,7 @@ class ReleaseController extends Zend_Controller_Action
 		{
 			$release = new Application_Model_Release( array( 'name' => 'default release' ) );
 		}
-		//Zend_Debug::dump($release);
+		//Zend_Debug::dump( $release ); die();
 		$form = new Escarmouche_Form_Release( array( 'update' => $isUpdate ) );
 		$form->setAction( $this->view->link( 'release', 'edit', null, '', 'default', !$isUpdate ) )
 			 ->setMethod( 'post' )

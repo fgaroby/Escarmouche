@@ -60,7 +60,7 @@ class ProductController extends Zend_Controller_Action
 		{
 			$values = $form->getValues();
 			// $values['creator'] = Zend_Auth::getInstance()->getIdentity()->id;
-			$product->setFromArray( array_intersect_key($values, $product->toArray() ) );
+			$product->setFromArray( array_intersect_key( $values, $product->toArray() ) );
 
 			// Sauvegarde des informations
 			$this->_productMapper->save( $product );
@@ -68,8 +68,8 @@ class ProductController extends Zend_Controller_Action
 			$this->_helper->FlashMessenger( "Insertion du produit '{$product->getName()}' effectuée ! " );
 			$this->_redirect( $this->view->url( array( 'controller' => 'product', 'action' => 'index' ) ), array( 'prependBase' => false ) );
 		}
-		
-		$this->view->form = $form;
+		else
+			$this->view->form = $form;
 	}
 	
 	

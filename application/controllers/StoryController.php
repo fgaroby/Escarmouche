@@ -58,14 +58,12 @@ class StoryController extends Zend_Controller_Action
 			}
 		}
 		else
-		{
 			$story = new Application_Model_Story( array( 'name' => 'default story' ) );
-		}
 		
 		$form = new Escarmouche_Form_Story();
 		$form->setAction( $this->view->link( 'story', 'edit', null, '', 'default', !$isUpdate ) )
 			 ->setMethod( 'post' )
-			 ->setDefaults( $story->toArray() );
+			 ->populate( $story->toArray() );
 			 
 		// Création des informations et ajout/suppression
 		if( $this->getRequest()->isPost() && $form->isValid( $_POST ) )

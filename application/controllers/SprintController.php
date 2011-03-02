@@ -3,7 +3,7 @@ class SprintController extends Zend_Controller_Action
 {
 	public function init()
 	{
-		$this->view->setTitle( 'Sprint' );
+		$this->view->setTitle( 'Sprints' );
 	}
 	
 	

@@ -69,7 +69,7 @@ class Application_Model_Status extends Application_Model_AbstractModel
 	const FINISHED	= 256;
 	
 	
-	public function __construct( array $options = array() )
+	public function __construct( $options = array() )
 	{
 		parent::__construct( $options );
 	}
@@ -95,7 +95,7 @@ class Application_Model_Status extends Application_Model_AbstractModel
 	
 	public static function getStatus( $status )
 	{
-		if( is_int( $status ) )
+		if( !$status instanceof Application_Model_Status )
 		{
 			$sm = new Application_Model_StatusMapper();
 			$status = $sm->find( $status );
@@ -130,7 +130,7 @@ class Application_Model_Status extends Application_Model_AbstractModel
 		if( $status instanceof Application_Model_Status )
 			$status = $status->getId();
 			
-		if( !is_int( ( int ) $status ) )
+		if( !intval( $status, 10 ) )
 			return false;
 		
 		$status = intval( $status, 10 );

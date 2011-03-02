@@ -4,7 +4,7 @@ class Escarmouche_Db_Table_Row_Abstract extends Zend_Db_Table_Row
 	public function __get( $columnName )
 	{
 		$m = $this->_table->info( 'metadata' );
-
+		
 		if( isset( $m[$columnName] ) )
 		{
 			$value = $this->_data[$columnName];
@@ -13,8 +13,8 @@ class Escarmouche_Db_Table_Row_Abstract extends Zend_Db_Table_Row
 				case 'DATE' :
 					if( $value && ( $value != '0000-00-00' ) )
 					{
-						$date = new DateTime( $value, Zend_Date::ISO_8601 );
-						$date->setTime( '00:00:00' );
+						$date = new Zend_Date( $value, Zend_Date::ISO_8601 );
+						$date->set( '00:00:00', Zend_Date::TIMES );
 						
 						return $date;
 					}
@@ -24,7 +24,7 @@ class Escarmouche_Db_Table_Row_Abstract extends Zend_Db_Table_Row
 
 				case 'DATETIME' :
 					if( $value && ( $value != '0000-00-00 00:00:00' ) )
-						return new DateTime( $value, new DateTimeZone( 'Europe/Paris' ) );
+						return new Zend_Date( $value );
 					else
 						return null;
 				break;

@@ -51,7 +51,7 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 	
 	/**
 	 * Find one task by ID
-	 * @see application/models/Application_Model_AbstractMapper::fetchAll()
+	 * @see application/models/Application_Model_AbstractMapper::find()
 	 * @return Application_Model_Task
 	 */
 	public function find( $id )

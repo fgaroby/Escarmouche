@@ -14,7 +14,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	
 	
-	public function __construct( array $options = array() )
+	public function __construct( $options = array() )
 	{
 		parent::__construct( $options );
 	}
@@ -81,7 +81,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	public function getScrumMaster()
 	{
-		if( is_int( $this->_scrumMaster ) )
+		if( !$this->_scrumMaster instanceof Application_Model_User )
 		{
 			$um = new Application_Model_UserMapper();
 			$this->_scrumMaster = $um->find( $this->_scrumMaster );
@@ -97,7 +97,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 		$um = null;
 		foreach( $this->_developpers as $key => $developper )
 		{
-			if( is_int( $developper ) )
+			if( !$developper instanceof Application_Model_User )
 			{
 				if( $um === null )
 					$um = new Application_Model_UserMapper();
@@ -121,7 +121,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	public function getProductOwner()
 	{
-		if( is_int( $this->_productOwner ) )
+		if( !$this->_productOwner instanceof Application_Model_User )
 		{
 			$po = new Application_Model_UserMapper();
 			$this->_productOwner = $po->find( $this->_productOwner );
@@ -158,7 +158,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	public function toArray()
 	{
-		return array_merge( parent::toArray(), array(	'scrumMaster'	=> $this->_scrumMaster,
-														'productOwner'	=> $this->_productOwner ) );
+		return array_merge( parent::toArray(), array(	'scrumMaster'	=> $this->getScrumMaster()->getId(),
+														'productOwner'	=> $this->getProductOwner()->getId() ) );
 	}
 }

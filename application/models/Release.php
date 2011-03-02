@@ -10,13 +10,12 @@ class Application_Model_Release extends Application_Model_AbstractModel
 {
 	/**
 	 * 
-	 * Enter description here ...
 	 * @var array[Application_Model_Sprint]
 	 */
 	protected $_sprints = array();
 
 	
-	protected $_product;
+	protected $_product = null;
 	
 	
 	protected $_status;
@@ -24,14 +23,14 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	
 	/**
 	 * 
-	 * @var DateTime
+	 * @var Zend_Date
 	 */
 	protected $_startDate;
 	
 	
 	/**
 	 * 
-	 * @var DateTime
+	 * @var Zend_Date
 	 */
 	protected $_endDate;
 	
@@ -44,7 +43,7 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	
 	
 	
-	public function __construct( array $options = array() )
+	public function __construct( $options = array() )
 	{
 		$this->_status = Application_Model_Status::SUGGESTED;
 		parent::__construct( $options );
@@ -111,10 +110,10 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	
 	public function getSprint( $index )
 	{
-		if( !is_numeric( $index ) )
-			throw new InvalidArgumentException( "'index' cannot be 'NaN' !" );
+		if( !is_int( $index ) )
+			throw new InvalidArgumentException( "'\$index' cannot be 'NaN' !" );
 		if( $index < 0 || $index >= sizeof( $this->_sprints ) )
-			throw new OutOfRangeException( "'index' cannot be negative, greater than or equal to the size of the array !" );
+			throw new OutOfRangeException( "'\$index' cannot be negative, greater than or equal to the size of the array !" );
 
 		return $this->_sprints[$index];
 	}
@@ -130,7 +129,7 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	{
 		if( null !== $product
 			&& !$product instanceof Application_Model_Product
-			&& !is_int( $product ) )
+			&& !intval( $product, 10 ) )
 			throw new InvalidArgumentException( "'\$product is NaN or an instance of Application_Model_Product !" );
 		
 		$this->_product = $product;
@@ -147,12 +146,12 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	
 	/**
 	 * 
-	 * @param int $status the status of the task
+	 * @param int | Application_Model_Status $status the status of the task
 	 * @throws InvalidArgumentException if $status is NaN or not a valid status
 	 */
 	public function setStatus( $status )
 	{
-		if( !$status instanceof Application_Model_Status && !is_numeric( $status ) )
+		if( !$status instanceof Application_Model_Status && !intval( $status, 10 ) )
 			throw new InvalidArgumentException( "'\$status' is NaN and not an instance of Application_Model_Status !" );
 		if( !Application_Model_Status::isValid( $status ) )
 			throw new InvalidArgumentException( "'\$status' is not a valid status !" );
@@ -172,10 +171,10 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	 */
 	public function getStatus()
 	{
-		if( is_int( $this->_status ) )
+		if( !$this->_status instanceof Application_Model_Status )
 		{
 			$sm = new Application_Model_StatusMapper();
-			$this->_status = $sm->find( $this->_status );
+			$this->_status = $sm->find( ( int ) $this->_status );
 		}
 		
 		return $this->_status;

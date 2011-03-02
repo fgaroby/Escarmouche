@@ -138,7 +138,7 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	
 	public function getStatus()
 	{
-		if( is_int( $this->_status ) )
+		if( !$this->_status instanceof Application_Model_Status )
 		{
 			$sm = new Application_Model_StatusMapper();
 			$this->_status = $sm->find( $this->_status );

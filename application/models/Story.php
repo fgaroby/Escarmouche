@@ -28,6 +28,9 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	protected $_feature = null;
 	
 	
+	protected $_type = null;
+	
+	
 	/**
 	 *
 	 * The list of <code>Task</code> that the story has.
@@ -52,15 +55,10 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	 */
 	public function setStatus( $status )
 	{
-		if( $status !== null )
-		{
-			if( $status instanceof Zend_Db_Table_Row )
-				$this->_status = new Application_Model_Status( $status );
-			if( $status instanceof Application_Model_Status && !is_int( $status ) )
-				throw new InvalidArgumentException( "\$status' is 'NaN' !" );
-			if( !Application_Model_Status::isValid( $status ) )
-				throw new InvalidArgumentException( "'\$status' is not a valid status !" );
-		}
+		if( !$status instanceof Application_Model_Status && !is_int( $status ) )
+			throw new InvalidArgumentException( "\$status' is 'NaN' !" );
+		if( !Application_Model_Status::isValid( $status ) )
+			throw new InvalidArgumentException( "'\$status' is not a valid status !" );
 	
 		$this->_status = $status;
 
@@ -104,6 +102,10 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	}
 	
 	
+	/**
+	 * Return the id of the sprint, or <code>null</code> if there's no sprint.
+	 * @return the id of the sprint, or <code>null</code>.
+	 */
 	public function getSprintId()
 	{
 		if( $this->_sprint instanceof Application_Model_Sprint )
@@ -117,9 +119,6 @@ class Application_Model_Story extends Application_Model_AbstractModel
 
 	public function setPriority( $priority )
 	{
-		if( !is_int( $priority ) )
-			throw new InvalidArgumentException( "'\$priority' is 'NaN' !" );
-			
 		$this->_priority = $priority;
 		
 		return $this;
@@ -229,11 +228,10 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	
 	public function setFeature( $feature = null )
 	{
-		if( null !== $feature )
+		if( $feature === 0 )
+			$this->_feature = null;
+		else
 		{
-			if( !$feature instanceof Application_Model_Feature && !is_int( $feature ) )
-					throw new InvalidArgumentException( "'\$feature is NaN or not an instance of Application_Model_Feature !" );
-
 			$this->_feature = $feature;
 		}
 		
@@ -295,8 +293,6 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	 */
 	public function setPoints( $points )
 	{
-		if( !is_int( $points ) )
-			throw new InvalidArgumentException( "'\$points' is NaN ! " );
 		$this->_points = ( int ) $points;
 			
 		return $this;

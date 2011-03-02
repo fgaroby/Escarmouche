@@ -1,6 +1,4 @@
 <?php
-require_once( dirname( __FILE__ ) . '/Db/Table/Status.php' );
-
 class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 {	
     public function getDbTable()

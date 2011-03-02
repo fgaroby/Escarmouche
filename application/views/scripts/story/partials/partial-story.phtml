@@ -1,10 +1,34 @@
-<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/story.css" />
 <div class="divStory" style="border-color : <?php echo $this->story->getColor(); ?>">
-	<h4>
-		<a href="<?php echo $this->baseUrl();?>/story/display/id/<?php echo $this->story->getId(); ?>"><?php echo $this->story->getName(); ?></a>
-	</h4>
-	<div class="status <?php echo $this->story->getStatus()->getName(); ?>">
-		<?php echo $this->story->getStatus()->getName(); ?>
-		<div class="points" title="<?php echo $this->story->getPoints(); ?> point<?php echo ( $this->story->getPoints() > 1 ? 's' : '' ); ?>"><?php echo $this->story->getPoints(); ?></div>
+	<div class="header">
+		<a href="<?php echo $this->baseUrl();?>/story/edit/id/<?php echo  $this->escape( $this->story->getId() ); ?>">
+			<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit story" title="edit story" />
+		</a>
+		<h4>
+			<a href="<?php echo $this->baseUrl();?>/story/display/id/<?php echo $this->story->getId(); ?>"><?php echo $this->story->getName(); ?></a>
+		</h4>
+		<div class="description">
+			<?php echo $this->escape( $this->story->getDescription() ); ?>
+		</div>
+		<div class="status <?php echo $this->story->getStatus()->getName(); ?>">
+			<span class="points" title="<?php echo $this->story->getPoints(); ?> point<?php echo ( $this->story->getPoints() > 1 ? 's' : '' ); ?>"><?php echo $this->story->getPoints(); ?></span>
+			<div class="spacer">&nbsp;</div>
+		</div>
+	</div>
+	<div class="content">
+		<div class="tasks">
+			<a href="<?php echo $this->baseUrl();?>/task/edit/">
+				<img class="edit" src="<?php echo $this->baseUrl();?>/images/add.png" alt="add task" title="add task" />
+			</a>
+			<h4>Sprints</h4>
+			<?php
+				$objectKey = $this->partialLoop()->getObjectKey();
+				echo $this->partialLoop()
+						  ->setObjectKey( 'task' )
+						  ->partialLoop( 'task/partials/partial-task.phtml', $this->story->getTasks() );
+						  
+				$this->partialLoop()
+					 ->setObjectKey( $objectKey );
+			?>
+		</div>
 	</div>
 </div>

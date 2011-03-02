@@ -1,0 +1,9 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/feature.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php foreach( $this->features as $feature ):?>
+	<div class="divFeature">
+		<h4>
+			<a href="<?php echo $this->baseUrl();?>/feature/display/id/<?php echo $feature->getId(); ?>"><?php echo $feature->getName(); ?></a>
+		</h4>
+	</div>
+<?php endforeach; ?>

@@ -1,5 +1,5 @@
-<div class="divProduct">
-	<h4>
-		<a href="<?php echo $this->baseUrl();?>/sprint/edit/id/<?php echo $this->sprint->getId(); ?>"><?php echo $this->sprint->getName(); ?></a>
-	</h4>
-</div>
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/sprint.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php
+	echo $this->partial( 'sprint/partials/partial-sprint-with-stories.phtml', array( 'sprint' => $this->sprint ) );
+?>

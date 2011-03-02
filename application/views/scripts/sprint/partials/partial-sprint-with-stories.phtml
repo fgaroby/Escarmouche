@@ -1,23 +1,37 @@
 <div class="divSprint">
-	<div class="header <?php echo $this->sprint->getStatus(); ?>">
-		<h4>Sprint <?php echo $this->partialCounter; ?> : <?php echo $this->sprint->getName(); ?></h4>
-		<h5 class="<?php echo $this->sprint->getStatus(); ?>" title="<?php echo $this->sprint->getPoints(); ?> point<?php echo ( $this->sprint->getPoints() > 1 ? 's' : '' ); ?>">
-			<?php echo $this->sprint->getPoints(); ?> point<?php echo ( $this->sprint->getPoints() > 1 ? 's' : '' ); ?>
-		</h5>
-		<span class="startDate">
-			<img src="<?php echo $this->baseUrl();?>/images/start.png" />
-			<?php echo $this->sprint->getStartDate(); ?>
-		</span>
-		<span class="endDate">
-			<img src="<?php echo $this->baseUrl();?>/images/end.png" />
-			<?php echo $this->sprint->getEndDate(); ?>
-		</span>
+	<div class="header">
+		<a href="<?php echo $this->baseUrl();?>/sprint/edit/id/<?php echo  $this->escape( $this->sprint->getId() ); ?>">
+			<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit sprint" title="edit sprint" />
+		</a>
+		<h4>
+			<?php echo ( isset( $this->partialCounter ) ? 'Sprint # ' . $this->partialCounter . ' : ' : '' ); ?>
+			<a href="<?php echo $this->baseUrl();?>/sprint/display/id/<?php echo $this->sprint->getId(); ?>"><?php echo $this->sprint->getName(); ?></a>
+		</h4>
+		<div class="description">
+			<?php echo $this->escape( $this->sprint->getDescription() ); ?>
+		</div>
+		<div class="status <?php echo $this->escape( $this->sprint->getStatus()->getName() ); ?>" title="<?php echo $this->escape( $this->sprint->getStatus()->getName() ); ?>">
+			<span class="points">
+				<?php echo $this->sprint->getPoints(); ?> point<?php echo ( $this->sprint->getPoints() > 1 ? 's' : '' ); ?>
+			</span>
+			<span class="startDate">
+				<img src="<?php echo $this->baseUrl();?>/images/flag-start.png" />
+				<?php echo $this->escape( $this->sprint->getStartDate() ); ?>
+			</span>
+			<span class="endDate">
+				<img src="<?php echo $this->baseUrl();?>/images/flag-end.png" />
+				<?php echo $this->escape( $this->sprint->getEndDate() ); ?>
+			</span>
+		</div>
 	</div>
 	<div class="content">
 		<?php
+			$objectKey = $this->partialLoop()->getObjectKey();
 			echo $this->partialLoop()
 					->setObjectKey( 'story' )
 					->partialLoop( 'story/partials/partial-story.phtml', $this->sprint->getStories() );
+			$this->partialLoop()
+				 ->setObjectKey( $objectKey );
 		?>
 	</div>
 </div>

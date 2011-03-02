@@ -1,18 +1,49 @@
 <div class="divRelease">
-	<a href="<?php echo $this->baseUrl();?>/release/edit/id/<?php echo  $this->escape( $this->release->getId() ); ?>">
-		<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit release" title="edit release" />
-	</a>
-	<h4>
-		<a href="<?php echo $this->baseUrl();?>/release/display/id/<?php echo $this->release->getId(); ?>"><?php echo $this->release->getName();?></a>
-	</h4>
-	<div title="<?php echo $this->escape( $this->release->getStatus()->getName() ); ?>" class="status <?php echo $this->escape( $this->release->getStatus()->getName() ); ?>">
-		<span class="startDate">
-			<img src="<?php echo $this->baseUrl();?>/images/flag-start.png" />
-			<?php echo $this->release->getStartDate(); ?>
-		</span>
-		<span class="endDate">
-			<img src="<?php echo $this->baseUrl();?>/images/flag-end.png" />
-			<?php echo $this->release->getEndDate(); ?>
-		</span>
+	<div class="header">
+		<a href="<?php echo $this->baseUrl();?>/release/edit/id/<?php echo  $this->escape( $this->release->getId() ); ?>">
+			<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit release" title="edit release" />
+		</a>
+		<h4>
+			<a href="<?php echo $this->baseUrl();?>/release/display/id/<?php echo $this->release->getId(); ?>"><?php echo $this->release->getName();?></a>
+		</h4>
+		<div class="description">
+			<?php echo $this->escape( $this->release->getDescription() ); ?>
+		</div>
+		<div class="status <?php echo $this->escape( $this->release->getStatus()->getName() ); ?>" title="<?php echo $this->escape( $this->release->getStatus()->getName() ); ?>">
+			<span class="startDate">
+				<img src="<?php echo $this->baseUrl();?>/images/flag-start.png" />
+				<?php echo $this->escape( $this->release->getStartDate() ); ?>
+			</span>
+			<span class="endDate">
+				<img src="<?php echo $this->baseUrl();?>/images/flag-end.png" />
+				<?php echo $this->escape( $this->release->getEndDate() ); ?>
+			</span>
+		</div>
+	</div>
+	<div class="content">
+		<div class="sprints">
+			<a href="<?php echo $this->baseUrl();?>/sprint/edit/release/<?php echo  $this->escape( $this->release->getId() ); ?>">
+				<img class="edit" src="<?php echo $this->baseUrl();?>/images/add.png" alt="add sprint" title="add sprint" />
+			</a>
+			<h4>Sprints</h4>
+			<?php
+				$objectKey = $this->partialLoop()->getObjectKey();
+				echo $this->partialLoop()
+						  ->setObjectKey( 'sprint' )
+						  ->partialLoop( 'sprint/partials/partial-sprint-with-stories.phtml', $this->release->getSprints() );
+				$this->partialLoop()
+					 ->setObjectKey( $objectKey );
+			?>
+		</div>
+	</div>
+	<div class="divMinimized">
+		<?php
+			$objectKey = $this->partialLoop()->getObjectKey();
+			echo $this->partialLoop()
+					  ->setObjectKey( 'minimized' )
+					  ->partialLoop( 'common/partials/partial-minimized.phtml', $this->release->getMinimized() );
+			$this->partialLoop()
+				 ->setObjectKey( $objectKey );
+		?>
 	</div>
 </div>

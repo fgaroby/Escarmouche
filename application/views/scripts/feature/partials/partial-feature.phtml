@@ -1,0 +1,25 @@
+<div class="divFeature">
+	<div class="header">
+		<a href="<?php echo $this->baseUrl();?>/feature/edit/id/<?php echo  $this->escape( $this->feature->getId() ); ?>">
+			<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit feature" title="edit feature" />
+		</a>
+		<h4><?php echo  $this->escape( $this->feature->getName() ); ?>
+		</h4>
+		<div class="description">
+			<?php echo $this->escape( $this->feature->getDescription() ); ?>
+		</div>
+	</div>
+	<div class="content">
+		<div class="stories">
+			<a href="<?php echo $this->baseUrl();?>/story/edit/">
+				<img class="edit" src="<?php echo $this->baseUrl();?>/images/add.png" alt="add story" title="add story" />
+			</a>
+			<h4>Stories</h4>
+			<?php
+				echo $this->partialLoop()
+						->setObjectKey( 'story' )
+						->partialLoop( 'story/partials/partial-story.phtml', $this->feature->getStories() );
+			?>
+		</div>
+	</div>
+</div>

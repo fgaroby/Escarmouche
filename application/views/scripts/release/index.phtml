@@ -1,7 +1,7 @@
-<?php foreach( $this->releases as $release ):?>
-	<div class="divRelease">
-		<h4>
-			<a href="<?php echo $this->baseUrl();?>/release/display/id/<?php echo $release->getId(); ?>"><?php echo $release->getName(); ?></a>
-		</h4>
-	</div>
-<?php endforeach; ?>
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/release.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php
+	echo $this->partialLoop()
+			  ->setObjectKey( 'release' )
+			  ->partialLoop( 'release/partials/partial-release.phtml', $this->releases );
+?>

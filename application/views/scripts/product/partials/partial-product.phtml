@@ -27,18 +27,24 @@
 			<div style="background-color : #F5D5A7;">
 				<h5>Équipe</h5>
 				<?php
+					$objectKey = $this->partialLoop()->getObjectKey();
 					echo $this->partialLoop()
 							->setObjectKey( 'user' )
 							->partialLoop( 'user/partials/partial-user.phtml', $this->product->getDeveloppers() );
+					$this->partialLoop()
+						 ->setObjectKey( $objectKey );
 				?>
 			</div>
 		</div>
 		<div class="releases">
 			<h4>Releases</h4>
 			<?php
+				$objectKey = $this->partialLoop()->getObjectKey();
 				echo $this->partialLoop()
 						->setObjectKey( 'release' )
 						->partialLoop( 'release/partials/partial-release.phtml', $this->product->getReleases() );
+				$this->partialLoop()
+					 ->setObjectKey( $objectKey );
 			?>
 		</div>
 	</div>

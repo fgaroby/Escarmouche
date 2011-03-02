@@ -28,14 +28,21 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 						'startDate'		=> $release->getStartDate(),
 						'endDate'		=> $release->getEndDate(),
 						'duration'		=> $release->getDuration() );
-		
-		if( null === ( $id = $release->getId() ) )
+		try
 		{
-			unset( $data['id'] );
-			$this->getDbTable()->insert( $data );
+			if( null === ( $id = $release->getId() ) )
+			{
+				unset( $data['id'] );
+				$id = $this->getDbTable()->insert( $data );
+				$this->_loadedMap[$id] = $release;
+			}
+			else
+				$this->getDbTable()->update( $data, array( 'id = ?' => $id ) );
 		}
-		else
-			$this->getDbTable()->update( $data, array( 'id = ?' => $id ) );
+		catch( Exception $e )
+		{
+			Zend_Debug::dump($e);
+		}
 	}
 	
 	
@@ -58,6 +65,16 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 			
 		$row = $rowset->current();
 		$release = new Application_Model_Release( $row );
+		$this->_loadedMap[$id] = $release;
+		
+		// We retrieve the dependent sprints
+		$rsSprints = $row->findDependentRowset( 'Application_Model_Db_Table_Sprint', 'Release' );
+		while( $rsSprints->valid() )
+		{
+			$rSprint = $rsSprints->current();
+			$release->addSprint( new Application_Model_Sprint( $rSprint ) );
+			$rsSprints->next();
+		}
 		
 		return $this->_loadedMap[$id];
 	}

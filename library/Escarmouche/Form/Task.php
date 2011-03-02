@@ -16,8 +16,8 @@ class Escarmouche_Form_Task extends Zend_Form
 	{
 		// Champ hidden "id" (contenant l'identifiant du produit, dans le cas d'une modification)
 		$id = new Zend_Form_Element_Hidden( 'id' );
-		$id->addValidator( new Zend_Validate_Uuid() )
-		   ->setDecorators( array( 'ViewHelper', 'Label' ) );
+		$id->addValidator( new Zend_Validate_Int() )
+		   ->setDecorators( array( 'ViewHelper', 'Errors', 'Label' ) );
 		$this->addElement( $id );
 		
 		$name = new Zend_Form_Element_Text( 'name' );
@@ -25,7 +25,7 @@ class Escarmouche_Form_Task extends Zend_Form
 			 ->addValidator( new Zend_Validate_StringLength( 0, 75 ) )
 			 ->setLabel( "Nom :" )
 			 ->setRequired( true )
-			 ->setDecorators( array( 'ViewHelper', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
+			 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
 		$this->addElement( $name );
 		
 		$desc = new Zend_Form_Element_Textarea( 'description' );
@@ -34,16 +34,19 @@ class Escarmouche_Form_Task extends Zend_Form
 			 ->setRequired( false )
 			 ->setAttrib( 'rows', 5 )
 			 ->setAttrib( 'cols', 40 )
-			 ->setDecorators( array( 'ViewHelper', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
+			 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
 		$this->addElement( $desc );
 		
+		// The type of the task : Story, Technical, ...
 		$type = new Zend_Form_Element_Select( 'type' );
 		$type->setLabel( "Type :" )
 			 ->setRequired( true )
-			 ->setDecorators( array( 'ViewHelper', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) )
-			 ->addMultiOptions( array(	'test'		=> 'Test',
-										'story'		=> 'Story',
-										'technique'	=> 'Technique' ) );
+			 ->addValidator( new Zend_Validate_Int() )
+			 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
+		$tm = new Application_Model_TypeMapper();
+		$types = $tm->fetchAll( null, 'ORDER BY name ASC' );
+		foreach( $types as $t )
+			$type->addMultiOption( $t->getId(), $t->getName() );
 		$this->addElement( $type );
 		
 		
@@ -52,12 +55,14 @@ class Escarmouche_Form_Task extends Zend_Form
 		$resetButton = new Zend_Form_Element_Reset( 'reset_task', array( 'name' => 'reset_task') );
 		$resetButton->setLabel( "Annuler" )
 					->setValue( "Annuler" )
+					 ->setAttrib( 'style', 'margin-left: 80px' )
 					->setDecorators( array( 'ViewHelper' ) );
 		$this->addElement( $resetButton );
 		
 		$submitButton = new Zend_Form_Element_Submit( 'submit_task', array( 'name' => 'submit_task' ) );
 		$submitButton->setLabel( "Valider" )
 					 ->setValue( "Valider" )
+					 ->setAttrib( 'style', 'margin-left: 80px' )
 					 ->setDecorators( array( 'ViewHelper' ) );
 		$this->addElement( $submitButton );
 		

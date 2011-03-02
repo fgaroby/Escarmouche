@@ -5,7 +5,7 @@
  * @package escarmouche
  * @package form
  */
-class Escarmouche_Form_Story extends Zend_Form
+class Escarmouche_Form_Sprint extends Zend_Form
 {
 	/**
 	 * Initialisation du formulaire (méthode obligatoire)
@@ -37,29 +37,34 @@ class Escarmouche_Form_Story extends Zend_Form
 			 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
 		$this->addElement( $desc );
 		
-		// The type of the task : Story, Technical, ...
-		$type = new Zend_Form_Element_Select( 'type' );
-		$type->setLabel( "Type :" )
-			 ->setRequired( true )
-			 ->addValidator( new Zend_Validate_Int() )
-			 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
-		$tm = new Application_Model_TypeMapper();
-		$types = $tm->fetchAll();
-		foreach( $types as $t )
-			$type->addMultiOption( $t->getId(), $t->getName() );
-		$this->addElement( $type );
 		
-		// The feature to which is assigned the story
-		$fm = new Application_Model_FeatureMapper();
-		$features = $fm->fetchAll();
-		$feature = new Zend_Form_Element_Select( 'feature' );
-		$feature->setLabel ('Feature : ' )
+		$release = new Zend_Form_Element_Select( 'release' );
+		$release->setLabel( "Release :" )
 				->setRequired( true )
 				->addValidator( new Zend_Validate_Int() )
+				->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) )
+				->addMultiOption( '', '-- Releases --' );
+		$rm = new Application_Model_ReleaseMapper();
+		$releases = $rm->fetchAll();
+		foreach( $releases as $r )
+			$release->addMultiOption( $r->getId(), $r->getName() );
+		$this->addElement( $release );
+		
+		$startDate = new Zend_Form_Element_Text( 'startDate' );
+		$startDate->addValidator( new Zend_Validate_Date( array( 'format' => 'dd/MM/YYYY' ) ) )
+				  ->setLabel( 'Date de début :' )
+				  ->setRequired( true )
+				  ->setAttribs( array( 'size' => 10, 'maxlength' => 10 ) )
+				  ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
+		$this->addElement( $startDate );
+		
+		$endDate = new Zend_Form_Element_Text( 'endDate' );
+		$endDate->addValidator( new Zend_Validate_Date( array( 'format' => 'dd/MM/YYYY' ) ) )
+				->setLabel( 'Date de fin :' )
+				->setRequired( true )
+				->setAttribs( array( 'size' => 10, 'maxlength' => 10 ) )
 				->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
-		foreach( $features as $f )
-			$feature->addMultiOption( $f->getId(), $f->getName() );
-		$this->addElement( $feature );
+		$this->addElement( $endDate );
 		
 		// The hidden referrer
 		$referrer = new Zend_Form_Element_Hidden( 'referrer' );
@@ -67,14 +72,14 @@ class Escarmouche_Form_Story extends Zend_Form
 		$this->addElement( $referrer );
 		
 		
-		$resetButton = new Zend_Form_Element_Reset( 'reset_story', array( 'name' => 'reset_story') );
+		$resetButton = new Zend_Form_Element_Reset( 'reset_sprint', array( 'name' => 'reset_sprint') );
 		$resetButton->setLabel( "Annuler" )
 					->setValue( "Annuler" )
 					 ->setAttrib( 'style', 'margin-left: 80px' )
 					->setDecorators( array( 'ViewHelper' ) );
 		$this->addElement( $resetButton );
 		
-		$submitButton = new Zend_Form_Element_Submit( 'submit_story', array( 'name' => 'submit_story' ) );
+		$submitButton = new Zend_Form_Element_Submit( 'submit_sprint', array( 'name' => 'submit_sprint' ) );
 		$submitButton->setLabel( "Valider" )
 					 ->setValue( "Valider" )
 					 ->setAttrib( 'style', 'margin-left: 80px' )
@@ -86,20 +91,7 @@ class Escarmouche_Form_Story extends Zend_Form
 		
 		// Fieldsets
 		$this->addDisplayGroup( array( 'id', 'name', 'description', 'type' ), 'base', array( 'legend' => 'Données de base' ) )
-			 ->addDisplayGroup( array( 'feature' ), 'attachment', array( 'legend' => 'Attachment' ) )
-			 ->addDisplayGroup( array( 'referrer', 'reset_story', 'submit_story' ), 'validation', array( 'legend' => 'Validation' ) );
-	}
-	
-	
-	public function getValues( $suppressArrayNotation = false )
-	{
-		$values = parent::getValues( $suppressArrayNotation );
-		foreach( $values as $key => $value )
-		{
-			if( in_array( 'Zend_Validate_Int', array_keys( $this->_elements[$key]->getValidators() ) ) )
-				$values[$key] = ( int ) $value;
-		}
-		
-		return $values;
+			 ->addDisplayGroup( array( 'release', 'startDate', 'endDate', 'duration' ), 'date', array( 'legend' => 'Dates' ) )
+			 ->addDisplayGroup( array( 'referrer', 'reset_sprint', 'submit_sprint' ), 'validation', array( 'legend' => 'Validation' ) );
 	}
 }

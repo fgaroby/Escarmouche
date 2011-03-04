@@ -28,7 +28,9 @@ abstract class Application_Model_AbstractModel
 	public function __construct( $options = array() )
 	{
 		if( ( !isset( $options['id'] ) || empty( $options['id'] ) ) && ( !isset( $options['name'] ) || empty( $options['name'] ) ) )
+		{
 			throw new InvalidArgumentException( "'\$id' and '\$name' cannot be both 'null' or empty !" );
+		}
 		
 		if( is_array( $options ) || $options instanceof ArrayAccess )
 			$this->setOptions( $options );
@@ -73,7 +75,7 @@ abstract class Application_Model_AbstractModel
 	{
 		$method = 'get' . ucfirst( $name );
 		if( ( 'mapper' === $name ) || !method_exists( $this, $method ) )
-			throw new Exception( 'Invalid release property' );
+			throw new Exception( 'Invalid property : ' . $name );
 
 		return $this->$method();
 	}

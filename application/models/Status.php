@@ -129,7 +129,6 @@ class Application_Model_Status extends Application_Model_AbstractModel
 	{
 		if( $status instanceof Application_Model_Status )
 			$status = $status->getId();
-			
 		if( !intval( $status, 10 ) )
 			return false;
 		
@@ -208,6 +207,19 @@ class Application_Model_Status extends Application_Model_AbstractModel
 							| self::PASSED
 							| self::FAILED
 							| self::FINISHED ) ) > 0 ;
+	}
+	
+	
+	public static function isValidTaskStatus( $status )
+	{
+		if( $status instanceof Application_Model_Status )
+			$status = $status->getId();
+		
+		return ( $status & ( Application_Model_Status::TODO
+							| Application_Model_Status::WIP
+							| Application_Model_Status::FINISHED
+							| Application_Model_Status::PASSED
+							| Application_Model_Status::FAILED ) ) > 0;
 	}
 	
 	

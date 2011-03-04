@@ -1,4 +1,6 @@
 <?php
+error_reporting( E_ALL );
+
 /**
  * Bootstrap de l'application (contrôleur frontal)
  * 
@@ -42,6 +44,9 @@ require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader->registerNamespace( 'Escarmouche_' );
 
+// Needed to the Gravatar view Helper
+$autoloader->registerNamespace( 'NP_' );
+
 $loader = new Zend_Loader_Autoloader_Resource( array( 'basePath' => APPLICATION_PATH, 'namespace' => 'Application' ) );
 $loader->addResourceType( 'model', 'models', 'Model' );
 
@@ -74,40 +79,21 @@ $log->setEventItem( 'client_ip', $_SERVER['REMOTE_ADDR'] );
 
 $log->addPriority( 'USER', 8 );
 // Ajout des paramètres enregistrés dans le format du journal à écrire
-$format = '%client_ip% %user_agent%' . Zend_Log_Formatter_Simple::DEFAULT_FORMAT;
+$format = Zend_Log_Formatter_Simple::DEFAULT_FORMAT . PHP_EOL;
 
 // Ajout du format du journal au log
 $writer->setFormatter( new Zend_Log_Formatter_Simple( $format ) );
 
 Zend_Registry::set( 'log', $log );
-
-
-// ************************* SESSION ***********************************
-
-
-
-// Configuration de la session (impérativement avant son démarrage)
-Zend_Session::setOptions( $configSession->toArray() );
-Zend_Session::setOptions( array( 'save_path' => APPLICATION_PATH . $configSession->save_path ) );
-
-// Partage (et création ou restauration) de l'objet de session dans le registre
-// Ce premier appel à new Zend_Session_Namespace démarre la session PHP
-Zend_Registry::set( 'session', $session = new Zend_Session_Namespace( $configSession->name ) );
-
-
 // ************************** LOCALE ********************************
-
-
-
 // locale pour la gestion de la langue
-
-
-
 //Zend_Locale::$compatibilityMode = false;
 $locale = new Zend_Locale( 'fr_FR' ); // locale par défaut : navigateur utilisé, sinon machine hôte
 Zend_Registry::set( 'Zend_Locale', $locale );
 // on attache le composant cache à Zend_Locale
 Zend_Locale::setCache( $cacheInstance );
+
+
 
 // *************************** DATES *********************************
 date_default_timezone_set( 'Europe/Paris' );
@@ -115,13 +101,9 @@ Zend_Date::setOptions( array( 'cache' => $cacheInstance ) );
 
 
 // ************************** DATABASE *******************************
-
-
-
 try
 {
 	$db = Zend_Db::factory( $configMain->database );
-	//$db->query( "SET NAMES 'UTF8'" );
 	$db->setFetchMode( Zend_Db::FETCH_OBJ );
 	
 	// Ajout du profiler
@@ -134,7 +116,6 @@ try
 }
 catch( Zend_Db_Exception $e )
 {
-	// on passe l'exception sous silence, elle sera gérée dans le système MVC plus tard
 	print_r( $e );
 }
 
@@ -142,10 +123,24 @@ catch( Zend_Db_Exception $e )
 Zend_Db_Table_Abstract::setDefaultMetadataCache( $cacheInstance );
 
 
+
+
+// ************************* SESSION ***********************************
+// Configuration de la session (impérativement avant son démarrage)
+Zend_Session::setOptions( $configSession->toArray() );
+Zend_Session::setOptions( array( 'save_path' => APPLICATION_PATH . $configSession->save_path ) );
+
+// Partage (et création ou restauration) de l'objet de session dans le registre
+// Ce premier appel à new Zend_Session_Namespace démarre la session PHP
+Zend_Registry::set( 'session', new Zend_Session_Namespace( $configSession->name ) );
+
+$adapter = new Zend_Auth_Adapter_DbTable(	Zend_Db_Table_Abstract::getDefaultAdapter(),
+    										Zend_Registry::get( 'config' )->database->auth->tableName,
+    										Zend_Registry::get( 'config' )->database->auth->identityColum,
+    										Zend_Registry::get( 'config' )->database->auth->credentialColumn );
+Zend_Registry::set( 'authAdapter', $adapter );
+
 //************************** ACL *************************************
-
-
-
 // les ACLs n'existent pas en session, créons les
 /*if( ! isset( $session->acl ) )
 {
@@ -157,22 +152,18 @@ Zend_Db_Table_Abstract::setDefaultMetadataCache( $cacheInstance );
 
 
 // ************************ PAGINATEUR *********************************
-
-
-
 Zend_View_Helper_PaginationControl::setDefaultViewPartial( 'common/pagination_control.phtml' );
 
 
+
 // ************************ MVC ****************************************
-
-
-
 // Configuration du contrôleur frontal
 $frontController = Zend_Controller_Front::getInstance();
-$frontController->setControllerDirectory( APPLICATION_PATH . '/controllers' )
-				->setBaseUrl('/~windu/Overlord/public' );
+$frontController->setControllerDirectory( APPLICATION_PATH .  DIRECTORY_SEPARATOR . 'controllers' )
+				//->setBaseUrl('/~windu/Escarmouche/public' );
+				->setBaseUrl( '/Escarmouche/public');
 
-$frontController->throwExceptions( false ); // par défaut
+$frontController->throwExceptions( true ); // par défaut
 
 
 
@@ -182,10 +173,10 @@ $frontController->setParam( 'locale', $locale );
 $frontController->setParam( 'config', $configMain );
 
 // enregistrement du plugin de sauvegarde de la page précédente
-$frontController->registerPlugin( new Overlord_Controller_Plugins_Session() );
+$frontController->registerPlugin( new Escarmouche_Controller_Plugins_Session() );
 
 // Ajout du chemin des aides d'action dans le gestionnaire d'aides MVC
-Zend_Controller_Action_HelperBroker::addPrefix( 'Overlord_Controller_ActionHelpers' );
+Zend_Controller_Action_HelperBroker::addPrefix( 'Escarmouche_Controller_ActionHelpers' );
 
 // Configuration d'un en-tête de réponse HTTP global
 $response = new Zend_Controller_Response_Http();
@@ -202,10 +193,8 @@ $router->addConfig( $configRoutes->getConfigObject(), 'routes' );
 
 
 // **************************** LAYOUTS ***********************************
+Zend_Layout::startMvc( array( 'layoutPath' => APPLICATION_PATH .  DIRECTORY_SEPARATOR . 'views' .  DIRECTORY_SEPARATOR . 'layouts' ) );
 
-
-
-Zend_Layout::startMvc( array( 'layoutPath' => APPLICATION_PATH . '/views/layouts' ) );
 
 
 // ************************* TRANSLATE ************************************
@@ -233,17 +222,11 @@ Zend_Registry::set( 'Zend_Translate', $translate );
 */
 
 // ************************* FORM ******************************************
-
-
-
 //Zend_Form::setDefaultTranslator( $translateForm );
 
 
 
 // ************************* VIEW ******************************************
-
-
-
 $view = new Zend_View();
 $view->setEncoding( 'UTF-8' );
 $view->strictVars( ( bool ) $configMain->debug );
@@ -255,10 +238,8 @@ $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper( 'ViewRende
 $viewRenderer->setView( $view );
 
 
+
 // ******************************** DISPATCH ******************************
-
-
-
 try
 {
 	$frontController->dispatch();

@@ -30,16 +30,21 @@ class UserController extends Escarmouche_Controller_Abstract
 	}
 	
 	
-	public function displayAction()
+	public function homeAction()
 	{
-		$params = $this->getRequest()->getParams();
-		if( isset( $params['id'] ) )
+		$auth = Zend_Auth::getInstance();
+		if( $auth->hasIdentity() )
 		{
-			$user = $this->_userMapper->find( $params['id' ] );
+			$identity = $auth->getIdentity();
+			$user = $this->_userMapper->find( $identity->id );
 			$this->view->user = $user;
-			$this->view->setTitle( $user->getName() );	
+			$this->view->setTitle( 'Page perso : ' . $user->getName() );
 		}
 		else
-			$this->_redirect( $this->view->url( array( 'controller' => 'user', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url(	array(	'controller'	=> 'user',
+															'action'		=> 'index' ),
+													null,
+													true ),
+								array( 'prependBase' => false ) );
 	}
 }

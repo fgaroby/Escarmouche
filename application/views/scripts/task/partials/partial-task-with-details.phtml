@@ -1,0 +1,34 @@
+<div class="divTask" style="border-color : <?php echo $this->task->getColor(); ?>">
+	<div class="header">
+		<a href="<?php echo $this->baseUrl();?>/task/edit/id/<?php echo  $this->escape( $this->task->getId() ); ?>">
+			<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit task" title="edit task" />
+		</a>
+		<h4>
+			<a href="<?php echo $this->baseUrl();?>/task/display/id/<?php echo $this->task->getId(); ?>"><?php echo $this->task->getName(); ?></a>
+		</h4>
+		<div class="description">
+			<?php echo $this->escape( $this->task->getDescription() ); ?>
+		</div>
+		<div class="status <?php echo $this->task->getStatus()->getName(); ?>">
+			<span class="points" title="<?php echo $this->task->getEstimation(); ?> jour<?php echo ( $this->task->getEstimation() > 1 ? 's' : '' ); ?>"><?php echo $this->task->getEstimation(); ?></span>
+			<div class="spacer">&nbsp;</div>
+		</div>
+	</div>
+	<div class="content">
+		<div class="comments">
+			<a href="<?php echo $this->baseUrl();?>/comment/edit/">
+				<img class="edit" src="<?php echo $this->baseUrl();?>/images/add.png" alt="add comment" title="add comment" />
+			</a>
+			<h4>Comments</h4>
+			<?php
+				$objectKey = $this->partialLoop()->getObjectKey();
+				echo $this->partialLoop()
+						  ->setObjectKey( 'comment' )
+						  ->partialLoop( 'comment/partials/partial-comment.phtml', $this->task->getComments() );
+						  
+				$this->partialLoop()
+					 ->setObjectKey( $objectKey );
+			?>
+		</div>
+	</div>
+</div>

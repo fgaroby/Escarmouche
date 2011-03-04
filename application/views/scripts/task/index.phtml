@@ -1,0 +1,7 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/task.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php
+	echo $this->partialLoop()
+			  ->setObjectKey( 'task' )
+			  ->partialLoop( 'task/partials/partial-task.phtml', $this->tasks );
+?>

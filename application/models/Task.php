@@ -6,15 +6,6 @@ class Application_Model_Task extends Application_Model_AbstractModel
 {
 	/**
 	 * 
-	 * The list of <code>Story</code> to which the task is attached.
-	 * Cannot be <code>null</code>. Can be empty.
-	 * @var array[Application_Model_Story]
-	 */
-	protected $_stories = array();
-	
-	
-	/**
-	 * 
 	 * The status of the task.
 	 * By default, equals <code>Application_Model_Status::SUGGESTED</code>
 	 * @var int
@@ -22,9 +13,38 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	protected $_status;
 	
 	
+	protected $_type		= null;
+	
+	
+	protected $_estimation	= 0;
+	
+	
+	protected $_createdBy	= null;
+	
+	
+	protected $_assignedTo	= null;
+	
+	
+	protected $_closedBy	= null;
+	
+	
+	/**
+	 * 
+	 * The list of <code>Story</code> to which the task is attached.
+	 * Cannot be <code>null</code>. Can be empty.
+	 * @var array[Application_Model_Story]
+	 */
+	protected $_stories		= array();
+	
+	
+	protected $_comments	= array();
+
+	
+	
 	public function __construct( $options = array() )
 	{
 		$this->_status = Application_Model_Status::SUGGESTED;
+		$this->_type = Application_Model_Type::STORY;
 		parent::__construct( $options );
 	}
 	
@@ -36,18 +56,10 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	 */
 	public function setStatus( $status )
 	{
-		if( !is_int( $status ) )
-			throw new InvalidArgumentException( "'\$status' is 'NaN' !" );
-			
-		// Status is an integer
 		if( !Application_Model_Status::isValid( $status ) )
-			throw new InvalidArgumentException( "'\$status' is not a valid status !" );
+			throw new InvalidArgumentException( "'\$status' " . $status . " is not a valid status !" );
 		
-		if( $status !== Application_Model_Status::TODO
-			&& $status !== Application_Model_Status::WIP
-			&& $status !== Application_Model_Status::FINISHED 
-			&& $status !== Application_Model_Status::PASSED
-			&& $status !== Application_Model_Status::FAILED )
+		if( !Application_Model_Status::isValidTaskStatus( $status ) )
 			throw new InvalidArgumentException( "The status '" . $status . "' is not allowed !" );
 			
 		$this->_status = $status;
@@ -62,7 +74,19 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	 */
 	public function getStatus()
 	{
+		if( !$this->_status instanceof Application_Model_Status )
+			$this->_status = Application_Model_StatusMapper::getInstance()->find( $this->_status );
+		
 		return $this->_status;
+	}
+	
+	
+	public function getStatusId()
+	{
+		if( $this->_status instanceof Application_Model_Status )
+			return $this->_status->getId();
+		else
+			return $this->_status;
 	}
 	
 	
@@ -154,9 +178,164 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	}
 	
 	
+	public function setEstimation( $estimation )
+	{
+		$this->_estimation = $estimation;
+		
+		return $this;
+	}
+	
+	
+	/**
+	 * 
+	 * @return int
+	 */
+	public function getEstimation()
+	{
+		return $this->_estimation;
+	}
+	
+	
+	public function setType( $type )
+	{
+		$this->_type = $type;
+		
+		return $this;
+	}
+	
+	
+	/**
+	 * 
+	 * @return Application_Model_Type
+	 */
+	public function getType()
+	{
+		if( !$this->_type instanceof Application_Model_Type )
+			$this->_type = Application_Model_TypeMapper::getInstance()->find( $this->_type );
+		
+		return $this->_type;
+	}
+	
+	
+	/**
+	 * 
+	 * @return int | null
+	 */
+	public function getTypeId()
+	{
+		if( $this->_type instanceof Application_Model_Type )
+			return $this->_type->getId();
+		else
+			return $this->_type;
+	}
+	
+	
+	public function setCreatedBy( Application_Model_User $createdBy )
+	{
+		$this->_createdBy = $createdBy;
+		
+		return $this;
+	}
+	
+	
+	/**
+	 * 
+	 * @return Application_Model_User
+	 */
+	public function getCreatedBy()
+	{
+		if ( !$this->_createdBy instanceof Application_Model_User )
+			$this->_createdBy = Application_Model_UserMapper::getInstance()->find( $this->_createdBy );
+		
+		return $this->_createdBy;
+	}
+	
+	
+	public function getCreatedById()
+	{
+		if ( $this->_createdBy instanceof Application_Model_User )
+			return $this->_createdBy->getId();
+		else
+			return $this->_createdBy;
+	}
+	
+	
+	public function setAssignedTo( Application_Model_User $assignedTo )
+	{
+		$this->_assignedTo = $assignedTo;
+		
+		return $this;
+	}
+	
+	
+	public function getAssignedTo()
+	{
+		if ( !$this->_assignedTo instanceof Application_Model_User )
+			$this->_assignedTo = Application_Model_UserMapper::getInstance()->find( $this->_assignedTo );
+		
+		return $this->_assignedTo;
+	}
+	
+	
+	public function getAssignedToId()
+	{
+		if ( $this->_assignedTo instanceof Application_Model_User )
+			return $this->_assignedTo->getId();
+		else
+			return $this->_assignedTo;
+	}
+	
+	
+	public function setClosedBy( Application_Model_User $closedBy )
+	{
+		$this->_closedBy = $closedBy;
+		
+		return $this;
+	}
+	
+	
+	public function getClosedBy()
+	{
+		if ( !$this->_closedBy instanceof Application_Model_User )
+			$this->_closedBy = Application_Model_UserMapper::getInstance()->find( $this->_closedBy );
+		
+		return $this->_closedBy;
+	}
+	
+	
+	public function getClosedById()
+	{
+		if ( $this->_closedBy instanceof Application_Model_User )
+			return $this->_closedBy->getId();
+		else
+			return $this->_closedBy;
+	}
+	
+	
+	public function getColor()
+	{
+		if( !$this->_type instanceof Application_Model_Type )
+			$this->_type = Application_Model_TypeMapper::getInstance()->find( $this->_type );
+		
+		return $this->_type->getColor();
+	}
+	
+	
+	public function getComments()
+	{
+		return $this->_comments;
+	}
+	
+	
 	public function toArray()
 	{
-		return array_merge( parent::toArray(), array( 'status' => $this->getStatus() ) );
+		return array_merge( parent::toArray(), array(	'status'		=> $this->getStatusId(),
+														'type'			=> $this->getTypeId(),
+														'estimation'	=> $this->getEstimation(),
+														'created_by'	=> $this->getCreatedById(),
+														'assigned_to'	=> $this->getAssignedToId(),
+														'closed_by'		=> $this->getClosedById() ) );
+														
 	}
 }
 ?>

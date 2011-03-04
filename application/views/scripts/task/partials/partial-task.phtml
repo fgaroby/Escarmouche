@@ -1,0 +1,17 @@
+<div class="divTask" style="border-color : <?php echo $this->task->getColor(); ?>">
+	<div class="header">
+		<a href="<?php echo $this->baseUrl();?>/task/edit/id/<?php echo  $this->escape( $this->task->getId() ); ?>">
+			<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit task" title="edit task" />
+		</a>
+		<h4>
+			<a href="<?php echo $this->baseUrl();?>/task/display/id/<?php echo $this->task->getId(); ?>"><?php echo $this->task->getName(); ?></a>
+		</h4>
+		<div class="description">
+			<?php echo $this->escape( $this->task->getDescription() ); ?>
+		</div>
+		<div class="status <?php echo $this->task->getStatus()->getName(); ?>">
+			<span class="points" title="<?php echo $this->task->getEstimation(); ?> jour<?php echo ( $this->task->getEstimation() > 1 ? 's' : '' ); ?>"><?php echo $this->task->getEstimation(); ?></span>
+			<div class="spacer">&nbsp;</div>
+		</div>
+	</div>
+</div>

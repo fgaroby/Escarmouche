@@ -1,5 +1,7 @@
-<div class="divProduct">
-	<h4>
-		<a href="<?php echo $this->baseUrl();?>/task/edit/id/<?php echo $this->task->getId(); ?>"><?php echo $this->task->getName(); ?></a>
-	</h4>
-</div>
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/task.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php
+	echo $this->partial()
+			  ->setObjectKey( 'task' )
+			  ->partial( 'task/partials/partial-task-with-details.phtml', $this->task );
+?>

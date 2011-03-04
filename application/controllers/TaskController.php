@@ -6,13 +6,14 @@
  * @author
  * @version
  */
-class TaskController extends Zend_Controller_Action
+class TaskController extends Escarmouche_Controller_Abstract
 {
 	protected $_taskMapper;
 	
 	
 	public function init()
 	{
+		parent::init();
 		$this->view->setTitle( 'Tasks' );
 		$this->_taskMapper = new Application_Model_TaskMapper();
 	}
@@ -23,10 +24,15 @@ class TaskController extends Zend_Controller_Action
 	 */
 	public function indexAction()
 	{
-		// TODO Auto-generated TaskController::indexAction() default action
+		$this->view->tasks = $this->_taskMapper->fetchAll();
 	}
 	
 	
+	/**
+	 * 
+	 * Display the task elected by $params['id']
+	 * If doesn't exist, redirect to <code>task/index</code>
+	 */
 	public function displayAction()
 	{
 		$params = $this->getRequest()->getParams();
@@ -37,7 +43,13 @@ class TaskController extends Zend_Controller_Action
 			$this->view->setTitle( $task->getName() );	
 		}
 		else
-			$this->_redirect( $this->view->url( array( 'controller' => 'task', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+		{
+			$this->_redirect(	$this->view->url(	array(	'controller'	=> 'task',
+															'action'		=> 'index' ),
+													null,
+													true ),
+								array( 'prependBase' => false ) );
+		}
 	}
 	
 	
@@ -77,7 +89,7 @@ class TaskController extends Zend_Controller_Action
 			// Sauvegarde des informations
 			$this->_taskMapper->save( $task );
 			
-			$this->_helper->FlashMessenger( "Insertion du produit '{$task->getName()}' effectuée ! " );
+			$this->_helper->FlashMessenger( "Insertion de la tâche '{$task->getName()}' effectuée ! " );
 			$this->_redirect( $this->view->url( array( 'controller' => 'task', 'action' => 'index' ) ), array( 'prependBase' => false ) );
 		}
 		

@@ -1,10 +1,10 @@
 <?php
-require_once( dirname( __FILE__ ) . '/AbstractMapper.php' );
-require_once( dirname( __FILE__ ) . '/Db/Table/Task.php' );;
-
-
 class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 {
+	protected static $_instance = null;
+	
+	
+	
 	/**
 	 * Get storage
 	 * @return Zend_Db_Table_Abstract
@@ -28,15 +28,11 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 		if( !$task instanceof Application_Model_Task )
 			throw new InvalidArgumentException( "'\$task' must be instance of 'Application_Model_Task' !" );
 			
-		$data = array(	'name'			=> $task->getName(),
-						'description'	=> $task->getDescription(),
-						'status'		=> $task->getStatus() );
-		
 		if( null === ( $id = $task->getId() ) )
 		{
 			$table = $this->getDbTable();
 			unset( $data['id'] );
-			$table->insert( $data );
+			$table->insert( $task );
 			$id = $table->getAdapter()->lastInsertId();
 			$task->setId( $id );
 			
@@ -102,5 +98,14 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 		
 		unset( $this->_loadedMap[$id] );
 		$this->getDbTable()->delete( array( 'id = ?' => $id ) );
+	}
+	
+	
+	public static function getInstance()
+	{
+		if( null === self::$_instance )
+			self::$_instance = new Application_Model_TaskMapper();
+		
+		return self::$_instance;
 	}
 } 

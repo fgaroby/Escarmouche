@@ -1,0 +1,42 @@
+.divTask
+{
+	border : solid 1px black;
+	width : 75%;
+	float : left;
+	margin : 10px;
+	padding : 3px;
+}
+
+.divTask .header
+{
+	padding : 3px;	
+}
+
+.divTask .header h4
+{
+	margin : 2px;
+	text-align :center;
+}
+
+.divTask .header .description
+{
+	margin-top : 5px;
+	font-weight : normal;
+	border-width : 0px;
+}
+
+.divTask > .content
+{
+	border : solid 1px grey;
+	padding : 3px;
+	margin : 3px;
+}
+
+.divTask .content h4
+{
+	margin : 2px;
+	text-align :center;
+	border-bottom : dotted 1px grey;
+	padding-left : 3px;
+	padding-right : 3px;	
+}

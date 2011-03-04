@@ -1,7 +1,10 @@
 .divSprint
 {
+	border : solid 1px black;
+	width : 75%;
 	float : left;
-	width : 200px;
+	margin : 10px;
+	padding : 3px;
 }
 
 .divSprint .header h4
@@ -16,43 +19,21 @@
 	border-width : 0px;
 }
 
-.divSprint .header h5.PLANIFIED
-{
-	font-style : italic;
-}
-
-.divSprint .header h5.WIP,
-.divSprint .header h5.FAILED,
-.divSprint .header h5.PASSED,
-.divSprint .header h5.FINISHED 
-{
-
-}
-
 .divSprint .header
 {
-	border-left : solid 2px black;
-	border-right : solid 2px black;
-	padding : 5px;
+	padding : 3px;	
 }
 
-.divSprint .content
+.divSprint > .content
 {
+	border : solid 1px grey;
 	padding : 3px;
-	border-left : solid 2px black;
-	border-right : solid 2px black;	
-}
-
-.divSprint .divStory
-{
-	margin-bottom : 5px;
+	margin : 3px;
 }
 
 .divSprint .stories
 {
-	border-left : solid 2px black;
-	border-right : solid 2px black;
-	padding : 5px;
+	padding : 3px;
 }
 
 .storiesList

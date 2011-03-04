@@ -89,7 +89,7 @@ class StoryController extends Escarmouche_Controller_Abstract
 				Zend_Debug::dump( $e );die();
 			}
 			
-			$this->_helper->FlashMessenger( "Insertion du produit '{$story->getName()}' effectuée ! " );
+			$this->_helper->FlashMessenger( "Insertion de la story '{$story->getName()}' effectuée ! " );
 			
 			// redirect to the referrer page or to the default, if referrer is empty
 			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );

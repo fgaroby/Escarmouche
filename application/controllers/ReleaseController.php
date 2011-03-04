@@ -8,7 +8,7 @@
  */
 
 
-class ReleaseController extends Zend_Controller_Action
+class ReleaseController extends Escarmouche_Controller_Abstract
 {
 	protected $_releaseMapper;
 	
@@ -16,6 +16,7 @@ class ReleaseController extends Zend_Controller_Action
 	
 	public function init()
 	{
+		parent::init();
 		$this->view->setTitle( 'Releases' );
 		$this->_releaseMapper = new Application_Model_ReleaseMapper();
 	}
@@ -64,7 +65,6 @@ class ReleaseController extends Zend_Controller_Action
 		{
 			$release = new Application_Model_Release( array( 'name' => 'default release' ) );
 		}
-		//Zend_Debug::dump( $release ); die();
 		$form = new Escarmouche_Form_Release( array( 'update' => $isUpdate ) );
 		$form->setAction( $this->view->link( 'release', 'edit', null, '', 'default', !$isUpdate ) )
 			 ->setMethod( 'post' )
@@ -109,7 +109,7 @@ class ReleaseController extends Zend_Controller_Action
 			// Sauvegarde des informations
 			$this->_releaseMapper->save( $release );
 			
-			$this->_helper->FlashMessenger( "Insertion du produit '{$release->getName()}' effectuée ! " );
+			$this->_helper->FlashMessenger( "Insertion de la release '{$release->getName()}' effectuée ! " );
 			// redirect to the referrer page or to the default, if referrer is empty
 			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
 		}

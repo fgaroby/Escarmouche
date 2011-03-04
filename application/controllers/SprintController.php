@@ -1,11 +1,12 @@
 <?php
-class SprintController extends Zend_Controller_Action
+class SprintController extends Escarmouche_Controller_Abstract
 {
 	protected $_sprintMapper;
 	
 	
 	public function init()
 	{
+		parent::init();
 		$this->view->setTitle( 'Sprints' );
 		$this->_sprintMapper = new Application_Model_SprintMapper();
 	}
@@ -95,13 +96,13 @@ class SprintController extends Zend_Controller_Action
 			// We save (INSERT or UPDATE) the data
 			$this->_sprintMapper->save( $sprint );
 			
-			$this->_helper->FlashMessenger( "Insertion du produit '{$sprint->getName()}' effectuée ! " );
+			$this->_helper->FlashMessenger( "Insertion du sprint '{$sprint->getName()}' effectuée ! " );
 			// redirect to the referrer page or to the default, if referrer is empty
 			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
 		}
 		else
 		{
-			$this->_helper->FlashMessenger( "L'insertion du produit '{$sprint->getName()}' a échoué ! " );
+			$this->_helper->FlashMessenger( "L'insertion du sprint '{$sprint->getName()}' a échoué ! " );
 			$this->view->form = $form;
 		}
 	}

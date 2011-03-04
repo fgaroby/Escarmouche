@@ -16,7 +16,13 @@ class IndexController extends Escarmouche_Controller_Abstract
 	
 	public function indexAction()
 	{
-		
+		$this->view->setTitle( 'Accueil' );
+	}
+	
+	
+	public function displayAction()
+	{
+		$this->view->setTitle( 'Tableau de bord' );
 	}
 	
 	

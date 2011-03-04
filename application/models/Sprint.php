@@ -32,9 +32,6 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	 */
 	public function addStory( $story )
 	{
-		if( $story === null || empty( $story ) )
-			throw new InvalidArgumentException( "'\$story' cannot be 'null' or empty !" );
-			
 		if( is_array( $story ) )
 			foreach( $story as $s )
 				$this->_addStory( $s );
@@ -101,7 +98,7 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	public function getStory( $index )
 	{
 		if( !is_numeric( $index ) )
-			throw new InvalidArgumentException( "'\$index' is Nan !" );
+			throw new InvalidArgumentException( "'\$index' is NaN !" );
 		if( $index < 0 || $index >= sizeof( $this->_stories ) )
 			throw new OutOfRangeException( "'\$index' cannot be negative, greater than or equal to the array size !" );
 			
@@ -138,11 +135,8 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	
 	public function getStatus()
 	{
-		if( !$this->_status instanceof Application_Model_Status )
-		{
-			$sm = new Application_Model_StatusMapper();
-			$this->_status = $sm->find( $this->_status );
-		}
+		if( $this->_status instanceof Application_Model_Status )
+			$this->_status = Application_Model_StatusMapper::getInstance()->find( $this->_status );
 		
 		return $this->_status;
 	}
@@ -210,9 +204,8 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	 */
 	public function start( $date = null )
 	{
-		/*debug_print_backtrace();die();
 		if( $this->_startDate !== null && Application_Model_Status::isStarted( $this->getStatus() ) )
-			throw new BadMethodCallException( "This sprint has already started !" );*/
+			throw new BadMethodCallException( "This sprint has already started !" );
 			
 		if( $date === null )
 			$date = new Zend_Date( 'now' );
@@ -254,23 +247,22 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	 * Defines the end date of the sprint, and its status
 	 * @param string | Zend_Date $date the new status of the sprint. <code>Application_Model_Status::FINISHED</code> by default.
 	 * @param int $status the new status of the sprint.
-	 * @throws BadMethodCallException if the sprint is finished already
+	 * @return <code>false</code> if the sprint is finished already
 	 * @throws InvalidArgumentException if the end date is before the start date
 	 */
 	public function end( $date = null, $status = Application_Model_Status::FINISHED )
 	{
-		if( $this->_endDate !== null )
-			throw new BadMethodCallException( "This sprint has already finished !" );
-			
 		if( $date === null )
 			$date = new Zend_Date( 'now' );
 		else if( is_string( $date ) )
 			$date = new Zend_Date( $date );
 		if( $date->isEarlier( $this->_startDate ) )
-			throw new InvalidArgumentException( "this sprint cannot finish before it starts !" );
+			return false;
 		
 		$this->_endDate = $date;
 		$this->setStatus( $status );
+		
+		return true;
 	}
 	
 	

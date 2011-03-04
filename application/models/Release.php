@@ -192,11 +192,8 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	 */
 	public function getStatus()
 	{
-		if( !$this->_status instanceof Application_Model_Status )
-		{
-			$sm = new Application_Model_StatusMapper();
-			$this->_status = $sm->find( ( int ) $this->_status );
-		}
+		if( $this->_status instanceof Application_Model_Status )
+			$this->_status = Application_Model_StatusMapper::getInstance()->find( $this->_status );
 		
 		return $this->_status;
 	}
@@ -258,7 +255,7 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	}
 	
 	
-	public function getDuration()
+	public function getEstimation()
 	{
 		return $this->_duration;
 	}
@@ -268,7 +265,7 @@ class Application_Model_Release extends Application_Model_AbstractModel
 	{
 		return array_merge( parent::toArray(), array(	'startDate'	=> $this->getStartDate(),
 														'endDate'	=> $this->getEndDate(),
-														'duration'	=> $this->getDuration() ) );
+														'duration'	=> $this->getEstimation() ) );
 	}
 }
 ?>

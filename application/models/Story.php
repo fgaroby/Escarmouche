@@ -55,7 +55,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	 */
 	public function setStatus( $status )
 	{
-		if( !$status instanceof Application_Model_Status && !is_int( $status ) )
+		if( !$status instanceof Application_Model_Status && !intval( $status, 10 ) )
 			throw new InvalidArgumentException( "\$status' is 'NaN' !" );
 		if( !Application_Model_Status::isValid( $status ) )
 			throw new InvalidArgumentException( "'\$status' is not a valid status !" );
@@ -72,11 +72,8 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	 */
 	public function getStatus()
 	{
-		if( is_int( $this->_status ) )
-		{
-			$sm = new Application_Model_StatusMapper();
-			$this->_status = $sm->find( $this->_status );
-		}
+		if( $this->_status instanceof Application_Model_Status )
+			$this->_status = Application_Model_StatusMapper::getInstance()->find( $this->_status );
 		
 		return $this->_status;
 	}

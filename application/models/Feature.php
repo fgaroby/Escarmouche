@@ -45,10 +45,6 @@ class Application_Model_Feature extends Application_Model_AbstractModel
 	{
 		if( !$status instanceof Application_Model_Status )
 		{
-			if( !is_int( $status ) )
-				throw new InvalidArgumentException( "\$status' is 'NaN' !" );
-				
-			// $status is an integer
 			if( !Application_Model_Status::isValid( $status ) )
 				throw new InvalidArgumentException( "'\$status' is not a valid status !" );
 			
@@ -67,6 +63,9 @@ class Application_Model_Feature extends Application_Model_AbstractModel
 	 */
 	public function getStatus()
 	{
+		if( $this->_status instanceof Application_Model_Status )
+			$this->_status = Application_Model_StatusMapper::getInstance()->find( $this->_status );
+		
 		return $this->_status;
 	}
 	

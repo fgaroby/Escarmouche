@@ -1,6 +1,10 @@
 <?php
 class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 {
+	protected static $_instance;
+
+
+
 	public function getDbTable()
 	{
 		if( null === $this->_dbTable )
@@ -102,5 +106,14 @@ class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 		
 		unset( $this->_loadedMap[$id] );
 		$this->getDbTable()->delete( array( 'id = ?' => $id ) );
+	}
+	
+	
+	public static function getInstance()
+	{
+		if( null === self::$_instance )
+			self::$_instance = new Application_Model_SprintMapper();
+		
+		return self::$_instance;
 	}
 }

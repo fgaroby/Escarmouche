@@ -1,30 +1,34 @@
 <?php
 class Application_Model_TypeMapper extends Application_Model_AbstractMapper
 {
-    public function getDbTable()
-    {
-    	if( null === $this->_dbTable )
-    		$this->setDbTable('Application_Model_Db_Table_Type' );
+	protected static $_instance;
 
-    	return $this->_dbTable;
-    }
-    
-    
-    /**
-     * 
-     * @see application/models/Application_Model_AbstractMapper::save()
-     * @param Application_Model_Type $type
-     * @return void
-     */
-    public function save( Application_Model_AbstractModel $type )
-    {
-    	if( !$type instanceof Application_Model_Type )
+
+
+	public function getDbTable()
+	{
+		if( null === $this->_dbTable )
+			$this->setDbTable('Application_Model_Db_Table_Type' );
+
+		return $this->_dbTable;
+	}
+
+
+	/**
+	* 
+	* @see application/models/Application_Model_AbstractMapper::save()
+	* @param Application_Model_Type $type
+	* @return void
+	*/
+	public function save( Application_Model_AbstractModel $type )
+	{
+		if( !$type instanceof Application_Model_Type )
 			throw new InvalidArgumentException( "'\$type' must be instance of 'Application_Model_Type' !" );
-			
+
 		$data = array(	'name'			=> $type->getName(),
-						'description'	=> $type->getDescription(),
-						'status'		=> $type->getStatus() );
-		
+		'description'	=> $type->getDescription(),
+		'status'		=> $type->getStatus() );
+
 		if( null === ( $id = $type->getId() ) )
 		{
 			unset( $data['id'] );
@@ -32,14 +36,14 @@ class Application_Model_TypeMapper extends Application_Model_AbstractMapper
 		}
 		else
 			$this->getDbTable()->update( $data, array( 'id = ?' => $id ) );
-    }
-	
-	
+	}
+
+
 	/**
-	 * 
-	 * @see Application_Model_AbstractMapper::find()
-	 * @param int $id
-	 */
+	* 
+	* @see Application_Model_AbstractMapper::find()
+	* @param int $id
+	*/
 	public function find( $id )
 	{
 		if( !$id )
@@ -47,26 +51,26 @@ class Application_Model_TypeMapper extends Application_Model_AbstractMapper
 
 		if( isset( $this->_loadedMap[$id] ) )
 			return $this->_loadedMap[$id];
-		
+
 		$rowset = $this->getDbTable()->find( array( 'id = ?' => $id ) );
 		if( 0 === $rowset->count() )
 			return new Zend_Db_Table_Row();
-			
+
 		$row = $rowset->current();
 		$data = array(	'id'			=> $row->id,
-			 			'name'			=> $row->name,
-						'description'	=> $row->description );
-			
+		'name'			=> $row->name,
+		'description'	=> $row->description );
+
 		$this->_loadedMap[$id] = new Application_Model_Type( $data );
-		
+
 		return $this->_loadedMap[$id];
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @see Application_Model_AbstractMapper::fetchAll()
-	 */
+	* 
+	* @see Application_Model_AbstractMapper::fetchAll()
+	*/
 	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
 		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
@@ -74,26 +78,35 @@ class Application_Model_TypeMapper extends Application_Model_AbstractMapper
 		foreach( $resultSet as $row )
 		{
 			$entry = new Application_Model_Type( array(	'id'			=> $row->id,
-														'name'			=> $row->name,
-														'description'	=> $row->description ) );
+			'name'			=> $row->name,
+			'description'	=> $row->description ) );
 			$entries[] = $entry;
 		}
-		
+
 		return $entries;
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @see Application_Model_AbstractMapper::delete()
-	 * @param int | Application_Model_Type $type
-	 */
+	* 
+	* @see Application_Model_AbstractMapper::delete()
+	* @param int | Application_Model_Type $type
+	*/
 	public function delete( $type )
 	{
 		if( null === ( $id = $type->getId() ) )
-			throw new Exception( 'Object ID not set !' );
-		
+		throw new Exception( 'Object ID not set !' );
+
 		unset( $this->_loadedMap[$id] );
 		$this->getDbTable()->delete( array( 'id = ?' => $id ) );
+	}
+
+
+	public static function getInstance()
+	{
+		if( null === self::$_instance )
+		self::$_instance = new Application_Model_TypeMapper();
+
+		return self::$_instance;
 	}
 }

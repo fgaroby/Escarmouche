@@ -1,8 +1,10 @@
 <?php
-require_once( dirname( __FILE__ ) . '/AbstractMapper.php' );
-
 class Application_Model_UserMapper extends Application_Model_AbstractMapper
 {
+	protected static $_instance = null;
+	
+	
+	
 	public function getDbTable()
 	{
     	if( null === $this->_dbTable )
@@ -41,12 +43,32 @@ class Application_Model_UserMapper extends Application_Model_AbstractMapper
 	
 	public function fetchAll( $where = null, $order = null, $count = null, $offset = null )
 	{
+		$resultSet = $this->getDbTable()->fetchAll( $where, $order, $count, $offset );
+		$entries = array();
+		foreach( $resultSet as $row )
+		{
+			$entry = new Application_Model_User( $row );
+			$entries[] = $entry;
+		}
 		
+		return $entries;
 	}
 
 	
-	public function delete( $model )
+	public function delete( Application_Model_AbstractModel $model )
 	{
-		
+		if( !$model instanceof Application_Model_User )
+			return false;
+
+		return $this->getDbTable()->delete( 'id = ? ' . $model->getId() );
+	}
+	
+	
+	public static function getInstance()
+	{
+		if( null === self::$_instance )
+			self::$_instance = new Application_Model_UserMapper();
+			
+		return self::$_instance;
 	}
 }

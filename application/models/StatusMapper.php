@@ -1,6 +1,16 @@
 <?php
 class Application_Model_StatusMapper extends Application_Model_AbstractMapper
 {
+	protected static $_instance = null;
+	
+	
+	
+	protected function __construct()
+	{
+		
+	}
+	
+	
 	public function getDbTable()
 	{
 		if( null === $this->_dbTable )
@@ -73,7 +83,7 @@ class Application_Model_StatusMapper extends Application_Model_AbstractMapper
 	 * @param int | Application_Model_Status $status
 	 * @return void
 	 */
-	public function delete( $status )
+	public function delete( Application_Model_AbstractModel $status )
 	{
 		if( $status instanceof Application_Model_Status )	
 			if( null === ( $id = $status->getId( ) ) )
@@ -83,5 +93,14 @@ class Application_Model_StatusMapper extends Application_Model_AbstractMapper
 		
 		unset( $this->_loadedMap[$id] );
 		$this->getDbTable()->delete( array( 'id = ?' => $id ) );
+	}
+	
+	
+	public static function getInstance()
+	{
+		if( null === self::$_instance )
+			self::$_instance = new Application_Model_StatusMapper();
+		
+		return self::$_instance;
 	}
 }

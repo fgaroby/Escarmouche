@@ -1,26 +1,30 @@
 <?php
 class Application_Model_ProductMapper extends Application_Model_AbstractMapper
 {
-    public function getDbTable()
-    {
-    	if( null === $this->_dbTable )
-    		$this->setDbTable('Application_Model_Db_Table_Product' );
+	protected static $_instance;
 
-    	return $this->_dbTable;
-    }
-    
-    
-    /**
+
+
+	public function getDbTable()
+	{
+		if( null === $this->_dbTable )
+		$this->setDbTable('Application_Model_Db_Table_Product' );
+		
+		return $this->_dbTable;
+	}
+
+
+	/**
      * 
      * @see application/models/Application_Model_AbstractMapper::save()
      * @param Application_Model_Product $product
      * @return void
      */
-    public function save( Application_Model_AbstractModel $product )
-    {
-    	if( !$product instanceof Application_Model_Product )
+	public function save( Application_Model_AbstractModel $product )
+	{
+		if( !$product instanceof Application_Model_Product )
 			throw new InvalidArgumentException( "'\$product' must be instance of 'Application_Model_Product' !" );
-			
+
 		$data = array(	'name'			=> $product->getName(),
 						'description'	=> $product->getDescription(),
 						'scrumMaster'	=> $product->getScrumMaster(),
@@ -100,12 +104,21 @@ class Application_Model_ProductMapper extends Application_Model_AbstractMapper
 	 * @see Application_Model_AbstractMapper::delete()
 	 * @param int | Application_Model_Product $product
 	 */
-	public function delete( $product )
+	public function delete( Application_Model_AbstractModel $product )
 	{
 		if( null === ( $id = $product->getId() ) )
 			throw new Exception( 'Object ID not set !' );
 		
 		unset( $this->_loadedMap[$id] );
 		$this->getDbTable()->delete( array( 'id = ?' => $id ) );
+	}
+	
+	
+	public static function getInstance()
+	{
+		if( null === self::$_instance )
+			self::$_instance = new Application_Model_ProductMapper();
+		
+		return self::$_instance;
 	}
 }

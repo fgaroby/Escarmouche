@@ -26,7 +26,7 @@ abstract class Application_Model_AbstractMapper
 	public abstract function fetchAll( $where = null, $order = null, $count = null, $offset = null );
 
 	
-	public abstract function delete( $model );
+	public abstract function delete( Application_Model_AbstractModel $model );
 
 	
 	public function setDbTable( $dbTable )

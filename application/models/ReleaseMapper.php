@@ -1,13 +1,17 @@
 <?php
 class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
-{	
-    public function getDbTable()
-    {
-    	if( null === $this->_dbTable )
-    		$this->setDbTable('Application_Model_Db_Table_Release');
-
-    	return $this->_dbTable;
-    }
+{
+	protected static $_instance = null;
+	
+	
+	
+	public function getDbTable()
+	{
+		if( null === $this->_dbTable )
+			$this->setDbTable('Application_Model_Db_Table_Release');
+			
+		return $this->_dbTable;
+	}
     
     
     /**
@@ -27,7 +31,7 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 						'product'		=> $release->getProduct(),
 						'startDate'		=> $release->getStartDate(),
 						'endDate'		=> $release->getEndDate(),
-						'duration'		=> $release->getDuration() );
+						'duration'		=> $release->getEstimation() );
 		try
 		{
 			if( null === ( $id = $release->getId() ) )
@@ -113,5 +117,14 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 		
 		unset( $this->_loadedMap[$id] );
 		$this->getDbTable()->delete( array( 'id = ?' => $id ) );
+	}
+	
+	
+	public static function getInstance()
+	{
+		if( null === self::$_instance )
+			self::$_instance = new Application_Model_ReleaseMapper();
+		
+		return self::$_instance;
 	}
 } 

@@ -1,13 +1,17 @@
 <?php
 class Application_Model_StoryMapper extends Application_Model_AbstractMapper
-{	
-    public function getDbTable()
-    {
-    	if( null === $this->_dbTable )
-    		$this->setDbTable('Application_Model_Db_Table_Story');
+{
+	protected static $_instance = null;
+	
+	
+	
+	public function getDbTable()
+	{
+		if( null === $this->_dbTable )
+			$this->setDbTable('Application_Model_Db_Table_Story');
 
-    	return $this->_dbTable;
-    }
+		return $this->_dbTable;
+	}
     
     
     /**
@@ -82,5 +86,14 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 		
 		unset( $this->_loadedMap[$id] );
 		$this->getDbTable()->delete( array( 'id = ?' => $id ) );
+	}
+	
+	
+	public static function getInstance()
+	{
+		if( null === self::$_instance )
+			self::$_instance = new Application_Model_StoryMapper();
+		
+		return self::$_instance;
 	}
 } 

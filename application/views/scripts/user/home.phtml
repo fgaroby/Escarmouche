@@ -1,0 +1,31 @@
+<div class="divProducts">
+	<div class="header">
+		<h4>Vos produits</h4>
+	</div>
+	<div class="content">
+	<?php
+		$objectKey = $this->partialLoop()->getObjectKey();
+		echo $this->partialLoop()
+				  ->setObjectKey( 'product' )
+				  ->partialLoop( 'product/partials/partial-product.phtml', $this->user->getProducts() );
+		$this->partialLoop()
+			 ->setObjectKey( $objectKey );
+	?>
+	</div>
+</div>
+
+<div class="divComments">
+	<div class="header">
+		<h4>Vos derniers commentaires</h4>
+	</div>
+	<div class="content">
+	<?php
+		$objectKey = $this->partialLoop()->getObjectKey();
+		echo $this->partialLoop()
+				  ->setObjectKey( 'comment' )
+				  ->partialLoop( 'comment/partials/partial-comment.phtml', $this->user->getComments() );
+		$this->partialLoop()
+			 ->setObjectKey( $objectKey );
+	?>
+	</div>
+</div>

@@ -1,11 +1,16 @@
 <?php
-
-class IndexController extends Zend_Controller_Action
+/**
+ * 
+ * Enter description here ...
+ * @author windu.2b
+ *
+ */
+class IndexController extends Escarmouche_Controller_Abstract
 {
 
 	public function init()
 	{
-		$this->view->setTitle( 'Accueil' );
+		parent::init();
 	}
 
 	

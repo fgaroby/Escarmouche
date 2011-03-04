@@ -3,19 +3,20 @@
 /**
  * FeatureController
  *
- * @author
+ * @author windu.2b
  * @version
  */
 
 require_once 'Zend/Controller/Action.php';
 
-class FeatureController extends Zend_Controller_Action
+class FeatureController extends Escarmouche_Controller_Abstract
 {
 	protected $_featureMapper;
 	
 	
 	public function init()
 	{
+		parent::init();
 		$this->view->setTitle( 'Features' );
 		$this->_featureMapper = new Application_Model_FeatureMapper();
 	}

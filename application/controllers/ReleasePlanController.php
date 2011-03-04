@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ReleasePlanController
  *
@@ -9,13 +8,14 @@
 
 require_once 'Zend/Controller/Action.php';
 
-class ReleasePlanController extends Zend_Controller_Action
+class ReleasePlanController extends Escarmouche_Controller_Abstract
 {
 	protected $_sprintMapper;
 	
 	
 	public function init()
 	{
+		parent::init();
 		$this->view->setTitle( 'Release Plan' );
 		$this->_sprintMapper = new Application_Model_SprintMapper();
 	}

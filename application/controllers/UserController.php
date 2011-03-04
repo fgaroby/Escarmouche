@@ -6,13 +6,14 @@
  * @author Francescu Garoby
  * @version 0.1
  */
-class UserController extends Zend_Controller_Action
+class UserController extends Escarmouche_Controller_Abstract
 {
 	protected $_userMapper;
 	
 	
 	public function init()
 	{
+		parent::init();
 		$this->view->setTitle( 'Users' );
 		$this->_userMapper = new Application_Model_UserMapper();
 	}

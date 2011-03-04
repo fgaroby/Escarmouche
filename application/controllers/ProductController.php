@@ -1,11 +1,18 @@
 <?php
-class ProductController extends Zend_Controller_Action
+/**
+ * 
+ * Enter description here ...
+ * @author windu.2b
+ *
+ */
+class ProductController extends Escarmouche_Controller_Abstract
 {
 	protected $_productMapper;
 	
 	
 	public function init()
 	{
+		parent::init();
 		$this->view->setTitle( 'Products' );
 		$this->_productMapper = new Application_Model_ProductMapper();
 	}

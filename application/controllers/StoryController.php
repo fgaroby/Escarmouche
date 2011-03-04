@@ -6,13 +6,14 @@
  * @author
  * @version
  */
-class StoryController extends Zend_Controller_Action
+class StoryController extends Escarmouche_Controller_Abstract
 {
 	protected $_storyMapper;
 	
 	
 	public function init()
 	{
+		parent::init();
 		$this->view->setTitle( 'Stories' );
 		$this->_storyMapper = new Application_Model_StoryMapper();
 	}

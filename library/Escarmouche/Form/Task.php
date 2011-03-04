@@ -49,7 +49,13 @@ class Escarmouche_Form_Task extends Zend_Form
 			$type->addMultiOption( $t->getId(), $t->getName() );
 		$this->addElement( $type );
 		
-		
+		// The duration estimation
+		$duration = new Zend_Form_Element_Text( 'duration' );
+		$duration->addValidator( new Zend_Validate_Int() )
+			 ->setLabel( "Reste à faire :" )
+			 ->setRequired( true )
+			 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
+		$this->addElement( $duration );
 		
 		
 		$resetButton = new Zend_Form_Element_Reset( 'reset_task', array( 'name' => 'reset_task') );
@@ -70,7 +76,8 @@ class Escarmouche_Form_Task extends Zend_Form
 		$token = new Zend_Form_Element_Hash( 'token', array( 'salt' => 'unique' ) );
 		
 		// Fieldsets
-		$this->addDisplayGroup( array( 'id', 'name', 'description', 'type' ), 'base', array( 'legend' => 'Données de base' ) )
-			 ->addDisplayGroup( array( 'reset_task', 'submit_task' ), 'validation', array( 'legend' => 'Validation' ) );
+		$this->addDisplayGroup( array( 'id', 'name', 'description', 'type' ), 'dgBase', array( 'legend' => 'Données de base' ) )
+			 ->addDisplayGroup( array( 'duration' ), 'dgDuration', array( 'legend' => 'Reste à faire' ) )
+			 ->addDisplayGroup( array( 'reset_task', 'submit_task' ), 'dgValidation', array( 'legend' => 'Validation' ) );
 	}
 }

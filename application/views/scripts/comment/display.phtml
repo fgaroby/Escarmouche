@@ -1,0 +1,7 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/comment.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php
+	echo $this->partial()
+			  ->setObjectKey( 'comment' )
+			  ->partial( 'comment/partials/partial-comment.phtml', $this->comment );
+?>

@@ -1,0 +1,9 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/comment.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
+<?php foreach( $this->comments as $comment ):?>
+	<div class="divComment">
+		<h4>
+			<a href="<?php echo $this->baseUrl();?>/comment/display/id/<?php echo $comment->getId(); ?>"><?php echo $comment->getName(); ?></a>
+		</h4>
+	</div>
+<?php endforeach; ?>

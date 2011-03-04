@@ -1,0 +1,6 @@
+* manage the status changes (when, who, why) ;
+* manage theuser status (role, active/inactive account, ...) ;
+* manage the comments (links between comments and features/sprints/stories/tasks/whatever) ;
+* dashboard on index/index ;
+* customize the dashboard (visible areas, which areas should be displayed, ...) per user ;
+* use Flot to display graphs (product backlog, sprint backlog, ...) ;

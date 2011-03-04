@@ -32,10 +32,8 @@
  */
 class Escarmouche_Filter_StripSlashes implements Zend_Filter_Interface
 {
-
-
 	/**
-	 * Défini dans Zend_Filter_Interface
+	 * Définie dans Zend_Filter_Interface
 	 *
 	 * Returns $value without newline control characters
 	 *

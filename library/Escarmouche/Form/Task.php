@@ -33,7 +33,7 @@
 class Escarmouche_Form_Task extends Zend_Form
 {
 	/**
-	 * Initialisation du formulaire (méthode obligatoire)
+	 * Initialize the form
 	 *
 	 * @return Zend_Form
 	 */

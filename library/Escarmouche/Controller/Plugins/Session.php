@@ -74,7 +74,7 @@ class Escarmouche_Controller_Plugins_Session extends Zend_Controller_Plugin_Abst
 	 */
 	public function dispatchLoopStartup( Zend_Controller_Request_Abstract $request )
 	{
-		if( Zend_Auth::getInstance()->hasIdentity() )
+		/*if( Zend_Auth::getInstance()->hasIdentity() )
 		{
 			if( $this->_session->clientBrowser != $this->_clientHeaders )
 			{
@@ -84,7 +84,7 @@ class Escarmouche_Controller_Plugins_Session extends Zend_Controller_Plugin_Abst
 				$this->_response->sendResponse();
 				exit();
 			}
-		}
+		}*/
 	}
 
 

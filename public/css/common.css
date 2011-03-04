@@ -16,18 +16,6 @@ a, a img
 	height : 16px;
 }
 
-/*.startDate:before
-{
-	content : url( '/images/start.png' );
-	height : 16px;
-}
-
-.endDate:before
-{
-	content : url( '/images/end.png' );
-	height : 16px;
-}*/
-
 img.edit
 {
 	float : right;

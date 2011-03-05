@@ -88,7 +88,7 @@ class Application_Model_Feature extends Application_Model_AbstractModel
 	 */
 	public function getStatus()
 	{
-		if( $this->_status instanceof Application_Model_Status )
+		if( !$this->_status instanceof Application_Model_Status )
 			$this->_status = Application_Model_StatusMapper::getInstance()->find( $this->_status );
 		
 		return $this->_status;

@@ -104,7 +104,7 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 	 * @param int | Application_Model_Story $story
 	 * @return void
 	 */
-	public function delete( $story )
+	public function delete( Application_Model_AbstractModel $story )
 	{
 		if( !$story instanceof Application_Model_Story || null === ( $id = $story->getId( ) ) )
 				throw new Exception( 'Object ID not set' );

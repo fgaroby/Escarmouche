@@ -117,7 +117,7 @@ class Application_Model_TypeMapper extends Application_Model_AbstractMapper
 	* @see Application_Model_AbstractMapper::delete()
 	* @param int | Application_Model_Type $type
 	*/
-	public function delete( $type )
+	public function delete( Application_Model_AbstractModel $type )
 	{
 		if( null === ( $id = $type->getId() ) )
 		throw new Exception( 'Object ID not set !' );

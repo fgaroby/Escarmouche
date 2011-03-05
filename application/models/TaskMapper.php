@@ -116,7 +116,7 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 	 * @param int | Application_Model_Task $task
 	 * @return void
 	 */
-	public function delete( $task )
+	public function delete( Application_Model_AbstractModel $task )
 	{
 		if( null === ( $id = $task->getId() ) )
 			throw new Exception( 'Object ID not set !' );

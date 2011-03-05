@@ -121,7 +121,7 @@ class Application_Model_SprintMapper extends Application_Model_AbstractMapper
 	 * @param int | Application_Model_Sprint $sprint
 	 * @return void
 	 */
-	public function delete( $sprint )
+	public function delete( Application_Model_AbstractModel $sprint )
 	{
 		if( $sprint instanceof Application_Model_Sprint )	
 			if( null === ( $id = $sprint->getId( ) ) )

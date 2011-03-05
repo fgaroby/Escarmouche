@@ -132,7 +132,7 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 	 * @see Application_Model_AbstractMapper::delete()
 	 * @param int | Application_Model_Release $release
 	 */
-	public function delete( $release )
+	public function delete( Application_Model_AbstractModel $release )
 	{
 		if( $release instanceof Application_Model_Story )	
 			if( null === ( $id = $release->getId( ) ) )

@@ -113,7 +113,7 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 	* @see Application_Model_AbstractMapper::delete()
 	* @param int | Application_Model_Feature $feature
 	*/
-	public function delete( $feature )
+	public function delete( Application_Model_AbstractModel $feature )
 	{
 		if( null === ( $id = $feature->getId() ) )
 			throw new Exception( 'Object ID not set !' );

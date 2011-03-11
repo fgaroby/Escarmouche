@@ -1,0 +1,68 @@
+.sprint-backlog
+{
+	border : solid 3px grey;
+}
+
+.sprint-backlog .divStory
+{
+	border : solid 1px #CCC;
+	margin : 3px;
+	padding : 3px;
+}
+
+.header > h4
+{
+	margin : 2px;
+}
+
+.sprint-backlog > tbody
+{
+	overflow	: auto;
+	height		: 280px;
+	overflow-x	: hidden;
+	overflow-y	: auto;
+}
+
+.sprint-backlog .divStory .description
+{
+	padding : 3px;
+	text-align : justify;
+}
+
+.sprint-backlog .divStory .description:first-letter
+{
+	margin-left : 15px;
+}
+
+.sprint-backlog div.draggable
+{
+	border	: solid 1px #CCC;
+	padding	: 3px;
+	vertical-align : top;
+}
+
+
+.divStory .content > h4, a.edit, .divTask .description, .divTask .edit
+{
+	display : none;
+}
+
+.storiesList
+{
+	border-collapse : collapse;
+	width : 90%;
+	padding : 2px;
+}
+
+.draggable
+{
+	height : 35px;
+	margin : 2px;
+	padding : 2px;
+}
+
+.placeholder
+{
+	background: #f0f0f0;
+	border : 1px dashed #ddd;
+}

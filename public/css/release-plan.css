@@ -1,0 +1,42 @@
+.divSprint
+{
+	border : solid 1px black;
+	width : 20%;
+	float : left;
+	margin : 3px;
+	padding : 3px;
+}
+
+.divSprint .header h4
+{
+	margin : 2px;
+	margin-top : 0px;
+	float : left;
+}
+
+ .divSprint .header h4:after
+{
+	content : ' : ';
+}
+
+ .divSprint .header .description
+{
+	clear : right;
+}
+
+.divSprint .header
+{
+	
+}
+
+.divSprint > .content
+{
+	border : solid 1px grey;
+	padding : 3px;
+	margin-top : 3px;
+}
+
+.divSprint .content > h4, a.edit
+{
+	display : none;
+}

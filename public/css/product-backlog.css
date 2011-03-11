@@ -1,0 +1,45 @@
+.product-backlog
+{
+	width : 100%;
+	padding: 0;
+	margin: 10px 0;
+	list-style: none;
+}
+
+.product-backlog .divStory
+{
+	border : solid 1px #CCC;
+	width : 200px;
+	float : left;
+	margin : 3px;
+	padding : 3px;
+}
+
+.divStory .header h4
+{
+	margin : 2px;
+}
+
+.product-backlog .divStory .description
+{
+	padding : 3px;
+	text-align : justify;
+	text-justify : inter-word;
+}
+
+.product-backlog .divStory .description:first-letter
+{
+	margin-left : 15px;
+}
+
+.divStory > .content
+{
+	border : solid 1px grey;
+	padding : 3px;
+	margin-top : 3px;
+}
+
+.divStory .content > h4, a.edit
+{
+	display : none;
+}

@@ -94,6 +94,14 @@ class Application_Model_Feature extends Application_Model_AbstractModel
 		return $this->_status;
 	}
 	
+	public function getStatusId()
+	{
+		if( $this->_status instanceof Application_Model_Status )
+			return $this->_status->getId();
+		
+		return $this->_status;
+	}
+	
 	
 	public function setRelease( $release )
 	{

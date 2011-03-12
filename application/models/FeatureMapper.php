@@ -53,7 +53,7 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 
 		$data = array(	'name'			=> $feature->getName(),
 						'description'	=> $feature->getDescription(),
-						'status'		=> $feature->getStatus(),
+						'status'		=> $feature->getStatusId(),
 						'color'			=> $feature->getColor(),
 						'release'		=> $feature->getReleaseId() );
 

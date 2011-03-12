@@ -35,6 +35,7 @@ class Zend_View_Helper_SetTitle extends Zend_View_Helper_Abstract
 	{
 		$config = Zend_Registry::get( 'config' )->application;
 		$this->view->headTitle = $this->view->translate( $titre )
+						. ' '
 						. $config->separator
 						. ' '
 						. $config->name

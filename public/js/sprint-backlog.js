@@ -47,7 +47,9 @@
 
 $( document ).ready( function()
 {
-	var parent = null;
+	var parent	= null;
+	var leftDrag	= 0;
+	var topDrag	= 0;
 	
 	//$( '.storiesList' ).sortableList( {} );
 	$( '.draggable' ).draggable(
@@ -58,6 +60,8 @@ $( document ).ready( function()
 		{
 			// On récupère l'ancien parent
 			parent = $( '#' + $( this ).attr( 'id' ).substring( 0, $( this ).attr( 'id' ).length - 2 ) );
+			leftDrag = $( this ).position().left;
+			topDrag = $( this ).position().top;
 		}
 	} );
 	
@@ -80,20 +84,28 @@ $( document ).ready( function()
 			$( '.placeholder' ).remove();
 		},
 		drop	: function( event, ui )
-		{	
-			ui.draggable.css( 'left', $( '.placeholder' ).css( 'left' ) );
-			ui.draggable.css( 'top', $( '.placeholder' ).css( 'top' )  );
-			ui.draggable.attr( 'id', $( this ).attr( 'id' ) + '_' + ( $( this ).size() + 1 ) );
-			$( '.placeholder' ).remove();
-			
-			// on raccroche au nouveau parent
-			$( this ).append( ui.draggable );
-			
-			// On recalcule les id des éléments appartenant toujours à l'ancien parent
-			$( parent ).find( '.draggable' ).each( function( i )
+		{
+			if( $( this ).find( '.placeholder' ).size() != 0 )
 			{
-				$( this ).attr( 'id', $( parent ).attr( 'id' ) + '_' + ( i + 1 ) );
-			});
+				ui.draggable.css( 'left', $( '.placeholder' ).css( 'left' ) );
+				ui.draggable.css( 'top', $( '.placeholder' ).css( 'top' )  );
+				ui.draggable.attr( 'id', $( this ).attr( 'id' ) + '_' + ( $( this ).size() + 1 ) );
+				$( '.placeholder' ).remove();
+				
+				// on raccroche au nouveau parent
+				$( this ).append( ui.draggable );
+				
+				// On recalcule les id des éléments appartenant toujours à l'ancien parent
+				$( parent ).find( '.draggable' ).each( function( i )
+				{
+					$( this ).attr( 'id', $( parent ).attr( 'id' ) + '_' + ( i + 1 ) );
+				});
+			}
+			else
+			{
+				ui.draggable.css( 'left', leftDrag );
+				ui.draggable.css( 'top', topDrag );
+			}
 		}
 	});
 } );

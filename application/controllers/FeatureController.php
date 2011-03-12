@@ -52,12 +52,59 @@ class FeatureController extends Escarmouche_Controller_Abstract
 			$this->view->feature = $this->_featureMapper->find( $params['id' ] );
 		}
 		else
-			$this->_redirect( $this->view->url( array( 'controller' => 'feature', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url(	array(	'controller'=> 'feature',
+															'action'	=> 'index' ),
+													null,
+													true ),
+								array(	'prependBase' => false ) );
 	}
 	
 	
 	public function editAction()
 	{
+		$params = $this->getRequest()->getParams();
+		$isUpdate = isset( $params['id'] ) && !empty( $params['id'] );
+		if( $isUpdate )
+		{
+			$params['id'] = (int ) $params['id'];
+			
+			$feature = $this->_featureMapper->find( $params['id'] );
+			if( $feature === null )
+			{
+				$this->getRequest()->clearParams();
+				$this->_redirect( $this->view->url( array( 'controller' => 'feature', 'action' => 'edit', 'id' => null ) ), array( 'prependBase' => false, 'code' => 303 ) );
+			}
+		}
+		else
+		{
+			$feature = new Application_Model_Feature( array( 'name' => 'default feature' ) );
+		}
 		
+		$form = new Escarmouche_Form_Feature();
+		$form->setAction( $this->view->link( 'feature', 'edit', null, '', 'default', !$isUpdate ) )
+			 ->setMethod( 'post' )
+			 ->setDefaults( $feature->toArray() );
+			 
+		// We define the referrer URL
+		if( isset( $_SERVER['HTTP_REFERER'] ) && !empty( $_SERVER['HTTP_REFERER'] ) )
+			$form->referrer->setValue( $_SERVER['HTTP_REFERER'] );
+		else
+			$form->referrer->setValue( $this->view->url( array( 'controller' => 'story', 'action' => 'index' ) ) );
+			 
+		// Création des informations et ajout/suppression
+		if( $this->getRequest()->isPost() && $form->isValid( $_POST ) )
+		{
+			$values = $form->getValues();
+			// $values['creator'] = Zend_Auth::getInstance()->getIdentity()->id;
+			$feature->setFromArray( array_intersect_key( $values, $feature->toArray() ) );
+
+			// Sauvegarde des informations
+			$this->_featureMapper->save( $feature );
+			
+			$this->_helper->FlashMessenger( "Insertion du produit '{$feature->getName()}' effectuée ! " );
+			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
+		}
+		else
+			$this->view->form = $form;
 	}
 }

@@ -34,7 +34,7 @@ class ReleaseController extends Escarmouche_Controller_Abstract
 	{
 		parent::init();
 		$this->view->setTitle( 'Releases' );
-		$this->_releaseMapper = new Application_Model_ReleaseMapper();
+		$this->_releaseMapper = Application_Model_ReleaseMapper::getInstance();
 	}
 
 	

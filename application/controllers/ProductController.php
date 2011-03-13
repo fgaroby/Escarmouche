@@ -33,7 +33,7 @@ class ProductController extends Escarmouche_Controller_Abstract
 	{
 		parent::init();
 		$this->view->setTitle( 'Products' );
-		$this->_productMapper = new Application_Model_ProductMapper();
+		$this->_productMapper = Application_Model_ProductMapper::getInstance();
 	}
 
 	

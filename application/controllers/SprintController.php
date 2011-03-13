@@ -33,7 +33,7 @@ class SprintController extends Escarmouche_Controller_Abstract
 	{
 		parent::init();
 		$this->view->setTitle( 'Sprints' );
-		$this->_sprintMapper = new Application_Model_SprintMapper();
+		$this->_sprintMapper = Application_Model_SprintMapper::getInstance();
 	}
 	
 	

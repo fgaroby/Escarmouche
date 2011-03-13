@@ -33,7 +33,7 @@ class TaskController extends Escarmouche_Controller_Abstract
 	{
 		parent::init();
 		$this->view->setTitle( 'Tasks' );
-		$this->_taskMapper = new Application_Model_TaskMapper();
+		$this->_taskMapper = Application_Model_TaskMapper::getInstance();
 	}
 
 	

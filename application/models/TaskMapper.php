@@ -30,6 +30,12 @@ class Application_Model_TaskMapper extends Application_Model_AbstractMapper
 	
 	
 	
+	protected function __construct()
+	{
+		
+	}
+	
+	
 	/**
 	 * Get storage
 	 * @return Zend_Db_Table_Abstract

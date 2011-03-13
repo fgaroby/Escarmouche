@@ -30,6 +30,12 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 	
 	
 	
+	protected function __construct()
+	{
+		
+	}
+	
+	
 	public function getDbTable()
 	{
 		if( null === $this->_dbTable )

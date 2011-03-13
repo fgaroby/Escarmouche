@@ -29,6 +29,11 @@ class Application_Model_UserMapper extends Application_Model_AbstractMapper
 	protected static $_instance = null;
 	
 	
+	protected function __construct()
+	{
+		
+	}
+	
 	
 	public function getDbTable()
 	{

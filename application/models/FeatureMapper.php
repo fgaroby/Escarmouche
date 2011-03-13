@@ -31,6 +31,12 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 
 
 
+	protected function __construct()
+	{
+		
+	}
+	
+	
 	public function getDbTable()
 	{
 		if( null === $this->_dbTable )

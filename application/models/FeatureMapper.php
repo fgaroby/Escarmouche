@@ -81,14 +81,14 @@ class Application_Model_FeatureMapper extends Application_Model_AbstractMapper
 	public function find( $id )
 	{
 		if( !$id )
-			return new Zend_Db_Table_Row();
+			return null;
 
 		if( isset( $this->_loadedMap[$id] ) )
 			return $this->_loadedMap[$id];
 
 		$rowset = $this->getDbTable()->find( array( 'id = ?' => $id ) );
 		if( 0 === $rowset->count() )
-			return new Zend_Db_Table_Row();
+			return null;
 
 		$this->_loadedMap[$id] = new Application_Model_Feature( $rowset->current() );
 

@@ -78,14 +78,14 @@ class Application_Model_TypeMapper extends Application_Model_AbstractMapper
 	public function find( $id )
 	{
 		if( !$id )
-			return new Zend_Db_Table_Row();
+			return null;
 
 		if( isset( $this->_loadedMap[$id] ) )
 			return $this->_loadedMap[$id];
 
 		$rowset = $this->getDbTable()->find( array( 'id = ?' => $id ) );
 		if( 0 === $rowset->count() )
-			return new Zend_Db_Table_Row();
+			return null;
 
 		$row = $rowset->current();
 		$data = array(	'id'			=> $row->id,

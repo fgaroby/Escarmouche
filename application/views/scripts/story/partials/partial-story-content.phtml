@@ -1,0 +1,17 @@
+<div class="content">
+	<div class="tasks">
+		<a href="<?php echo $this->baseUrl();?>/task/edit/">
+			<img class="edit" src="<?php echo $this->baseUrl();?>/images/add.png" alt="add task" title="add task" />
+		</a>
+		<h4>Tasks</h4>
+		<?php
+			$objectKey = $this->partialLoop()->getObjectKey();
+			echo $this->partialLoop()
+					  ->setObjectKey( 'task' )
+					  ->partialLoop( 'task/partials/partial-task.phtml', $this->story->getTasks() );
+					  
+			$this->partialLoop()
+				 ->setObjectKey( $objectKey );
+		?>
+	</div>
+</div>

@@ -12,13 +12,6 @@
 	margin : 2px;
 }
 
-.divSprint .header h5
-{
-	margin-top : 2px;
-	font-weight : normal;
-	border-width : 0px;
-}
-
 .divSprint .header
 {
 	padding : 3px;	
@@ -36,20 +29,6 @@
 	padding : 3px;
 }
 
-.storiesList
-{
-	border-collapse : collapse;
-	width : 90%;
-	padding : 2px;
-}
-
-.draggable
-{
-	height : 35px;
-	margin : 2px;
-	padding : 2px;
-}
-
 .story
 {
 	border-style : solid;
@@ -58,34 +37,6 @@
 	padding-top : 5px;
 	padding-bottom : 5px;
 	padding-left : 3px;
-}
-
-span.title
-{
-	text-align : center;
-	display : block;
-	margin : auto;
-}
-
-.count
-{
-	float : right;
-	padding-right : 10px;
-	padding-top : 3px;
-}
-
-.item
-{
-	cursor : move;
-	display : block;
-	width : 80%;
-	padding-top : 3px;
-}
-
-.placeholder
-{
-	background: #f0f0f0;
-	border : 1px dashed #ddd;
 }
 
 h2

@@ -1,0 +1,8 @@
+<div class="description">
+	<?php echo $this->escape( $this->story->getDescription() ); ?>
+	<div class="status <?php echo $this->story->getStatus()->getName(); ?>" title="<?php echo $this->story->getStatus()->getName(); ?>">
+		<span><?php echo $this->story->getStatus()->getName(); ?></span>
+		<span class="points" title="<?php echo $this->story->getPoints(); ?> point<?php echo ( $this->story->getPoints() > 1 ? 's' : '' ); ?>"><?php echo $this->story->getPoints(); ?></span>
+		<div class="spacer">&nbsp;</div>
+	</div>
+</div>

@@ -1,0 +1,30 @@
+.divProducts
+{
+	border : solid 1px black;
+	width : 50%;
+	float : left;
+	margin : 3px;
+	padding : 3px;
+}
+
+.divProduct .header h4
+{
+	margin : 2px;
+}
+
+.divProduct .header
+{
+	
+}
+
+.divProduct > .content
+{
+	border : solid 1px grey;
+	padding : 3px;
+	margin-top : 3px;
+}
+
+.divProduct .content > h4, a.edit, .description
+{
+	display : none;
+}

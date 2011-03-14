@@ -1,0 +1,11 @@
+#username
+{
+	color : grey;
+	font-style : italic;
+}
+
+#username:focus
+{
+	color : black;
+	font-style : normal;
+}

@@ -1,0 +1,15 @@
+<div class="header">
+	<a href="<?php echo $this->baseUrl();?>/story/edit/id/<?php echo  $this->escape( $this->story->getId() ); ?>">
+		<img class="edit" src="<?php echo $this->baseUrl();?>/images/edit.png" alt="edit story" title="edit story" />
+	</a>
+	<h4>
+		<a href="<?php echo $this->baseUrl();?>/story/display/id/<?php echo $this->story->getId(); ?>"><?php echo $this->story->getName(); ?></a>
+	</h4>
+	<div class="description">
+		<?php echo $this->escape( $this->story->getDescription() ); ?>
+	</div>
+	<div class="status <?php echo $this->story->getStatus()->getName(); ?>">
+		<span class="points" title="<?php echo $this->story->getPoints(); ?> point<?php echo ( $this->story->getPoints() > 1 ? 's' : '' ); ?>"><?php echo $this->story->getPoints(); ?>pt<?php echo ( $this->story->getPoints() > 1 ? 's' : '' ); ?></span>
+		<div class="spacer">&nbsp;</div>
+	</div>
+</div>

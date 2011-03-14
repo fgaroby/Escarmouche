@@ -166,9 +166,46 @@ class Application_Model_User extends Application_Model_AbstractModel
 		if( null === $this->_products )
 		{
 			$pm = Application_Model_ProductMapper::getInstance();
-			$this->_products = $pm->fetchAll(	' scrumMaster = ' . $this->_id
-												. ' OR productOwner = ' . $this->_id,
-												' name ASC' );
+			$selectProductsWithPOStatus = $pm->getDbTable()
+											 ->select()
+											 ->setIntegrityCheck( false )
+											 ->from(	array(	'p'	=> 'product' ) )
+											 ->join(	array(	'po'	=> 'productOwner' ),
+														'po.product = p.id',
+														null )
+											 ->join(	array(	'u'	=> 'user' ),
+														'u.id = po.user',
+														array(	'productOwner'	=> 'id' ) )
+											 ->where(	'u.id = ?', $this->_id );
+			$selectProductsWithSMStatus = $pm->getDbTable()
+											 ->select()
+											 ->setIntegrityCheck( false )
+											 ->from(	array(	'p'	=> 'product' ) )
+											 ->join(	array(	'sm'	=> 'scrumMaster' ),
+														'sm.product = p.id',
+														null )
+											 ->join(	array(	'u'	=> 'user' ),
+														'u.id = sm.user',
+														array(	'scrumMaster'	=> 'id' ) )
+											 ->where(	'u.id = ?', $this->_id );
+			$selectProductsWithTeamStatus = $pm->getDbTable()
+											   ->select()
+											   ->setIntegrityCheck( false )
+											   ->from(	array(	'p'	=> 'product' ) )
+											   ->join(	array(	't'	=> 'team' ),
+														't.product = p.id',
+														null )
+											   ->join(	array(	'u'	=> 'user' ),
+														'u.id = t.user',
+														array( 'developpers'	=> 'id' ) )
+											 ->where(	'u.id = ?', $this->_id );
+			
+			$this->_products = $pm->fetchAll( $pm->getDbTable()
+												 ->select()
+												 ->union( array(	$selectProductsWithPOStatus,
+																	$selectProductsWithSMStatus,
+																	$selectProductsWithTeamStatus ) )
+												 ->order( 'p.name ASC' ) );
 		}
 	}
 	
@@ -257,6 +294,10 @@ class Application_Model_User extends Application_Model_AbstractModel
 	}
 	
 	
+	/**
+	 * 
+	 * Load the comments written by the user.
+	 */
 	protected function _loadComments()
 	{
 		if( null === $this->_comments )
@@ -285,11 +326,36 @@ class Application_Model_User extends Application_Model_AbstractModel
 									 					'sc.story_id = s.id',
 									    				null )
 									  ->where( 'c.id = ?', $this->_id );
+									  	
+			$selectTaskComments = $pm->getDbTable()
+									  ->select()
+									  ->setIntegrityCheck( false )
+									  ->from(	array(	'c'		=> 'comment' ) )
+									  ->join(	array(	'tc'	=> 'task_comment' ),
+									 					'tc.comment_id 	= c.id',
+									    				null )
+									  ->join( 	array(	't'		=> 'task' ),
+									 					'tc.task_id = t.id',
+									    				null )
+									  ->where( 'c.id = ?', $this->_id );
+									  	
+			$selectSprintComments = $pm->getDbTable()
+									   ->select()
+									   ->setIntegrityCheck( false )
+									   ->from(	array(	'c'		=> 'comment' ) )
+									   ->join(	array(	'sc'	=> 'sprint_comment' ),
+									 					'sc.comment_id 	= c.id',
+									    				null )
+									   ->join( 	array(	't'		=> 'task' ),
+									 					'sc.sprint_id = t.id',
+									    				null )
+									  ->where( 'c.id = ?', $this->_id );
 			$this->_comments = $pm->fetchAll( $selectStoryComments  );
 			$this->_comments = $pm->fetchAll( $pm->getDbTable()
 												 ->select()
 												 ->union( array(	$selectFeatureComments,
-																	$selectStoryComments ) )
+																	$selectStoryComments,
+																	$selectTaskComments ) )
 												 ->order( 'created DESC' ) );
 		}
 	}

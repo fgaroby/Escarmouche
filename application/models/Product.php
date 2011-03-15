@@ -29,6 +29,9 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	protected $_releases		= array();
 	
 	
+	protected $_currentRelease	= null;
+	
+	
 	protected $_scrumMaster		= null;
 	
 	
@@ -62,6 +65,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 		if( !in_array( $release, $this->_releases ) )
 		{
 			$this->_releases[] = $release;
+			$this->_currentRelease = $release;
 			$release->setProduct( $this );
 		}
 		
@@ -81,12 +85,18 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	}
 	
 	
+	/**
+	 * 
+	 * @todo définir la nouvelle release par défaut
+	 * @param Application_Model_Release $release
+	 */
 	protected function _removeRelease( Application_Model_Release $release )
 	{
 		$index = array_search( $release, $this->_releases );
 		if( $index !== false )
 		{
 			unset( $this->_releases[$index] );
+			Zend_Registry::get( 'session' )->currentRelease = null;
 			$release->setProduct( null );
 		}
 		
@@ -106,7 +116,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	public function getScrumMaster()
 	{
-		if( !$this->_scrumMaster instanceof Application_Model_User )
+		if( null !== $this->_scrumMaster && !$this->_scrumMaster instanceof Application_Model_User )
 		{
 			$um = new Application_Model_UserMapper();
 			$this->_scrumMaster = $um->find( $this->_scrumMaster );
@@ -146,7 +156,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	public function getProductOwner()
 	{
-		if( !$this->_productOwner instanceof Application_Model_User )
+		if( null !== $this->_productOwner && !$this->_productOwner instanceof Application_Model_User )
 		{
 			$po = new Application_Model_UserMapper();
 			$this->_productOwner = $po->find( $this->_productOwner );
@@ -154,6 +164,12 @@ class Application_Model_Product extends Application_Model_AbstractModel
 		}
 		
 		return $this->_productOwner;
+	}
+	
+	
+	public function getCurrentRelease()
+	{
+		return $this->_currentRelease;
 	}
 	
 	

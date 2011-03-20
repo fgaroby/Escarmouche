@@ -39,15 +39,16 @@ class Escarmouche_Form_Auth extends Zend_Form
 				 ->setRequired( true )
 				 ->addFilter( new Escarmouche_Filter_StripSlashes() )
 				 ->addValidator( new Zend_Validate_StringLength( 0, 75 ) )
-				 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label' ) );
-		$this->addElement($username);
+				 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label' ) )
+				 ->setValue( 'Username' );
+		$this->addElement( $username );
 		
 		
 		$password = new Zend_Form_Element_Password( 'password' );
 		$password->setLabel( 'Password:' )
 				 ->setRequired( true )
 			 	 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
-		$this->addElement($password);
+		$this->addElement( $password );
 		
 		
 		$submitButton = new Zend_Form_Element_Submit( 'submit_auth', array( 'title' => 'submit_auth' ) );

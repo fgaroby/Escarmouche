@@ -33,7 +33,7 @@ class StoryController extends Escarmouche_Controller_Abstract
 	{
 		parent::init();
 		$this->view->setTitle( 'Stories' );
-		$this->_storyMapper = new Application_Model_StoryMapper();
+		$this->_storyMapper = Application_Model_StoryMapper::getInstance();
 	}
 
 	

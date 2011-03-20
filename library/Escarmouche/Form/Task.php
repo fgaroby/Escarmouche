@@ -68,8 +68,7 @@ class Escarmouche_Form_Task extends Zend_Form
 			 ->setRequired( true )
 			 ->addValidator( new Zend_Validate_Int() )
 			 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
-		$tm = new Application_Model_TypeMapper();
-		$types = $tm->fetchAll( null, 'ORDER BY name ASC' );
+		$types = Application_Model_TypeMapper::getInstance()->fetchAll( null, 'ORDER BY name ASC' );
 		foreach( $types as $t )
 			$type->addMultiOption( $t->getId(), $t->getName() );
 		$this->addElement( $type );

@@ -28,14 +28,14 @@ require_once 'Zend/Controller/Action.php';
 
 class SprintBacklogController extends Escarmouche_Controller_Abstract
 {
-	protected $_storyMapper;
+	protected $_sprintMapper;
 	
 	
 	public function init()
 	{
 		parent::init();
 		$this->view->setTitle( 'Sprint Backlog' );
-		$this->_storyMapper = Application_Model_StoryMapper::getInstance();
+		$this->_sprintMapper = Application_Model_SprintMapper::getInstance();
 	}
 
 	
@@ -44,7 +44,7 @@ class SprintBacklogController extends Escarmouche_Controller_Abstract
 	 */
 	public function indexAction()
 	{
-		$this->view->stories = $this->_storyMapper->fetchAll();
+		$this->view->stories = $this->_sprintMapper->fetchAll();
 	}
 	
 	

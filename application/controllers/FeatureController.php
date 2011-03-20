@@ -34,7 +34,7 @@ class FeatureController extends Escarmouche_Controller_Abstract
 	{
 		parent::init();
 		$this->view->setTitle( 'Features' );
-		$this->_featureMapper = new Application_Model_FeatureMapper();
+		$this->_featureMapper = Application_Model_FeatureMapper::getInstance();
 	}
 	
 	

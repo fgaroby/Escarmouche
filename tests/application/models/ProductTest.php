@@ -64,8 +64,7 @@ class Application_Model_ProductTest extends Application_Model_AbstractTest
 	public function testSetAndGetIntProductOwner()
 	{
 		$product = new Application_Model_Product( array( 'id' => $this->_options['id'] ) );
-		$user = new Application_Model_UserMapper();
-		$po = $user->find( 1 );
+		$po = Application_Model_UserMapper::getInstance()->find( 1 );
 		
 		$this->assertNull( $product->getProductOwner() );
 		
@@ -92,7 +91,7 @@ class Application_Model_ProductTest extends Application_Model_AbstractTest
 	public function testSetAndGetIntScrumMaster()
 	{
 		$product = new Application_Model_Product( array( 'id' => $this->_options['id'] ) );
-		$user = new Application_Model_UserMapper();
+		$user = Application_Model_UserMapper::getInstance();
 		$sc = $user->find( 1 );
 		
 		$this->assertNull( $product->getScrumMaster() );

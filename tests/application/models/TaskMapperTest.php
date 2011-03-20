@@ -16,7 +16,7 @@ class Application_Model_TaskMapperTest extends Application_Db_AbstractTest
 						'status'		=> Application_Model_Status::WIP );
 
 		$task = new Application_Model_Task( $data );
-		$taskMapper = new Application_Model_TaskMapper();
+		$taskMapper = Application_Model_TaskMapper::getInstance();
 
 		$taskMapper->save( $task );
 
@@ -35,7 +35,7 @@ class Application_Model_TaskMapperTest extends Application_Db_AbstractTest
 	{
 		$recordId = 2;
 		
-		$taskMapper = new Application_Model_TaskMapper();
+		$taskMapper = Application_Model_TaskMapper::getInstance();
 		$task = $taskMapper->find( $recordId );
 		
 		$dataSet = $this->convertRecordToDataSet( $task->toArray(), 'task' );
@@ -52,7 +52,7 @@ class Application_Model_TaskMapperTest extends Application_Db_AbstractTest
 
 		$data = array(	'description'	=> 'new task desc. 2' );
 
-		$taskMapper = new Application_Model_TaskMapper();
+		$taskMapper = Application_Model_TaskMapper::getInstance();
 		$task = $taskMapper->find( $recordId );
 		$task->setDescription( $data['description'] );
 
@@ -73,7 +73,7 @@ class Application_Model_TaskMapperTest extends Application_Db_AbstractTest
 	{
 		$recordId = 1;
 
-		$taskMapper = new Application_Model_TaskMapper();
+		$taskMapper = Application_Model_TaskMapper::getInstance();
 
 		$task = $taskMapper->find( $recordId );
 

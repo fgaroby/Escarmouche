@@ -68,15 +68,13 @@ class Escarmouche_Form_Story extends Zend_Form
 			 ->setRequired( true )
 			 ->addValidator( new Zend_Validate_Int() )
 			 ->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) );
-		$tm = new Application_Model_TypeMapper();
-		$types = $tm->fetchAll();
+		$types = Application_Model_TypeMapper::getInstance()->fetchAll();
 		foreach( $types as $t )
 			$type->addMultiOption( $t->getId(), $t->getName() );
 		$this->addElement( $type );
 		
 		// The feature to which is assigned the story
-		$fm = new Application_Model_FeatureMapper();
-		$features = $fm->fetchAll();
+		$features = Application_Model_FeatureMapper::getInstance()->fetchAll();
 		$feature = new Zend_Form_Element_Select( 'feature' );
 		$feature->setLabel ('Feature : ' )
 				->setRequired( true )

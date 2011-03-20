@@ -18,8 +18,7 @@ class Application_Model_FeatureMapperTest extends Application_Db_AbstractTest
 						'release'		=> 1 );
 
 		$feature = new Application_Model_Feature( $data );
-		$featureMapper = new Application_Model_FeatureMapper();
-		$featureMapper->save( $feature );
+		Application_Model_FeatureMapper::getInstance()->save( $feature );
 
 		$dataSet = new Zend_Test_PHPUnit_Db_DataSet_QueryDataSet( $this->getConnection() );
 		$dataSet->addTable( 'feature', 'SELECT * FROM feature' );
@@ -36,8 +35,7 @@ class Application_Model_FeatureMapperTest extends Application_Db_AbstractTest
 	{
 		$recordId = 2;
 		
-		$featureMapper = new Application_Model_FeatureMapper();
-		$feature = $featureMapper->find( $recordId );
+		$feature = Application_Model_FeatureMapper::getInstance()->find( $recordId );
 		
 		$dataSet = $this->convertRecordToDataSet( $feature->toArray(), 'feature' );
 		$this->assertDataSetsMatchXML( 'featuresRetrieveOneAssertion.xml', $dataSet );
@@ -53,8 +51,7 @@ class Application_Model_FeatureMapperTest extends Application_Db_AbstractTest
 		$data = array(	'description'	=> 'new feature desc. 2',
 						'color'			=> 'blue' );
 
-		$featureMapper = new Application_Model_FeatureMapper();
-		$feature = $featureMapper->find( $recordId );
+		$feature = Application_Model_FeatureMapper::getInstance()->find( $recordId );
 		$feature->setDescription( $data['description'] );
 		$feature->setColor( $data['color'] );
 
@@ -75,7 +72,7 @@ class Application_Model_FeatureMapperTest extends Application_Db_AbstractTest
 	{
 		$recordId = 1;
 
-		$featureMapper = new Application_Model_FeatureMapper();
+		$featureMapper = Application_Model_FeatureMapper::getInstance();
 
 		$feature = $featureMapper->find( $recordId );
 

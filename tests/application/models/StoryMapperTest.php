@@ -19,7 +19,7 @@ class Application_Model_StoryMapperTest extends Application_Db_AbstractTest
 						'priority'		=> 3 );
 
 		$story = new Application_Model_Story( $data );
-		$storyMapper = new Application_Model_StoryMapper();
+		$storyMapper = Application_Model_StoryMapper::getInstance();
 
 		$storyMapper->save( $story );
 
@@ -38,7 +38,7 @@ class Application_Model_StoryMapperTest extends Application_Db_AbstractTest
 	{
 		$recordId = 2;
 		
-		$storyMapper = new Application_Model_StoryMapper();
+		$storyMapper = Application_Model_StoryMapper::getInstance();
 		$story = $storyMapper->find( $recordId );
 		
 		$dataSet = $this->convertRecordToDataSet( $story->toArray(), 'story' );
@@ -53,13 +53,13 @@ class Application_Model_StoryMapperTest extends Application_Db_AbstractTest
 	{
 		$recordId = 2;
 
-		$feature2 = new Application_Model_FeatureMapper();
+		$feature2 = Application_Model_FeatureMapper::getInstance();
 		$row = $feature2->find( 2 );
 		$data = array(	'description'	=> 'new story desc. 2',
 						'feature'		=> $row,
 						'priority'		=> 2 );
 
-		$storyMapper = new Application_Model_StoryMapper();
+		$storyMapper = Application_Model_StoryMapper::getInstance();
 		$story = $storyMapper->find( $recordId );
 		$story->setDescription( $data['description'] );
 		$story->setFeature( $data['feature'] );
@@ -82,7 +82,7 @@ class Application_Model_StoryMapperTest extends Application_Db_AbstractTest
 	{
 		$recordId = 1;
 
-		$storyMapper = new Application_Model_StoryMapper();
+		$storyMapper = Application_Model_StoryMapper::getInstance();
 
 		$story = $storyMapper->find( $recordId );
 

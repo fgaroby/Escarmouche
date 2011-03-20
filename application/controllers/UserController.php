@@ -33,7 +33,7 @@ class UserController extends Escarmouche_Controller_Abstract
 	{
 		parent::init();
 		$this->view->setTitle( 'Users' );
-		$this->_userMapper = new Application_Model_UserMapper();
+		$this->_userMapper = Application_Model_UserMapper::getInstance();
 	}
 
 	

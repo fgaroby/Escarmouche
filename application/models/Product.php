@@ -118,8 +118,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	{
 		if( null !== $this->_scrumMaster && !$this->_scrumMaster instanceof Application_Model_User )
 		{
-			$um = new Application_Model_UserMapper();
-			$this->_scrumMaster = $um->find( $this->_scrumMaster );
+			$this->_scrumMaster = Application_Model_UserMapper::getInstance()->find( $this->_scrumMaster );
 			$this->_scrumMaster->setRole( 'scrumMaster' );
 		}
 		
@@ -129,16 +128,9 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	
 	public function getDeveloppers()
 	{
-		$um = null;
 		foreach( $this->_developpers as $key => $developper )
-		{
 			if( !$developper instanceof Application_Model_User )
-			{
-				if( $um === null )
-					$um = new Application_Model_UserMapper();
-				$this->_developpers[$key] = $um->find( $developper );
-			}
-		}
+				$this->_developpers[$key] = Application_Model_UserMapper::getInstance()->find( $developper );
 		
 		return $this->_developpers;
 	}
@@ -158,8 +150,7 @@ class Application_Model_Product extends Application_Model_AbstractModel
 	{
 		if( null !== $this->_productOwner && !$this->_productOwner instanceof Application_Model_User )
 		{
-			$po = new Application_Model_UserMapper();
-			$this->_productOwner = $po->find( $this->_productOwner );
+			$this->_productOwner = Application_Model_UserMapper::getInstance()->find( $this->_productOwner );
 			$this->_productOwner->setRole( 'productOwner' );
 		}
 		

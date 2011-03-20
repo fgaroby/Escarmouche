@@ -69,8 +69,7 @@ class Escarmouche_Form_Sprint extends Zend_Form
 				->addValidator( new Zend_Validate_Int() )
 				->setDecorators( array( 'ViewHelper', 'Errors', 'Label', array( 'HtmlTag', array( 'tag' => 'p') ) ) )
 				->addMultiOption( '', '-- Releases --' );
-		$rm = new Application_Model_ReleaseMapper();
-		$releases = $rm->fetchAll();
+		$releases = Application_Model_ReleaseMapper::getInstance()->fetchAll();
 		foreach( $releases as $r )
 			$release->addMultiOption( $r->getId(), $r->getName() );
 		$this->addElement( $release );

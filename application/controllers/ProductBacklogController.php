@@ -81,6 +81,7 @@ class ProductBacklogController extends Escarmouche_Controller_Abstract
 	public function displayAction()
 	{
 		$sm = Application_Model_StoryMapper::getInstance();
+		$stm = Application_Model_StoryMapper::getInstance();
 		$params = $this->getRequest()->getParams();
 		if( isset( $params['id'] ) )
 			$id = $params['id'];

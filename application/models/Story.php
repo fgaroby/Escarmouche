@@ -56,7 +56,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	 * Cannot be <code>null</code>. Can be empty.
 	 * @var array[Application_Model_Task]
 	 */
-	protected $_tasks = array();
+	protected $_tasks = null;
 
 
 	public function __construct( $options = array() )
@@ -110,8 +110,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	{
 		if( is_int( $this->_sprint ) )
 		{
-			$sm = new Application_Model_SprintMapper();
-			$this->_sprint = $sm->find( $this->_sprint );
+			$this->_sprint = Application_Model_SprintMapper::getInstance()->find( $this->_sprint );
 		}
 		
 		return $this->_sprint;

@@ -122,8 +122,7 @@ class Application_Model_Status extends Application_Model_AbstractModel
 	{
 		if( !$status instanceof Application_Model_Status )
 		{
-			$sm = new Application_Model_StatusMapper();
-			$status = $sm->find( $status );
+			$status = Application_Model_StatusMapper::getInstance()->find( $status );
 		}
 		
 		return $status->getName();

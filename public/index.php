@@ -162,8 +162,7 @@ $frontController = Zend_Controller_Front::getInstance();
 $frontController->setControllerDirectory( APPLICATION_PATH .  DIRECTORY_SEPARATOR . 'controllers' )
 				//->setBaseUrl('/~windu/Escarmouche/public' );
 				->setBaseUrl( '/Escarmouche/public');
-
-$frontController->throwExceptions( true ); // par défaut
+$frontController->throwExceptions( false ); // par défaut
 
 
 
@@ -227,7 +226,7 @@ Zend_Registry::set( 'Zend_Translate', $translate );
 
 
 // ************************* VIEW ******************************************
-$view = new Zend_View();
+$view = new Escarmouche_View();
 $view->setEncoding( 'UTF-8' );
 $view->strictVars( ( bool ) $configMain->debug );
 

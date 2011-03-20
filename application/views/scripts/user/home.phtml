@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/user.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl();?>/css/status.css" />
 <div class="divProducts">
 	<div class="header">
 		<h4>Vos produits</h4>
@@ -14,18 +16,20 @@
 	</div>
 </div>
 
-<div class="divComments">
-	<div class="header">
-		<h4>Vos derniers commentaires</h4>
-	</div>
-	<div class="content">
-	<?php
-		$objectKey = $this->partialLoop()->getObjectKey();
-		echo $this->partialLoop()
-				  ->setObjectKey( 'comment' )
-				  ->partialLoop( 'comment/partials/partial-comment.phtml', $this->user->getComments() );
-		$this->partialLoop()
-			 ->setObjectKey( $objectKey );
-	?>
+<div class="lastActions">
+	<div class="divComments">
+		<div class="header">
+			<h4>Vos derniers commentaires</h4>
+		</div>
+		<div class="content">
+		<?php
+			$objectKey = $this->partialLoop()->getObjectKey();
+			echo $this->partialLoop()
+					  ->setObjectKey( 'comment' )
+					  ->partialLoop( 'comment/partials/partial-comment.phtml', $this->user->getComments() );
+			$this->partialLoop()
+				 ->setObjectKey( $objectKey );
+		?>
+		</div>
 	</div>
 </div>

@@ -9,7 +9,7 @@
 
 .divProduct .header h4
 {
-	margin : 2px;
+	margin : 0px;
 }
 
 .divProduct .header
@@ -24,7 +24,7 @@
 	margin-top : 3px;
 }
 
-.divProduct .content > h4, a.edit, .description
+a.edit
 {
 	display : none;
 }

@@ -2,10 +2,10 @@
 * use *_status tables ;
 * manage the user status (role, active/inactive account, ...) ;
 * manage the comments (links between comments and features/sprints/stories/tasks/whatever) ;
-* dashboard on index/index ;
+* dashboard on index/display ;
 * customize the dashboard (visible areas, which areas should be displayed, ...) per user ;
 * use Flot to display graphs (product backlog, sprint backlog, ...) ;
 * i18n ;
-* store the current product/release/sprint/story in the session ;
+* store the current product/release/sprint in the session ;
 * product param : is the sprint starts when today is the start date or when the previous sprint is finished ?
-* add Personas ;  
+* add Personas ;

@@ -229,6 +229,19 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	}
 	
 	
+	public function getRemainingPoints()
+	{
+		$this->_loadStories();
+		
+		$points = 0;
+		foreach( $this->_stories as $story )
+			if( !Application_Model_Status::isFinished( $story->getStatus() ))
+				$points += $story->getPoints();
+		
+		return $points;
+	}
+	
+	
 	public function setRelease( $release )
 	{
 		$this->_release = $release;

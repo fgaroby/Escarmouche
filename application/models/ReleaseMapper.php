@@ -76,7 +76,7 @@ class Application_Model_ReleaseMapper extends Application_Model_AbstractMapper
 		}
 		catch( Exception $e )
 		{
-			Zend_Debug::dump($e);
+			Zend_Debug::dump( $e );
 		}
 	}
 	

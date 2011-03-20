@@ -260,7 +260,7 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	}
 	
 	
-	public function setCreatedBy( Application_Model_User $createdBy )
+	public function setCreatedBy( $createdBy = null )
 	{
 		$this->_createdBy = $createdBy;
 		
@@ -290,7 +290,7 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	}
 	
 	
-	public function setAssignedTo( Application_Model_User $assignedTo )
+	public function setAssignedTo( $assignedTo = null )
 	{
 		$this->_assignedTo = $assignedTo;
 		
@@ -316,7 +316,7 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	}
 	
 	
-	public function setClosedBy( Application_Model_User $closedBy )
+	public function setClosedBy( $closedBy = null )
 	{
 		$this->_closedBy = $closedBy;
 		
@@ -344,10 +344,12 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	
 	public function getColor()
 	{
-		if( !$this->_type instanceof Application_Model_Type )
-			$this->_type = Application_Model_TypeMapper::getInstance()->find( $this->_type );
+		$this->_loadType();
 		
-		return $this->_type->getColor();
+		if( $this->_type instanceof Application_Model_Type )
+			return $this->_type->getColor();
+		else
+			return Zend_Registry::get( 'config' )->color->border->default;
 	}
 	
 	

@@ -59,7 +59,7 @@ class ErrorController extends Escarmouche_Controller_Abstract
 		}
 
 		// conditionally display exceptions
-		if( $this->getInvokeArg('displayExceptions') == true )
+		//if( $this->getInvokeArg('displayExceptions') == true )
 			$this->view->exception = $errors->exception;
 
 		$this->view->request = $errors->request;

@@ -267,12 +267,30 @@ class Application_Model_Story extends Application_Model_AbstractModel
 
 
 	/**
-	 *
+	 * 
+	 * Enter description here ...
+	 * @param int $status
 	 * @return array[Application_Model_Task]
 	 */
-	public function getTasks()
+	public function getTasks( $status = null )
 	{
-		return $this->_tasks;
+		$this->_loadTasks();
+		
+		if( Application_Model_Status::isValid( $status ) )
+			return $this->_filter( $status );
+		else
+			return $this->_tasks;
+	}
+	
+	
+	protected function _filter( $status )
+	{
+		$tasks = array();
+		foreach( $this->_tasks as $t )
+			if( Application_Model_Status::equals( $t->getStatus(), $status ) )
+				$tasks[] = $t;
+		
+		return $tasks;
 	}
 	
 	
@@ -318,26 +336,17 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	
 	
 	/**
-	 * TODO proposer une couleur par défaut, si pas associée à une feature
+	 * TODO Gérer le paramétrage de la couleur par défaut, i.e. si pas associée à une feature
 	 * Returns the color associated
 	 */
 	public function getColor()
 	{
-		if( isset( $this->_feature ) )
-		{
-			if( is_int( $this->_feature ) )
-			{
-				$f = new Application_Model_FeatureMapper();
-				$this->_feature = $f->find( $this->_feature );
-			}
-			
-			if( $this->_feature instanceof Application_Model_Feature )
-				return $this->_feature->getColor();
-			else
-				return Zend_Registry::get( 'config' )->color->border->default;
-		}
+		$this->_loadFeature();
 		
-		return null;
+		if( $this->_feature instanceof Application_Model_Feature )
+			return $this->_feature->getColor();
+		else
+			return Zend_Registry::get( 'config' )->color->border->default;
 	}
 	
 	
@@ -368,8 +377,7 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	
 	protected function _getType()
 	{
-		$tm = new Application_Model_TypeMapper();
-		$this->_type = $tm->find( $this->_type );
+		$this->_type = Application_Model_TypeMapper::getInstance()->find( $this->_type );
 	}
 	
 	public function getType()

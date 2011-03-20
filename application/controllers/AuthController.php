@@ -76,8 +76,8 @@ class AuthController extends Escarmouche_Controller_Abstract
     	{
     		$adapter = Zend_Registry::get( 'authAdapter' );
     		// get the username and password from the form
-    		$adapter->setIdentity( $authForm->getValue( 'username' ) );
-    		$adapter->setCredential( md5( $authForm->getValue( 'password' ) ) );
+    		$adapter->setIdentity( trim( $authForm->getValue( 'username' ) ) );
+    		$adapter->setCredential( md5( trim( $authForm->getValue( 'password' ) ) ) );
     		$result = $adapter->authenticate();
     		
     		/*
@@ -87,17 +87,10 @@ class AuthController extends Escarmouche_Controller_Abstract
     		if( $result->isValid() )
     		{
     			$auth->getStorage()->write( $adapter->getResultRowObject( null, 'password' ) );
+    			Zend_Registry::get( 'session' )->defaultProduct = Application_Model_ProductMapper::getInstance()->find( 1 );
     			
     			return $this->_redirect( $this->view->url(	array(	'controller'	=> 'index',
     																'action'		=> 'display' ),
-																	null,
-																	true ),
-															array(	'prependBase'	=> false ) );
-    		}
-    		else
-    		{
-    			return $this->_redirect( $this->view->url(	array(	'controller'	=> 'auth',
-    																'action'		=> 'login' ),
 																	null,
 																	true ),
 															array(	'prependBase'	=> false ) );

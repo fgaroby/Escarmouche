@@ -39,7 +39,7 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 	public function getDbTable()
 	{
 		if( null === $this->_dbTable )
-			$this->setDbTable('Application_Model_Db_Table_Story');
+			$this->setDbTable( 'Application_Model_Db_Table_Story' );
 
 		return $this->_dbTable;
 	}
@@ -80,13 +80,33 @@ class Application_Model_StoryMapper extends Application_Model_AbstractMapper
 		if( isset( $this->_loadedMap[$id] ) )
 			return $this->_loadedMap[$id];
 		
-		$rowset = $this->getDbTable()->find( array( 'id = ?' => $id ) );
-		if( 0 === $rowset->count() )
-			return null;
+		$selectLastStatus = $this->getDbTable()
+								 ->select()
+								 ->setIntegrityCheck( false )
+								 ->from(	array( 'sta'	=> 'status' ),
+											'id' )
+								 ->join(	array( 'ss'		=> 'story_status'	),
+											'sta.id = ss.status',
+											null )
+								 ->where( 'ss.story = s.id' )
+								 ->order( 'ss.changed DESC' )
+								 ->limit( 1 );
+		$selectStory = $this->getDbTable()
+							->select()
+							->setIntegrityCheck( false )
+							->from(	array(	's'		=> 'story' ),
+									array(	's.*',
+											'status' => '(' . $selectLastStatus->__toString() . ')' ) )
+							->where( 's.id = ?', $id );
+		$row = $this->getDbTable()->fetchRow( $selectStory );
+		if( null !== $row )
+		{
+			$this->_loadedMap[$id] = new Application_Model_Story( $row );
 			
-		$this->_loadedMap[$id] = new Application_Model_Story( $rowset->current() );
-		
-		return $this->_loadedMap[$id];
+			return $this->_loadedMap[$id];
+		}
+		else
+			return null;
 	}
 	
 	

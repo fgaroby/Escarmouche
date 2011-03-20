@@ -91,16 +91,23 @@ class ProductBacklogController extends Escarmouche_Controller_Abstract
 		else
 			$id = Zend_Registry::get( 'session' )->defaultProduct;
 		
+		$selectLastStatus = $sm->getDbTable()
+							->select()
+							->setIntegrityCheck( false )
+							->from(	array( 'sta'	=> 'status' ),
+									'id' )
+							->join(	array( 'st'		=> 'story_status'	),
+									'sta.id = st.status',
+									null )
+							->where( 'st.story = s.id' )
+							->order( 'st.changed DESC' )
+							->limit( 1 );
 		$selectStories = $sm->getDbTable()
 							->select()
 							->setIntegrityCheck( false )
-							->from(	array( 's' => 'story' ) )
-							->join(	array( 'st'=> 'story_status'	),
-									's.id = st.story',
-									null )
-							->join(	array( 'sta'	=> 'status'	),
-									'sta.id = st.status',
-									null )
+							->from(	array( 's' => 'story' ),
+									array(	's.*',
+											'status' => '(' . $selectLastStatus->__toString() . ')' ) )
 							->join(	array( 'sp'	=> 'sprint' ),
 						 			's.sprint = sp.id',
 								  	null )
@@ -111,10 +118,9 @@ class ProductBacklogController extends Escarmouche_Controller_Abstract
 									'r.product = p.id',
 									null )
 						 	->where( 'p.id = ?', $id )
-						 	->order( array(	'st.status ASC',
+						 	->where( 'status >= ?', Application_Model_Status::TODO )
+						 	->order( array(	'status ASC',
 						 					's.id ASC' ) );
-									 
-		Zend_Debug::dump( $selectStories->__toString() );
 		$this->view->stories = $sm->fetchAll( $selectStories );
 	}
 }

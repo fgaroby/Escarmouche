@@ -51,51 +51,31 @@ class SprintBacklogController extends Escarmouche_Controller_Abstract
 	/**
 	 * 
 	 * @todo gérer les cas où l'id ne correspond à aucun sprint
-//	 * @todo gérer les colonnes à afficher (TODO, WIP, DONE, TEST, FAILED/PASSED, DONE)
+//	 * @todo pouvoir filtrer les colonnes à afficher (TODO, WIP, DONE, TEST, FAILED/PASSED, DONE)
 	 */
 	public function displayAction()
 	{
-		$sm = Application_Model_StoryMapper::getInstance();
-		$stm = Application_Model_StoryMapper::getInstance();
 		$params = $this->getRequest()->getParams();
 		if( isset( $params['id'] ) )
-			$id = $params['id'];
+				$id = $params['id'];
 		/*
 		 * @todo gérer la sélection de l'ID de la release par défaut
 		 */
 		else
 			$id = Zend_Registry::get( 'session' )->defaultProduct->getCurrentRelease()->getId();
-		
-		$selectLastStatus = $sm->getDbTable()
-							->select()
-							->setIntegrityCheck( false )
-							->from(	array( 'sta'	=> 'status' ),
-									'id' )
-							->join(	array( 'st'		=> 'story_status'	),
-									'sta.id = st.status',
-									null )
-							->where( 'st.story = s.id' )
-							->order( 'st.changed DESC' )
-							->limit( 1 );
-		$selectStories = $sm->getDbTable()
-							->select()
-							->setIntegrityCheck( false )
-							->from(	array(	's'		=> 'story' ),
-									array(	's.*',
-											'status' => '(' . $selectLastStatus->__toString() . ')' ) )
-							->join(	array( 'sp'		=> 'sprint' ),
-						 			'sp.id = s.sprint',
-									null )
-							->joinLeft(	array( 'f'	=> 'feature' ),
-						 				's.feature = f.id',
-										null )
-						 	->where( 'sp.id = ?', $id )
-						 	->where( 'status >= ?', Application_Model_Status::TODO )
-						 	->order( array(	'status DESC',
-						 					's.id ASC' ) );
-		//Zend_Debug::dump( $selectStories->__toString() );die();
-		$this->view->stories = $this->_storyMapper->fetchAll(	$selectStories,
-																'status DESC' );
+			
+		$sprint = $this->_sprintMapper->find( $params['id' ] );
+		if( null !== $sprint )
+		{
+			$this->view->sprint = $sprint;
+			$this->view->setTitle( 'Sprint Backlog : ' . $sprint->getName() );
+		}
+		else
+			$this->_redirect( $this->view->url( array(	'controller' => 'sprint-backlog',
+														'action' => 'index' ),
+														null,
+														true ),
+												array(	'prependBase'	=> false ) );
 	}
 	
 	

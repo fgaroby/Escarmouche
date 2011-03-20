@@ -211,6 +211,41 @@ class Application_Model_Story extends Application_Model_AbstractModel
 		return $this;
 	}
 
+	
+	protected function _loadTasks()
+	{
+		if( null === $this->_tasks )
+		{
+			$tm = Application_Model_TaskMapper::getInstance();
+			$selectLastStatus = $tm->getDbTable()
+								   ->select()
+								   ->setIntegrityCheck( false )
+								   ->from(	array( 'sta'	=> 'status' ),
+											'id' )
+								   ->join(	array( 'ts'		=> 'task_status'	),
+											'sta.id = ts.status',
+											null )
+								   ->where( 'ts.task = t.id' )
+								   ->order( 'ts.changed DESC' )
+								   ->limit( 1 );
+							
+			$selectTasks = $tm->getDbTable()
+							  ->select()
+							  ->setIntegrityCheck( false )
+							  ->from(	array(	't'		=> 'task' ),
+										array(	't.*',
+												'status' => '(' . $selectLastStatus->__toString() . ')' ) )
+							  ->join(	array(	'st'	=> 'story_task' ),
+										'st.task_id = t.id',
+										null )
+							  ->join(	array(	's'		=> 'story' ),
+										's.id = st.story_id',
+										null )
+							  ->where( 's.id = ?', $this->_id );
+
+			$this->_tasks = $tm->fetchAll( $selectTasks  );
+		}
+	}
 
 	/**
 	 *
@@ -254,13 +289,16 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	}
 	
 	
+	protected function _loadFeature()
+	{
+		if( !$this->_feature instanceof Application_Model_Feature )
+			$this->_feature = Application_Model_FeatureMapper::getInstance()->find( $this->_feature );
+	}
+	
+	
 	public function getFeature()
 	{
-		if( is_int( $this->_feature ) )
-		{
-			$fm = new Application_Model_FeatureMapper();
-			$this->_feature = $fm->find( $this->_feature );
-		}
+		$this->_loadFeature();
 		
 		return $this->_feature;
 	}
@@ -268,6 +306,8 @@ class Application_Model_Story extends Application_Model_AbstractModel
 	
 	public function getFeatureId()
 	{
+		$this->_loadFeature();
+		
 		if( $this->_feature instanceof Application_Model_Feature )
 			return $this->_feature->getId();
 		else if( is_int( $this->_feature ) )

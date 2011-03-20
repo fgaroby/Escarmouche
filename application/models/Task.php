@@ -218,6 +218,13 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	}
 	
 	
+	protected function _loadType()
+	{
+		if( null === $this->_type )
+			$this->_type = Application_Model_TypeMapper::getInstance()->find( $this->_type );		
+	}
+	
+	
 	public function setType( $type )
 	{
 		$this->_type = $type;
@@ -232,8 +239,7 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	 */
 	public function getType()
 	{
-		if( !$this->_type instanceof Application_Model_Type )
-			$this->_type = Application_Model_TypeMapper::getInstance()->find( $this->_type );
+		$this->_loadType();
 		
 		return $this->_type;
 	}
@@ -245,6 +251,8 @@ class Application_Model_Task extends Application_Model_AbstractModel
 	 */
 	public function getTypeId()
 	{
+		$this->_loadType();
+		
 		if( $this->_type instanceof Application_Model_Type )
 			return $this->_type->getId();
 		else

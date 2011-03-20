@@ -32,7 +32,7 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	protected	$_status;
 	
 	
-	protected	$_stories = array();
+	protected	$_stories = null;
 	
 	
 	protected	$_startDate = null;
@@ -71,6 +71,8 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	
 	protected function _addStory( Application_Model_Story $story )
 	{
+		$this->_loadStories();
+		
 		$index = array_search( $story, $this->_stories );
 		if( $index === false )
 		{
@@ -133,14 +135,53 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	
 	public function getStories()
 	{
+		$this->_loadStories();
+		
 		return $this->_stories;
+	}
+	
+	
+	protected function _loadStories()
+	{
+		if( null === $this->_stories )
+		{
+			$sm = Application_Model_StoryMapper::getInstance();
+			$selectLastStatus = $sm->getDbTable()
+								->select()
+								->setIntegrityCheck( false )
+								->from(	array( 'sta'	=> 'status' ),
+										'id' )
+								->join(	array( 'ss'		=> 'story_status'	),
+										'sta.id = ss.status',
+										null )
+								->where( 'ss.story = s.id' )
+								->order( 'ss.changed DESC' )
+								->limit( 1 );
+			$selectStories = $sm->getDbTable()
+								->select()
+								->setIntegrityCheck( false )
+								->from(	array(	's'		=> 'story' ),
+										array(	's.*',
+												'status' => '(' . $selectLastStatus->__toString() . ')' ) )
+								->join(	array( 'sp'		=> 'sprint' ),
+							 			'sp.id = s.sprint',
+										null )
+								->joinLeft(	array( 'f'	=> 'feature' ),
+							 				's.feature = f.id',
+											null )
+							 	->where( 'sp.id = ?', $this->id )
+							 	->where( 'status >= ?', Application_Model_Status::TODO )
+							 	->order( array(	'status DESC',
+							 					's.id ASC' ) );
+			$this->_stories = $sm->fetchAll( $selectStories  );
+		}
 	}
 	
 	
 	/**
 	 * 
-	 * @param int $status the status of the sprint
-	 * @throws InvalidArgumentException if $status is NaN or not a valid status
+	 * @param int|Application_Model_Status $status the status of the sprint
+	 * @throws InvalidArgumentException if $status is not a valid status
 	 */
 	public function setStatus( $status )
 	{
@@ -176,8 +217,10 @@ class Application_Model_Sprint extends Application_Model_AbstractModel
 	}
 	
 	
-	public function getPoints()
+	public function getTotalPoints()
 	{
+		$this->_loadStories();
+		
 		$points = 0;
 		foreach( $this->_stories as $story )
 			$points += $story->getPoints();

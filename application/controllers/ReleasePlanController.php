@@ -48,6 +48,25 @@ class ReleasePlanController extends Escarmouche_Controller_Abstract
 	}
 	
 	
+	/**
+	 * 
+	 * @todo gérer les cas où l'id ne correspond à aucune release
+	 */
+	public function displayAction()
+	{
+		$params = $this->getRequest()->getParams();
+		if( isset( $params['id'] ) )
+			$id = $params['id'];
+		/*
+		 * @todo gérer la sélection de l'ID de la release par défaut
+		 */
+		else
+			$id = Zend_Registry::get( 'session' )->defaultProduct->getCurrentRelease()->getId();
+		$this->view->sprints = $this->_sprintMapper->fetchAll(	array( 'release = ?' => $id ),
+																'status DESC' );
+	}
+	
+	
 	public function editAction()
 	{
 		

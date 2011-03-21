@@ -35,11 +35,15 @@ class Zend_View_Helper_LoggedInAs extends Zend_View_Helper_Abstract
 			$homePage = $this->view->url( array( 'controller' => 'user', 'action' => 'home' ) );
 			return 'Bienvenue <a href="' . $homePage . '">' . $identity->name . '</a> <a href="' . $logout . '">Logout</a>';
 		}
-			
+
 		$request = Zend_Controller_Front::getInstance()->getRequest();
 		$controller = $request->getControllerName();
 		$action = $request->getActionName();
-		if( $controller === 'auth' && $action === 'index' )
+		
+		/*
+		 * If we are in the authentication page : don't show the 'login' link. 
+		 */
+		if( $controller === 'auth' && $action === 'login' )
 			return '';
 
 		$loginUrl = $this->view->url(array( 'controller'=>'auth', 'action'=>'login' ) );

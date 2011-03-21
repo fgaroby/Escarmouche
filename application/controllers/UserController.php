@@ -43,8 +43,6 @@ class UserController extends Escarmouche_Controller_Abstract
 	public function indexAction()
 	{
 		$this->view->setTitle( 'Login' );
-
-		$this->render();
 	}
 	
 	

@@ -24,7 +24,6 @@
  *  @since 0.1
  */
 
-require_once 'Zend/Controller/Action.php';
 
 class ProductBacklogController extends Escarmouche_Controller_Abstract
 {

@@ -63,7 +63,11 @@ class AuthController extends Escarmouche_Controller_Abstract
 		$auth = Zend_Auth::getInstance();
 		// If we're already logged in, redirect
 		if( $auth->hasIdentity() )
-			$this->_redirect( $this->view->url( array( 'controller' => 'index', 'action' => 'display' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url( 	array(	'controller' => 'index',
+															'action' => 'display' ),
+													null,
+													true ),
+								array( 'prependBase' => false ) );
 			
 		$params = $this->getRequest()->getParams();
 		
@@ -89,11 +93,11 @@ class AuthController extends Escarmouche_Controller_Abstract
     			$auth->getStorage()->write( $adapter->getResultRowObject( null, 'password' ) );
     			Zend_Registry::get( 'session' )->defaultProduct = Application_Model_ProductMapper::getInstance()->find( 1 );
     			
-    			return $this->_redirect( $this->view->url(	array(	'controller'	=> 'index',
-    																'action'		=> 'display' ),
-																	null,
-																	true ),
-															array(	'prependBase'	=> false ) );
+    			return $this->_redirect(	$this->view->url(	array(	'controller'	=> 'index',
+    																	'action'		=> 'display' ),
+																null,
+																true ),
+											array(	'prependBase'	=> false ) );
     		}
     	}
     	
@@ -105,6 +109,10 @@ class AuthController extends Escarmouche_Controller_Abstract
 	{
 		Zend_Auth::getInstance()->clearIdentity();
 		// back to auth page
-		$this->_redirect( $this->view->url( array( 'controller' => 'index', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+		$this->_redirect(	$this->view->url( 	array(	'controller' => 'index',
+														'action' => 'index' ),
+												null,
+												true ),
+							array( 'prependBase' => false ) );
 	}
 }

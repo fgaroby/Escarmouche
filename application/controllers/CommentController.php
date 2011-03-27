@@ -53,7 +53,11 @@ class CommentController extends Escarmouche_Controller_Abstract
 			$this->view->comment = $this->_commentMapper->find( $params['id' ] );
 		}
 		else
-			$this->_redirect( $this->view->url( array( 'controller' => 'comment', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url(	array(	'controller'	=> 'comment',
+															'action'		=> 'index' ),
+													null,
+													true ),
+								array( 'prependBase' => false ) );
 	}
 	
 	
@@ -69,7 +73,12 @@ class CommentController extends Escarmouche_Controller_Abstract
 			if( $comment === null )
 			{
 				$this->getRequest()->clearParams();
-				$this->_redirect( $this->view->url( array( 'controller' => 'comment', 'action' => 'edit', 'id' => null ) ), array( 'prependBase' => false, 'code' => 303 ) );
+				$this->_redirect( 	$this->view->url(	array(	'controller'	=> 'comment',
+																'action'		=> 'edit',
+																'id'			=> null ),
+														null,
+														true ),
+									array(	'prependBase' => false ) );
 			}
 		}
 		else
@@ -106,7 +115,8 @@ class CommentController extends Escarmouche_Controller_Abstract
 			$this->_helper->FlashMessenger( "Insertion du commentaire '{$comment->getName()}' effectuée ! " );
 			
 			// redirect to the referrer page or to the default, if referrer is empty
-			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
+			$this->_redirect(	$form->referrer->getValue(),
+								array( 'prependBase' => false ) );
 		}
 		
 		$this->view->form = $form;

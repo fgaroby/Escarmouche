@@ -53,7 +53,11 @@ class SprintController extends Escarmouche_Controller_Abstract
 			$this->view->setTitle( $sprint->getName() );	
 		}
 		else
-			$this->_redirect( $this->view->url( array( 'controller' => 'sprint', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url(	array(	'controller'	=> 'sprint',
+															'action'		=> 'index' ),
+													null,
+													true ),
+								array( 'prependBase' => false ) );
 	}
 	
 	
@@ -73,7 +77,10 @@ class SprintController extends Escarmouche_Controller_Abstract
 			if( $sprint === null )
 			{
 				$this->getRequest()->clearParams();
-				$this->_redirect( $this->view->url( array( 'controller' => 'sprint', 'action' => 'edit', 'id' => null ) ), array( 'prependBase' => false, 'code' => 303 ) );
+				$this->_redirect(	$this->view->url(	array(	'controller'	=> 'sprint',
+																'action'		=> 'edit',
+																'id'			=> null ) ),
+									array( 'prependBase' => false ) );
 			}
 		}
 		else
@@ -123,7 +130,8 @@ class SprintController extends Escarmouche_Controller_Abstract
 			
 			$this->_helper->FlashMessenger( "Insertion du sprint '{$sprint->getName()}' effectuée ! " );
 			// redirect to the referrer page or to the default, if referrer is empty
-			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
+			$this->_redirect(	$form->referrer->getValue(),
+								array( 'prependBase' => false ) );
 		}
 		else
 		{

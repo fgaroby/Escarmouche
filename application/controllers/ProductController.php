@@ -51,7 +51,11 @@ class ProductController extends Escarmouche_Controller_Abstract
 			$this->view->product = $this->_productMapper->find( $params['id' ] );
 		}
 		else
-			$this->_redirect( $this->view->url( array( 'controller' => 'product', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url( 	array(	'controller'	=> 'product',
+															'action'		=> 'index' ),
+													null,
+													true ),
+								array( 'prependBase' => false ) );
 	}
 	
 	
@@ -68,7 +72,12 @@ class ProductController extends Escarmouche_Controller_Abstract
 			if( $product === null )
 			{
 				$this->getRequest()->clearParams();
-				$this->_redirect( $this->view->url( array( 'controller' => 'product', 'action' => 'edit', 'id' => null ) ), array( 'prependBase' => false, 'code' => 303 ) );
+				$this->_redirect(	$this->view->url(	array(	'controller'	=> 'product',
+																'action'		=> 'edit',
+																'id'			=> null ),
+														null,
+														true ),
+									array(	'prependBase' => false ) );
 			}
 		}
 		else
@@ -92,7 +101,11 @@ class ProductController extends Escarmouche_Controller_Abstract
 			$this->_productMapper->save( $product );
 			
 			$this->_helper->FlashMessenger( "Insertion du produit '{$product->getName()}' effectuée ! " );
-			$this->_redirect( $this->view->url( array( 'controller' => 'product', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url(	array(	'controller'	=> 'product',
+															'action'		=> 'index' ),
+													null,
+													true ),
+								array(	'prependBase' => false ) );
 		}
 		else
 			$this->view->form = $form;

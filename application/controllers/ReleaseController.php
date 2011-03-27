@@ -58,7 +58,11 @@ class ReleaseController extends Escarmouche_Controller_Abstract
 			$this->view->setTitle( $release->getName() );	
 		}
 		else
-			$this->_redirect( $this->view->url( array( 'controller' => 'release', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url( 	array(	'controller'	=> 'release',
+															'action'		=> 'index' ),
+													null,
+													true ),
+								array(	'prependBase' => false ) );
 	}
 	
 	
@@ -74,7 +78,10 @@ class ReleaseController extends Escarmouche_Controller_Abstract
 			if( $release === null )
 			{
 				$this->getRequest()->clearParams();
-				$this->_redirect( $this->view->url( array( 'controller' => 'release', 'action' => 'edit', 'id' => null ) ), array( 'prependBase' => false, 'code' => 303 ) );
+				$this->_redirect(	$this->view->url(	array(	'controller'	=> 'release',
+																'action'		=> 'edit',
+																'id'			=> null ) ),
+									array(	'prependBase' => false ) );
 			}
 		}
 		else
@@ -127,7 +134,8 @@ class ReleaseController extends Escarmouche_Controller_Abstract
 			
 			$this->_helper->FlashMessenger( "Insertion de la release '{$release->getName()}' effectuée ! " );
 			// redirect to the referrer page or to the default, if referrer is empty
-			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
+			$this->_redirect(	$form->referrer->getValue(),
+								array( 'prependBase' => false ) );
 		}
 		
 		$this->view->form = $form;

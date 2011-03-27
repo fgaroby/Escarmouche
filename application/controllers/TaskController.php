@@ -84,7 +84,10 @@ class TaskController extends Escarmouche_Controller_Abstract
 			if( $task === null )
 			{
 				$this->getRequest()->clearParams();
-				$this->_redirect( $this->view->url( array( 'controller' => 'task', 'action' => 'edit', 'id' => null ) ), array( 'prependBase' => false, 'code' => 303 ) );
+				$this->_redirect(	$this->view->url(	array(	'controller'	=> 'task',
+																'action'		=> 'edit',
+																'id'			=> null ) ),
+									array( 'prependBase' => false ) );
 			}
 		}
 		else
@@ -108,7 +111,9 @@ class TaskController extends Escarmouche_Controller_Abstract
 			$this->_taskMapper->save( $task );
 			
 			$this->_helper->FlashMessenger( "Insertion de la tâche '{$task->getName()}' effectuée ! " );
-			$this->_redirect( $this->view->url( array( 'controller' => 'task', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url(	array(	'controller'	=> 'task',
+															'action'		=> 'index' ) ),
+								array( 'prependBase' => false ) );
 		}
 		
 		$this->view->form = $form;

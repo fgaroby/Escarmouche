@@ -72,7 +72,12 @@ class FeatureController extends Escarmouche_Controller_Abstract
 			if( $feature === null )
 			{
 				$this->getRequest()->clearParams();
-				$this->_redirect( $this->view->url( array( 'controller' => 'feature', 'action' => 'edit', 'id' => null ) ), array( 'prependBase' => false, 'code' => 303 ) );
+				$this->_redirect(	$this->view->url(	array(	'controller'	=> 'feature',
+																'action'		=> 'edit',
+																'id'			=> null ),
+														null,
+														true ),
+									array(	'prependBase' => false) );
 			}
 		}
 		else
@@ -102,7 +107,8 @@ class FeatureController extends Escarmouche_Controller_Abstract
 			$this->_featureMapper->save( $feature );
 			
 			$this->_helper->FlashMessenger( "Insertion du produit '{$feature->getName()}' effectuée ! " );
-			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
+			$this->_redirect(	$form->referrer->getValue(),
+								array( 'prependBase' => false ) );
 		}
 		else
 			$this->view->form = $form;

@@ -56,7 +56,9 @@ class StoryController extends Escarmouche_Controller_Abstract
 			$this->view->setTitle( $story->getName() );	
 		}
 		else
-			$this->_redirect( $this->view->url( array( 'controller' => 'story', 'action' => 'index' ) ), array( 'prependBase' => false ) );
+			$this->_redirect(	$this->view->url(	array(	'controller'	=> 'story',
+															'action'		=> 'index' ) ),
+								array(	'prependBase' => false ) );
 	}
 	
 	
@@ -73,7 +75,10 @@ class StoryController extends Escarmouche_Controller_Abstract
 			if( $story === null )
 			{
 				$this->getRequest()->clearParams();
-				$this->_redirect( $this->view->url( array( 'controller' => 'story', 'action' => 'edit', 'id' => null ) ), array( 'prependBase' => false, 'code' => 303 ) );
+				$this->_redirect(	$this->view->url(	array(	'controller'	=> 'story',
+																'action'		=> 'edit',
+																'id'			=> null ) ),
+									array( 'prependBase' => false ) );
 			}
 		}
 		else
@@ -110,7 +115,8 @@ class StoryController extends Escarmouche_Controller_Abstract
 			$this->_helper->FlashMessenger( "Insertion de la story '{$story->getName()}' effectuée ! " );
 			
 			// redirect to the referrer page or to the default, if referrer is empty
-			$this->_redirect( $form->referrer->getValue(), array( 'prependBase' => false ) );
+			$this->_redirect(	$form->referrer->getValue(),
+								array( 'prependBase' => false ) );
 		}
 		
 		$this->view->form = $form;

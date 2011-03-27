@@ -42,7 +42,7 @@ set_include_path( get_include_path()
 /** Zend_Loader_Autoloader */
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace( 'Escarmouche_' );
+$autoloader->registerNamespace( array( 'Escarmouche_', 'pChart_' ) );
 
 // Needed to the Gravatar view Helper
 $autoloader->registerNamespace( 'NP_' );

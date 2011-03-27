@@ -35,7 +35,15 @@ class IndexController extends Escarmouche_Controller_Abstract
 	
 	public function indexAction()
 	{
-		$this->view->setTitle( 'Accueil' );
+		if( Zend_Auth::getInstance()->hasIdentity() )
+		{
+			$this->_redirect(	$this->view->url(	array(	'controller'	=> 'index',
+															'action'		=> 'display' ),
+													null,
+													true ),
+								array( 'prependBase' => false ) );
+		}
+		$this->view->setTitle( $this->view->translate( 'Accueil' ) );
 	}
 	
 	

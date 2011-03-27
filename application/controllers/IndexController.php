@@ -41,7 +41,7 @@ class IndexController extends Escarmouche_Controller_Abstract
 	
 	public function displayAction()
 	{
-		$this->view->setTitle( 'Tableau de bord' );
+		$this->view->setTitle( $this->view->translate( 'Tableau de bord' ) );
 	}
 	
 	

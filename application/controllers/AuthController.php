@@ -29,7 +29,7 @@ class AuthController extends Escarmouche_Controller_Abstract
 	public function init()
 	{
 		parent::init();
-		$this->view->setTitle( 'Authentification' );
+		$this->view->setTitle( $this->view->translate( 'Authentification' ) );
 		$this->_commentMapper = Application_Model_CommentMapper::getInstance();
 	}
 

@@ -32,20 +32,6 @@ class AuthController extends Escarmouche_Controller_Abstract
 		$this->view->setTitle( $this->view->translate( 'Authentification' ) );
 		$this->_commentMapper = Application_Model_CommentMapper::getInstance();
 	}
-
-	
-	public function preDispatch()
-	{
-		if( !Zend_Auth::getInstance()->hasIdentity()
-			&& 'logout' === $this->getRequest()->getActionName() )
-		{
-			$this->_redirect(	$this->view->url( 	array(	'controller'=> 'index',
-															'action'	=> 'index' ),
-															null,
-															true ),
-													array( 'prependBase' => false ) );
-		}
-	}
 	
 	
 	public function indexAction()
